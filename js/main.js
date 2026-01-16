@@ -159,6 +159,13 @@
     });
   }
 
+  // ========== DYNAMIC YEAR ==========
+  const yearElements = document.querySelectorAll('.js-year');
+  const currentYear = new Date().getFullYear();
+  yearElements.forEach(el => {
+    el.textContent = currentYear;
+  });
+
   // ========== CONSOLE MESSAGE ==========
   console.log('%c Alex Perdel Portfolio ',
     'background: #DC2626; color: white; padding: 8px 16px; border-radius: 4px; font-weight: bold;');

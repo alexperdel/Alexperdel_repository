@@ -6,12 +6,15 @@
 
   <!-- SEO Meta Tags -->
   <title>Voicebot con IA | Alex Perdel</title>
-  <meta name="description" content="Sistema de voicebot con IA para automatizacion de llamadas comerciales y atencion al cliente en Hogar Solar. Desarrollado con Vapi, 11Labs, Make y LLMs.">
+  <meta name="description" content="Sistema de voicebot con IA para automatización de llamadas comerciales y atención al cliente en Hogarsolar. Desarrollado con Vapi, 11Labs, Make y LLMs.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://alexperdel.com/proyectos/voicebot-ia.html">
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23DC2626' d='M18 2L6 18h8l-2 12 12-16h-8z'/%3E%3C/svg%3E">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- Styles -->
   <link rel="stylesheet" href="../css/styles.css">
@@ -20,7 +23,7 @@
   <!-- ========== HEADER ========== -->
   <header class="header">
     <div class="container header__inner">
-      <a href="/" class="header__logo">
+      <a href="../" class="header__logo">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
           <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="url(#bolt-g)"/>
@@ -31,9 +34,9 @@
       <nav class="nav">
         <button class="nav__toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
         <ul class="nav__list">
-          <li><a href="/" class="nav__link">Inicio</a></li>
-          <li><a href="/sobre-mi.html" class="nav__link">Sobre mi</a></li>
-          <li><a href="/proyectos/" class="nav__link nav__link--active">Proyectos</a></li>
+          <li><a href="../" class="nav__link">Inicio</a></li>
+          <li><a href="../sobre-mi.html" class="nav__link">Sobre mí</a></li>
+          <li><a href="./" class="nav__link nav__link--active">Proyectos</a></li>
           <li><a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" class="btn btn--primary">LinkedIn</a></li>
         </ul>
       </nav>
@@ -45,9 +48,9 @@
     <section class="project-hero">
       <div class="container project-hero__inner">
         <div>
-          <span class="project-hero__tag">Hogar Solar</span>
+          <span class="project-hero__tag">Hogarsolar</span>
           <h1 class="project-hero__title">Voicebot con IA</h1>
-          <p class="project-hero__text">Sistema de llamadas automatizadas para confirmacion de citas comerciales y atencion al cliente. El voicebot gestiona conversaciones naturales, confirma o reprograma citas, y escala casos complejos a humanos.</p>
+          <p class="project-hero__text">Sistema de llamadas automatizadas para confirmación de citas comerciales y atención al cliente. El voicebot gestiona conversaciones naturales, confirma o reprograma citas, y escala casos complejos a humanos.</p>
           <div class="project-card__stack" style="margin-top: var(--space-6);">
             <span class="project-card__tech">Vapi</span>
             <span class="project-card__tech">11Labs</span>
@@ -56,13 +59,8 @@
             <span class="project-card__tech">APIs</span>
           </div>
         </div>
-        <div style="background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); border-radius: var(--radius-xl); padding: var(--space-16); display: flex; align-items: center; justify-content: center;">
-          <svg width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1">
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
-            <line x1="12" y1="19" x2="12" y2="23"/>
-            <line x1="8" y1="23" x2="16" y2="23"/>
-          </svg>
+        <div style="background: #000; border-radius: var(--radius-xl); padding: var(--space-16); display: flex; align-items: center; justify-content: center; min-height: 300px;">
+          <img src="../assets/img/vapi.png" alt="Vapi - Plataforma de Voicebots" style="max-width: 200px; height: auto;">
         </div>
       </div>
     </section>
@@ -71,30 +69,53 @@
     <section class="section">
       <div class="container project-content">
         <h2>El reto</h2>
-        <p>Hogar Solar necesitaba automatizar las llamadas de confirmacion de citas con clientes potenciales. El equipo comercial dedicaba horas a llamar para confirmar visitas, muchas veces sin exito. Las no-shows representaban un coste significativo en tiempo y recursos.</p>
+        <p>Hogarsolar necesitaba automatizar las llamadas de confirmación de citas con clientes potenciales. El equipo comercial dedicaba horas a llamar para confirmar visitas, muchas veces sin éxito. Las no-shows representaban un coste significativo en tiempo y recursos.</p>
 
-        <h2>La solucion</h2>
-        <p>Disenamos e implementamos un voicebot con IA capaz de:</p>
+        <h2>La solución</h2>
+        <p>Diseñamos e implementamos un voicebot con IA capaz de:</p>
         <ul>
-          <li>Realizar llamadas automaticas para confirmar citas programadas</li>
+          <li>Realizar llamadas automáticas para confirmar citas programadas</li>
           <li>Mantener conversaciones naturales gracias a la voz generada por 11Labs</li>
           <li>Entender respuestas variadas del cliente usando LLMs</li>
           <li>Reprogramar citas si el cliente lo solicita</li>
-          <li>Escalar automaticamente a un agente humano si detecta una situacion compleja</li>
-          <li>Registrar toda la informacion en el CRM (HubSpot) via Make</li>
+          <li>Escalar automáticamente a un agente humano si detecta una situación compleja</li>
+          <li>Registrar toda la información en el CRM (HubSpot) via Make</li>
         </ul>
 
-        <h2>Stack tecnologico</h2>
-        <p><strong>Vapi:</strong> Plataforma de voz conversacional que orquesta las llamadas y gestiona el flujo de la conversacion.</p>
-        <p><strong>11Labs:</strong> Generacion de voz natural y humana para que el cliente no perciba que habla con una maquina.</p>
+        <h2>Stack tecnológico</h2>
+        <p><strong>Vapi:</strong> Plataforma de voz conversacional que orquesta las llamadas y gestiona el flujo de la conversación.</p>
+        <p><strong>11Labs:</strong> Generación de voz natural y humana para que el cliente no perciba que habla con una máquina.</p>
         <p><strong>Make:</strong> Automatizaciones para conectar el voicebot con HubSpot, Google Calendar y sistemas internos.</p>
-        <p><strong>LLMs:</strong> Modelos de lenguaje para entender la intencion del cliente y generar respuestas contextuales.</p>
+        <p><strong>LLMs:</strong> Modelos de lenguaje para entender la intención del cliente y generar respuestas contextuales.</p>
 
         <h2>Resultados</h2>
-        <p>El voicebot gestiona cientos de llamadas semanales, liberando al equipo comercial para enfocarse en las visitas presenciales. La tasa de confirmacion ha mejorado y los no-shows se han reducido significativamente.</p>
+        <p>Tengo a <strong>10 voicebots de IA</strong> trabajando de lunes a domingo, mañana, tarde o noche:</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-6); margin: var(--space-8) 0;">
+          <div style="background: var(--color-surface); padding: var(--space-6); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-md);">
+            <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary);">84%</div>
+            <div style="color: var(--color-text-muted);">Citas confirmadas</div>
+          </div>
+          <div style="background: var(--color-surface); padding: var(--space-6); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-md);">
+            <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary);">60€</div>
+            <div style="color: var(--color-text-muted);">Coste mensual total</div>
+          </div>
+          <div style="background: var(--color-surface); padding: var(--space-6); border-radius: var(--radius-lg); text-align: center; box-shadow: var(--shadow-md);">
+            <div style="font-size: 2.5rem; font-weight: 700; color: var(--color-primary);">10</div>
+            <div style="color: var(--color-text-muted);">Agentes IA en paralelo</div>
+          </div>
+        </div>
+
+        <p>El sistema detecta intenciones, reubica citas, cancela cuando es necesario y deja todo registrado en el CRM sin intervención humana. Incluso atiende las llamadas entrantes cuando un cliente devuelve la llamada perdida.</p>
+        <p>Con un presupuesto de <strong>60€ al mes</strong> (incluyendo llamadas, APIs, automatizaciones y procesamiento de lenguaje natural), la IA trabaja como si fueran 10 agentes operando en paralelo, liberando al equipo comercial para enfocarse en las visitas presenciales.</p>
+
+        <div style="margin-top: var(--space-8);">
+          <img src="../assets/img/hogarsolar_oficina.png" alt="Setup de trabajo con Vapi, Make y herramientas de IA" style="width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
+          <p style="text-align: center; color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-4);">Mi setup de trabajo: Vapi, Make, ChatGPT y automatizaciones en acción.</p>
+        </div>
 
         <div style="margin-top: var(--space-12); text-align: center;">
-          <a href="/proyectos/" class="btn btn--outline">Ver mas proyectos</a>
+          <a href="./" class="btn btn--outline">Ver más proyectos</a>
         </div>
       </div>
     </section>
@@ -103,16 +124,16 @@
   <!-- ========== FOOTER ========== -->
   <footer class="footer">
     <div class="container footer__inner">
-      <a href="/" class="footer__logo">
+      <a href="../" class="footer__logo">
         <svg viewBox="0 0 32 32" fill="none"><path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/></svg>
         Alex Perdel
       </a>
       <div class="footer__social">
         <a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <i class="fab fa-linkedin"></i>
         </a>
       </div>
-      <p class="footer__copy">&copy; 2025 Alex Perdel.</p>
+      <p class="footer__copy">&copy; <span class="js-year">2026</span> Alex Perdel.</p>
     </div>
   </footer>
 
