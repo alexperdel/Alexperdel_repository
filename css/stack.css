@@ -1,0 +1,70 @@
+/* ==========================================================================
+   STACK TECNOLOGICO & CERTIFICACIONES
+   ========================================================================== */
+
+/* Stack Grid */
+.stack-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+}
+
+.stack-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  transition: transform var(--transition-fast);
+}
+
+.stack-item:hover {
+  transform: translateY(-4px);
+}
+
+.stack-item__icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stack-item__icon img,
+.stack-item__icon svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.stack-item__name {
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+  font-weight: 500;
+}
+
+/* Certificaciones */
+.certs-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.cert-item {
+  opacity: 0.7;
+  transition: opacity var(--transition-fast);
+  filter: grayscale(100%);
+}
+
+.cert-item:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+.cert-item img {
+  height: 40px;
+  width: auto;
+}

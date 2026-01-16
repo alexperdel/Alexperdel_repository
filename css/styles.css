@@ -1,0 +1,17 @@
+/* ==========================================================================
+   ALEX PERDEL - Portfolio
+   Main CSS - Imports all modules
+   ========================================================================== */
+
+@import 'variables.css';
+@import 'reset.css';
+@import 'utilities.css';
+@import 'header.css';
+@import 'buttons.css';
+@import 'hero.css';
+@import 'cards.css';
+@import 'stack.css';
+@import 'timeline.css';
+@import 'footer.css';
+@import 'project-page.css';
+@import 'animations.css';

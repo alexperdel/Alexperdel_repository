@@ -1,0 +1,88 @@
+/* ==========================================================================
+   PAGINA DE PROYECTO INDIVIDUAL
+   ========================================================================== */
+
+.project-hero {
+  padding-top: calc(var(--header-height) + var(--space-16));
+  padding-bottom: var(--space-16);
+  background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%);
+}
+
+.project-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.project-hero__tag {
+  display: inline-block;
+  padding: var(--space-2) var(--space-4);
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--color-primary);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+
+.project-hero__title {
+  font-size: var(--text-4xl);
+  margin-bottom: var(--space-4);
+}
+
+.project-hero__text {
+  color: var(--color-gray-600);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-6);
+}
+
+.project-hero__image {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+}
+
+.project-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.project-content h2 {
+  font-size: var(--text-2xl);
+  margin-top: var(--space-12);
+  margin-bottom: var(--space-6);
+}
+
+.project-content p {
+  color: var(--color-gray-600);
+  line-height: 1.8;
+}
+
+.project-content ul {
+  margin-bottom: var(--space-6);
+  padding-left: var(--space-6);
+}
+
+.project-content li {
+  position: relative;
+  padding-left: var(--space-4);
+  margin-bottom: var(--space-2);
+  color: var(--color-gray-600);
+}
+
+.project-content li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+}
+
+@media (max-width: 768px) {
+  .project-hero__inner {
+    grid-template-columns: 1fr;
+  }
+}

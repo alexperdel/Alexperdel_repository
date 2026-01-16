@@ -1,0 +1,115 @@
+/* ==========================================================================
+   TIMELINE - Trayectoria
+   ========================================================================== */
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-gray-200);
+}
+
+.timeline__item {
+  position: relative;
+  padding-left: var(--space-10);
+  padding-bottom: var(--space-10);
+}
+
+.timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: -7px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  border: 3px solid var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.timeline__item--current .timeline__dot {
+  background: var(--color-accent);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+}
+
+.timeline__date {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.timeline__title {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-1);
+}
+
+.timeline__company {
+  font-size: var(--text-sm);
+  color: var(--color-gray-500);
+  margin-bottom: var(--space-3);
+}
+
+.timeline__company a {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.timeline__company a:hover {
+  color: var(--color-primary-dark);
+}
+
+.timeline__text {
+  color: var(--color-gray-600);
+  font-size: var(--text-sm);
+}
+
+.timeline__stats {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.timeline__stat {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-gray-600);
+}
+
+.timeline__stat strong {
+  color: var(--color-primary);
+}
+
+@media (max-width: 480px) {
+  .timeline::before {
+    left: 8px;
+  }
+
+  .timeline__item {
+    padding-left: var(--space-8);
+  }
+
+  .timeline__dot {
+    left: 1px;
+  }
+}
