@@ -374,89 +374,99 @@
     <!-- ========== CERTIFICACIONES ========== -->
     <section class="section">
       <div class="container">
-        <div class="certs-layout fade-in" style="display: grid; grid-template-columns: 1fr 2fr; gap: var(--space-12); align-items: center;">
+        <header class="section__header fade-in">
+          <h2 class="section__title">Formación y Certificaciones</h2>
+          <p class="section__subtitle">Formación continua en IA, automatización y tecnologías cloud. Siempre aprendiendo.</p>
+        </header>
 
-          <!-- Columna izquierda: Título y CTA -->
-          <div>
-            <h2 style="font-size: var(--text-3xl); font-weight: 700; margin-bottom: var(--space-4);">Formación y Certificaciones</h2>
-            <p style="color: var(--color-text-muted); margin-bottom: var(--space-6);">Formación continua en IA, automatización y tecnologías cloud. Siempre aprendiendo.</p>
-            <a href="sobre-mi.html#certificaciones" class="btn btn--primary">
-              <i class="fas fa-graduation-cap"></i>
-              Ver todas
-            </a>
+        <!-- Grid de certificaciones 2x3 -->
+        <div class="certs-home-grid fade-in" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); max-width: 800px; margin: 0 auto var(--space-8);">
+
+          <!-- EBIS -->
+          <div style="background: linear-gradient(135deg, #023c57 0%, #012840 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <img src="assets/img/ebis_blue.png" alt="EBIS" width="50" height="50" style="border-radius: var(--radius-md);">
+            <div>
+              <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Máster IA Generativa</p>
+              <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">EBIS Business Techschool</p>
+            </div>
           </div>
 
-          <!-- Columna derecha: Grid de certificaciones -->
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4);">
-
-            <!-- EBIS -->
-            <div style="background: linear-gradient(135deg, #023c57 0%, #012840 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-              <img src="assets/img/ebis_blue.png" alt="EBIS" width="50" height="50" style="border-radius: var(--radius-md);">
-              <div>
-                <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Máster IA Generativa</p>
-                <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">EBIS Business Techschool</p>
-              </div>
+          <!-- AWS -->
+          <div style="background: linear-gradient(90deg, #6b7280 0%, #1f2937 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <img src="assets/img/Amazon_Web_Services.svg" alt="AWS" width="40" height="40">
+            <div>
+              <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Generative AI Foundations</p>
+              <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">AWS + IMMUNE</p>
             </div>
-
-            <!-- AWS -->
-            <div style="background: linear-gradient(90deg, #6b7280 0%, #1f2937 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-              <img src="assets/img/Amazon_Web_Services.svg" alt="AWS" width="40" height="40">
-              <div>
-                <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Generative AI Foundations</p>
-                <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">AWS + IMMUNE</p>
-              </div>
-            </div>
-
-            <!-- Make -->
-            <div style="background: linear-gradient(135deg, #6c00d2 0%, #4a0094 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-              <img src="assets/img/make-app-icon-circle.png" alt="Make" width="40" height="40">
-              <div>
-                <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Make Advanced</p>
-                <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">HTTP, JSON, Webhooks, API</p>
-              </div>
-            </div>
-
-            <!-- HubSpot -->
-            <div style="background: linear-gradient(135deg, #FF7A59 0%, #E5603D 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-              <i class="fab fa-hubspot" style="font-size: 36px; color: #fff;"></i>
-              <div>
-                <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Inbound Marketing</p>
-                <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">HubSpot Academy</p>
-              </div>
-            </div>
-
-            <!-- Microsoft -->
-            <div style="background: linear-gradient(135deg, #00A4EF 0%, #0078D4 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-              <i class="fab fa-microsoft" style="font-size: 36px; color: #fff;"></i>
-              <div>
-                <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">JavaScript, CSS, HTML</p>
-                <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">Microsoft Certifications</p>
-              </div>
-            </div>
-
-            <!-- Hootsuite -->
-            <div style="background: linear-gradient(135deg, #0a3141 0%, #061f2a 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-              <img src="assets/img/Hootsuite-Symbol.png" alt="Hootsuite" width="40" height="40" style="object-fit: contain;">
-              <div>
-                <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Hootsuite Ambassador</p>
-                <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">Social Media Management</p>
-              </div>
-            </div>
-
           </div>
+
+          <!-- Make -->
+          <div style="background: linear-gradient(135deg, #6c00d2 0%, #4a0094 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <img src="assets/img/make-app-icon-circle.png" alt="Make" width="40" height="40">
+            <div>
+              <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Make Advanced</p>
+              <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">HTTP, JSON, Webhooks, API</p>
+            </div>
+          </div>
+
+          <!-- HubSpot -->
+          <div style="background: linear-gradient(135deg, #FF7A59 0%, #E5603D 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <i class="fab fa-hubspot" style="font-size: 36px; color: #fff;"></i>
+            <div>
+              <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Inbound Marketing</p>
+              <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">HubSpot Academy</p>
+            </div>
+          </div>
+
+          <!-- Microsoft -->
+          <div style="background: linear-gradient(135deg, #00A4EF 0%, #0078D4 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <i class="fab fa-microsoft" style="font-size: 36px; color: #fff;"></i>
+            <div>
+              <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">JavaScript, CSS, HTML</p>
+              <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">Microsoft Certifications</p>
+            </div>
+          </div>
+
+          <!-- Hootsuite -->
+          <div style="background: linear-gradient(135deg, #0a3141 0%, #061f2a 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
+            <img src="assets/img/Hootsuite-Symbol.png" alt="Hootsuite" width="40" height="40" style="object-fit: contain;">
+            <div>
+              <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Hootsuite Ambassador</p>
+              <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">Social Media Management</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Botón después del grid -->
+        <div class="text-center fade-in">
+          <a href="sobre-mi.html#certificaciones" class="btn btn--primary">
+            <i class="fas fa-graduation-cap"></i>
+            Ver todas
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- Responsive para certificaciones -->
+    <!-- Responsive para certificaciones home -->
     <style>
-      @media (max-width: 900px) {
-        .certs-layout {
-          grid-template-columns: 1fr !important;
-          text-align: center;
+      @media (max-width: 600px) {
+        .certs-home-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          gap: var(--space-2) !important;
         }
-        .certs-layout > div:first-child {
-          margin-bottom: var(--space-6);
+        .certs-home-grid > div {
+          padding: var(--space-3) !important;
+          flex-direction: column !important;
+          text-align: center;
+          gap: var(--space-2) !important;
+        }
+        .certs-home-grid > div img,
+        .certs-home-grid > div i {
+          margin: 0 auto;
+        }
+        .certs-home-grid > div p {
+          font-size: var(--text-xs) !important;
         }
       }
     </style>

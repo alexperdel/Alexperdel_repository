@@ -131,3 +131,18 @@
   font-weight: 500;
   border-radius: var(--radius-sm);
 }
+
+/* Mobile Card Adjustments */
+@media (max-width: 768px) {
+  .cards-grid {
+    gap: var(--space-6);
+  }
+
+  .card {
+    padding: var(--space-6);
+  }
+
+  .project-card__content {
+    padding: var(--space-4);
+  }
+}

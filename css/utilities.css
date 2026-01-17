@@ -49,3 +49,18 @@
   color: var(--color-gray-500);
   font-size: var(--text-lg);
 }
+
+/* Mobile Spacing Adjustments */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-12) 0;
+  }
+
+  .section__header {
+    margin-bottom: var(--space-8);
+  }
+
+  .container {
+    padding: 0 var(--space-4);
+  }
+}

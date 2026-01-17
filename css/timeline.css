@@ -100,9 +100,13 @@
   color: var(--color-primary);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  .timeline {
+    margin-left: var(--space-4);
+  }
+
   .timeline::before {
-    left: 8px;
+    left: 0;
   }
 
   .timeline__item {
@@ -110,6 +114,12 @@
   }
 
   .timeline__dot {
-    left: 1px;
+    left: -7px;
+  }
+
+  .timeline__item--highlight {
+    margin-left: 0 !important;
+    padding-left: var(--space-8) !important;
+    border-left: 3px solid var(--color-primary) !important;
   }
 }

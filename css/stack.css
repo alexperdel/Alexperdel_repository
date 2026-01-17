@@ -68,3 +68,19 @@
   height: 40px;
   width: auto;
 }
+
+/* Mobile Stack Adjustments */
+@media (max-width: 768px) {
+  .stack-grid {
+    gap: var(--space-4);
+  }
+
+  .stack-item {
+    padding: var(--space-2);
+  }
+
+  .stack-item__icon {
+    width: 36px;
+    height: 36px;
+  }
+}

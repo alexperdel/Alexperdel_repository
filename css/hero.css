@@ -145,14 +145,39 @@
 }
 
 @media (max-width: 480px) {
+  .hero {
+    min-height: auto;
+    padding-top: calc(var(--header-height) + var(--space-8));
+    padding-bottom: var(--space-8);
+  }
+
+  .hero__inner {
+    gap: var(--space-8);
+  }
+
   .hero__photo {
-    width: 280px;
-    height: 280px;
+    width: 220px;
+    height: 220px;
   }
 
   .hero__decoration {
-    width: 300px;
-    height: 300px;
-    left: calc(50% - 140px);
+    width: 240px;
+    height: 240px;
+    left: calc(50% - 110px);
+    top: 15px;
+  }
+
+  .hero__subtitle {
+    font-size: var(--text-base);
+  }
+
+  .hero__cta {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .hero__cta .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
