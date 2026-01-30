@@ -57,6 +57,23 @@
   height: 20px;
 }
 
+.footer__legal {
+  display: flex;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer__legal a {
+  color: var(--color-gray-500);
+  font-size: var(--text-sm);
+  transition: color var(--transition-fast);
+}
+
+.footer__legal a:hover {
+  color: var(--color-white);
+}
+
 .footer__copy {
   font-size: var(--text-sm);
 }

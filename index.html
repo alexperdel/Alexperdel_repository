@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <!-- Theme (antes del render para evitar flash) -->
+  <script src="js/theme.js"></script>
+
+  <!-- Google Consent Mode v2 + Analytics 4 (inyectado dinámicamente) -->
+  <script src="js/cookies.js"></script>
+
   <!-- SEO Meta Tags -->
   <title>Alex Perdel | Head of AI & Automation</title>
   <meta name="description" content="Head of AI & Automation en Hogarsolar. Especialista en LLMs, automatización con Make y n8n, voicebots, y desarrollo con Python y FastAPI. Docente en Máster de IA Generativa.">
@@ -85,6 +91,12 @@
           <li><a href="./" class="nav__link nav__link--active">Inicio</a></li>
           <li><a href="sobre-mi.html" class="nav__link">Sobre mí</a></li>
           <li><a href="proyectos/" class="nav__link">Proyectos</a></li>
+          <li>
+            <button class="theme-toggle" onclick="ThemeToggle.toggle()" aria-label="Cambiar tema">
+              <i class="fas fa-moon icon-moon"></i>
+              <i class="fas fa-sun icon-sun"></i>
+            </button>
+          </li>
           <li><a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" class="btn btn--primary">LinkedIn</a></li>
         </ul>
       </nav>
@@ -502,7 +514,13 @@
         </a>
       </div>
 
-      <p class="footer__copy">&copy; <span class="js-year">2026</span> Alex Perdel. Todos los derechos reservados.</p>
+      <div class="footer__legal">
+        <a href="aviso-legal.html">Aviso Legal</a>
+        <a href="politica-privacidad.html">Privacidad</a>
+        <a href="politica-cookies.html">Cookies</a>
+      </div>
+
+      <p class="footer__copy">&copy; 2026 Alex Perdel</p>
     </div>
   </footer>
 
