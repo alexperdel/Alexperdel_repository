@@ -310,8 +310,22 @@ body {
 
 @media (max-width: 768px) {
   [data-theme="dark"] .nav__list {
-    background: var(--bg-primary);
+    background: var(--bg-primary) !important;
     border-color: var(--border-color);
+  }
+
+  [data-theme="dark"] .nav__list li a.nav__link {
+    color: var(--text-primary) !important;
+  }
+
+  [data-theme="dark"] .nav__list li a.nav__link:hover,
+  [data-theme="dark"] .nav__list li a.nav__link--active {
+    color: var(--color-primary) !important;
+  }
+
+  /* Hamburger lines en dark mode */
+  [data-theme="dark"] .nav__toggle span {
+    background: var(--text-primary);
   }
 }
 
