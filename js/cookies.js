@@ -42,7 +42,7 @@
 
   // Permitir datos modelados sin cookies (Consent Mode v2 feature)
   gtag('set', 'ads_data_redaction', true);
-  gtag('set', 'url_passthrough', true);
+  // url_passthrough desactivado para URLs limpias (sin parámetros _gl)
 
   // ============================================
   // INYECTAR GOOGLE ANALYTICS 4
