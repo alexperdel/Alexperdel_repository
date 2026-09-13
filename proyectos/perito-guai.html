@@ -23,7 +23,12 @@
   <meta property="og:type" content="article">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23DC2626' d='M18 2L6 18h8l-2 12 12-16h-8z'/%3E%3C/svg%3E">
+  <!-- Iconos. Ficheros de verdad y no un data: URI: Google rastrea el favicon
+         como un recurso aparte, y un data: URI no tiene URL que rastrear. Por eso
+         el resultado de búsqueda salía con el globo genérico. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <!-- Font Awesome -->
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
