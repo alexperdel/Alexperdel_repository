@@ -14,10 +14,11 @@
    La portada de cada tarjeta se dibuja con CSS, sin fichero de imagen. No es
    una limitacion, es la decision: una foto de banco de imagenes de un robot
    dandole la mano a un humano no dice nada del articulo, pesa cientos de
-   kilobytes y hay que buscarla cada vez. Aqui la portada se compone del
-   numero de capitulo en grande y la paleta del libro, asi que se genera sola,
-   pesa cero, se ve nitida en cualquier pantalla y ata cada articulo con la
-   cubierta de la que sale.
+   kilobytes y hay que ir a buscarla cada vez que se publica. Aqui la portada
+   se compone del nombre de la herramienta en grande sobre la paleta de la
+   casa, asi que se genera sola, pesa cero, se ve nitida en cualquier pantalla
+   y de un vistazo dice si el articulo va de Vapi, de n8n o de RAG antes de
+   leer el titular.
    -------------------------------------------------------------------------- */
 
 .articulos-grid {
@@ -73,18 +74,23 @@ a.articulo-card:hover {
     repeating-linear-gradient(-115deg, rgba(244, 239, 229, 0.035) 0 1px, transparent 1px 26px);
 }
 
-/* El numero de capitulo, enorme y en hueco. Es el elemento grafico: se lee
-   como portada, no como dato. */
+/* El nombre de la herramienta, grande y en hueco. Es el elemento grafico de
+   la portada: se lee como imagen, no como dato, y de un vistazo dice de que
+   va el articulo antes que el titular.
+
+   Va en hueco (stroke sin relleno) a proposito: relleno competiria con el
+   titulo, y aqui tiene que acompanar, no gritar. */
 .articulo-card__num {
   position: absolute;
-  top: -0.18em;
-  right: 0.06em;
-  font-size: 8.5rem;
+  right: 0.12em;
+  bottom: 0.02em;
+  font-size: 3.4rem;
   font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
   color: transparent;
-  -webkit-text-stroke: 2px rgba(244, 239, 229, 0.17);
+  -webkit-text-stroke: 1.5px rgba(244, 239, 229, 0.22);
   pointer-events: none;
   user-select: none;
 }
@@ -321,3 +327,60 @@ a.articulo-card:hover .articulo-card__pie { gap: var(--space-3); }
 @media (max-width: 560px) {
   .articulo__nav { flex-direction: column; }
 }
+
+/* --------------------------------------------------------------------------
+   CAPTACION AL FINAL DEL ARTICULO
+
+   Reutiliza .libro-form, que ya trae validacion, consentimiento y el POST a
+   MailerLite, asi que no hay un segundo formulario que mantener. Pero ese
+   bloque esta escrito para el azul noche de la landing del libro: sobre un
+   fondo claro el campo sale crema sobre crema y el texto del consentimiento
+   se queda en 2,4:1, que es ilegible. Todo lo que hay debajo es repintarlo
+   para fondo claro. Solo color: ni una regla de estructura.
+   -------------------------------------------------------------------------- */
+
+.articulo-news {
+  margin-top: var(--space-12);
+  padding: var(--space-8);
+  border: 1px solid var(--color-border, rgba(18, 39, 63, 0.14));
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary, rgba(18, 39, 63, 0.03));
+}
+
+.articulo-news__title {
+  font-size: var(--text-xl);
+  line-height: 1.3;
+  margin-bottom: var(--space-2);
+}
+
+.articulo-news__text {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+/* En el articulo el boton cae debajo del campo: hay menos ancho que en la
+   landing y en dos columnas el campo queda estrecho. */
+.articulo-news .libro-form__row { flex-direction: column; }
+
+.articulo-news .libro-form__row input[type="email"] {
+  flex: 0 0 auto;
+  width: 100%;
+  background: var(--color-white);
+  color: var(--text-primary);
+  border: 2px solid var(--color-border, rgba(18, 39, 63, 0.3));
+}
+
+.articulo-news .libro-form__row input[type="email"]::placeholder { color: #8A9AAC; }
+
+.articulo-news .libro-form__row input[type="email"]:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+}
+
+.articulo-news .libro-form__row .btn { width: 100%; }
+.articulo-news .libro-form__consent { color: var(--text-secondary); }
+.articulo-news .libro-form__consent a { color: var(--color-primary); }
+.articulo-news .libro-form__msg { color: var(--text-primary); }
+.articulo-news .libro-form__msg.is-error { color: var(--color-primary); }

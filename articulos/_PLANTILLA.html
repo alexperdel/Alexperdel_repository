@@ -174,8 +174,32 @@
 
           <!-- =================== AQUÍ TERMINA EL TEXTO ================== -->
 
-          <!-- De dónde sale. Enlaza el libro desde cada artículo: es tráfico
-               interno hacia la página que quieres que rankee. -->
+          <!-- CAPTACIÓN. El script js/suscripciones.js engancha solo cualquier
+               formulario con class="libro-form" y data-lista. No hay que tocar
+               JS para añadir esto.
+               ⚠️ Los ids tienen que ser ÚNICOS en la página: si algún día hay
+               dos formularios en el mismo artículo, cambia el prefijo. -->
+          <aside class="articulo-news">
+            <h2 class="articulo-news__title">Uno al mes, y del oficio</h2>
+            <p class="articulo-news__text">Lo que voy montando, lo que se me rompe y lo que haría distinto. Sin resúmenes de noticias y sin consejos que caducan.</p>
+
+            <form class="libro-form" data-lista="marca" novalidate>
+              <div class="libro-form__row">
+                <label for="news-email" class="visually-hidden">Tu email</label>
+                <input type="email" id="news-email" name="email" placeholder="tu@email.com" autocomplete="email" required>
+                <button type="submit" class="btn btn--primary btn--large">Suscribirme</button>
+              </div>
+              <label class="libro-form__consent">
+                <input type="checkbox" id="news-consent" name="consent" required>
+                <span>Acepto recibir la newsletter y he leído la <a href="../politica-privacidad.html">política de privacidad</a>.</span>
+              </label>
+              <p class="libro-form__msg" role="status" aria-live="polite"></p>
+            </form>
+          </aside>
+
+          <!-- De dónde sale. Solo si el artículo viene del libro: si no,
+               BORRA este bloque entero en vez de dejarlo diciendo algo que
+               no es verdad. -->
           <div class="articulo__origen">
             <p>Esto sale del capítulo [[N]] de <a href="../hiperautomatizaciones/index.html"><strong>Hiperautomatizaciones</strong></a>, el libro que estoy escribiendo. Sale a finales de 2026 y puedes pedir que te avise el día que esté.</p>
           </div>
@@ -213,5 +237,6 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script src="../js/suscripciones.js"></script>
 </body>
 </html>
