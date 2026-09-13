@@ -1,0 +1,155 @@
+{
+  "_comentario": [
+    "Calendario de publicacion. Lo lee el workflow de n8n del NAS.",
+    "",
+    "COMO FUNCIONA: cada articulo se escribe entero y se deja en",
+    "articulos/_borradores/. n8n mira este fichero una vez al dia; cuando",
+    "encuentra uno con fecha <= hoy y publicado:false, lo sube por FTP, lo",
+    "anade al indice y al sitemap, y lo marca como publicado.",
+    "",
+    "POR QUE ASI Y NO CON JAVASCRIPT: si el articulo esta en el HTML y se",
+    "oculta con JS, Google lo indexa igual, porque ejecuta JS. Y si no esta",
+    "en el HTML y se inyecta despues, lo indexa mal. Lo unico que retrasa de",
+    "verdad la publicacion es que la URL no exista todavia.",
+    "",
+    "'tag' es la palabra que sale en grande en la portada de la tarjeta.",
+    "'variante' es el color: a, b, c o d.",
+    "'keyword' no se usa en la web: esta aqui para no perder de vista para",
+    "que busqueda se escribio cada uno."
+  ],
+
+  "articulos": [
+    {
+      "fichero": "voicebot-recuperacion-de-cartera.html",
+      "fecha": "2026-09-22",
+      "publicado": false,
+      "tag": "Vapi",
+      "variante": "b",
+      "titulo": "Un voicebot que llama a cobrar",
+      "entradilla": "Monté un bot que llama a clientes con recibos pendientes. Lo que funcionó, lo que tuve que quitar y las tres cosas que no me esperaba de la gente al otro lado.",
+      "keyword": "voicebot recuperación de cartera",
+      "del_libro": false
+    },
+    {
+      "fichero": "n8n-en-un-nas-de-casa.html",
+      "fecha": "2026-09-29",
+      "publicado": false,
+      "tag": "n8n",
+      "variante": "a",
+      "titulo": "n8n en un NAS de casa, sin cuentos",
+      "entradilla": "Cuánto aguanta de verdad, qué se rompe, cómo hago copias y cuándo deja de compensar y hay que pagar la nube.",
+      "keyword": "n8n self hosted NAS",
+      "del_libro": false
+    },
+    {
+      "fichero": "por-que-fastapi.html",
+      "fecha": "2026-10-06",
+      "publicado": false,
+      "tag": "FastAPI",
+      "variante": "c",
+      "titulo": "Por qué uso FastAPI y no Flask ni Django",
+      "entradilla": "No es que sea más moderno. Son tres motivos concretos, y también digo en qué caso elegiría otra cosa.",
+      "keyword": "fastapi vs flask vs django",
+      "del_libro": false
+    },
+    {
+      "fichero": "por-que-escribo-un-libro.html",
+      "fecha": "2026-10-13",
+      "publicado": false,
+      "tag": "Libro",
+      "variante": "d",
+      "titulo": "Por qué estoy escribiendo un libro sobre automatizaciones",
+      "entradilla": "Qué me hartó lo suficiente como para ponerme con 336 páginas, para quién es, para quién no, y qué he aprendido escribiéndolo que no sabía al empezar.",
+      "keyword": "libro automatización empresas",
+      "del_libro": true
+    },
+    {
+      "fichero": "n8n-o-make.html",
+      "fecha": "2026-10-20",
+      "publicado": false,
+      "tag": "n8n+Make",
+      "variante": "a",
+      "titulo": "n8n o Make: uso los dos y te digo para qué cada uno",
+      "entradilla": "Nadie dice «los dos» porque todo el mundo vende uno. Dónde gana cada uno, con casos míos de los dos lados.",
+      "keyword": "n8n o make cuál elegir",
+      "del_libro": false
+    },
+    {
+      "fichero": "latencia-en-voicebots.html",
+      "fecha": "2026-10-27",
+      "publicado": false,
+      "tag": "Vapi",
+      "variante": "b",
+      "titulo": "Por qué tu voicebot suena a robot aunque el modelo sea bueno",
+      "entradilla": "No es la voz, es la latencia. De dónde sale cada milisegundo y qué se puede recortar de verdad.",
+      "keyword": "latencia voicebot tiempo real",
+      "del_libro": false
+    },
+    {
+      "fichero": "mi-rag-no-era-el-modelo.html",
+      "fecha": "2026-11-03",
+      "publicado": false,
+      "tag": "RAG",
+      "variante": "c",
+      "titulo": "Mi RAG no funcionaba, y no era culpa del modelo",
+      "entradilla": "Cambié de modelo tres veces antes de darme cuenta de que el problema estaba en los datos y en cómo los estaba partiendo.",
+      "keyword": "por qué falla mi rag",
+      "del_libro": false
+    },
+    {
+      "fichero": "fastapi-y-streamlit.html",
+      "fecha": "2026-11-10",
+      "publicado": false,
+      "tag": "FastAPI",
+      "variante": "d",
+      "titulo": "FastAPI y Streamlit: que negocio vea algo la primera semana",
+      "entradilla": "El atajo con el que enseño resultados antes de tener producto. Y en qué momento hay que tirarlo y hacerlo bien.",
+      "keyword": "fastapi streamlit prototipo",
+      "del_libro": false
+    },
+    {
+      "fichero": "flujo-de-40-nodos-a-6.html",
+      "fecha": "2026-11-17",
+      "publicado": false,
+      "tag": "n8n",
+      "variante": "b",
+      "titulo": "El flujo de 40 nodos que reescribí en 6",
+      "entradilla": "Antes y después de un flujo real. Menos nodos no es menos potencia: es poder arreglarlo a las tres de la mañana.",
+      "keyword": "simplificar flujo n8n",
+      "del_libro": false
+    },
+    {
+      "fichero": "rag-o-una-tabla.html",
+      "fecha": "2026-11-24",
+      "publicado": false,
+      "tag": "RAG",
+      "variante": "a",
+      "titulo": "¿Necesitas un RAG o te vale una tabla?",
+      "entradilla": "La pregunta que casi nadie hace antes de montar la infraestructura. Con la cuenta de lo que cuesta cada opción al mes.",
+      "keyword": "cuándo usar rag",
+      "del_libro": false
+    },
+    {
+      "fichero": "cuando-no-poner-voz.html",
+      "fecha": "2026-12-01",
+      "publicado": false,
+      "tag": "Vapi",
+      "variante": "c",
+      "titulo": "Cuándo NO poner un voicebot",
+      "entradilla": "El artículo que ninguna empresa de voicebots va a escribir. Tres situaciones en las que la voz empeora las cosas.",
+      "keyword": "cuándo no usar voicebot",
+      "del_libro": false
+    },
+    {
+      "fichero": "de-3-a-14-desarrolladores.html",
+      "fecha": "2026-12-08",
+      "publicado": false,
+      "tag": "Equipo",
+      "variante": "d",
+      "titulo": "De 3 a 14 desarrolladores: lo que se rompe",
+      "entradilla": "Lo que funcionaba con tres deja de funcionar con siete, y lo que aguanta con siete se cae con catorce. Lo que aprendí tarde.",
+      "keyword": "liderar equipo desarrollo crecimiento",
+      "del_libro": false
+    }
+  ]
+}
