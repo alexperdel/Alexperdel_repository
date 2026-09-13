@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Theme (antes del render para evitar flash) -->
+  <script src="../js/theme.js"></script>
+
+  <!-- Google Consent Mode v2 + Analytics 4 (inyectado dinámicamente) -->
+  <script src="../js/cookies.js"></script>
+
+  <!-- SEO Meta Tags -->
+  <title>Hiperautomatizaciones | El libro de Alex Perdel</title>
+  <meta name="description" content="Hiperautomatizaciones: manual honesto y sin humos para automatizar de verdad tu empresa. Para quien decide sobre automatización e IA y está harto del humo. Primer libro de Alex Perdel. Disponible a principios de 2027.">
+  <meta name="keywords" content="Hiperautomatizaciones, libro automatización, libro IA empresas, hiperautomatización, RPA, agentes IA, n8n, Make, Alex Perdel, automatización empresarial">
+  <meta name="author" content="Alex Perdel">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://alexperdel.com/hiperautomatizaciones/">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="book">
+  <meta property="og:url" content="https://alexperdel.com/hiperautomatizaciones/">
+  <meta property="og:title" content="Hiperautomatizaciones | Manual honesto y sin humos">
+  <meta property="og:description" content="La mayoría de las automatizaciones no se caen por la tecnología. Se caen antes. Un espejo operativo para quien decide sobre automatización e IA en su empresa.">
+  <meta property="og:image" content="https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones-demo.png">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hiperautomatizaciones | Manual honesto y sin humos">
+  <meta name="twitter:description" content="La mayoría de las automatizaciones no se caen por la tecnología. Se caen antes.">
+  <meta name="twitter:image" content="https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones-demo.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23DC2626' d='M18 2L6 18h8l-2 12 12-16h-8z'/%3E%3C/svg%3E">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/styles.css">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "Hiperautomatizaciones",
+    "alternateName": "Hiperautomatizaciones: Manual honesto y sin humos para automatizar de verdad tu empresa",
+    "inLanguage": "es",
+    "url": "https://alexperdel.com/hiperautomatizaciones/",
+    "image": "https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones-demo.png",
+    "genre": "Business & Technology",
+    "numberOfPages": 336,
+    "about": ["Automatización empresarial", "Inteligencia artificial aplicada", "Hiperautomatización", "Gestión de proyectos de IA"],
+    "author": {
+      "@type": "Person",
+      "name": "Alex Perdel",
+      "url": "https://alexperdel.com/sobre-mi.html",
+      "jobTitle": "Chief Growth & Transformation Officer",
+      "sameAs": ["https://www.linkedin.com/in/alexperdel/"]
+    },
+    "abstract": "Un espejo operativo con los patrones, las trampas y las cicatrices reales de más de una década construyendo automatizaciones, integraciones y agentes para empresas. No es un tutorial, ni un manifiesto, ni un curso motivacional."
+  }
+  </script>
+</head>
+<body class="libro-page">
+  <!-- ========== HEADER ========== -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="header__logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="url(#bolt-gradient)"/>
+          <defs>
+            <linearGradient id="bolt-gradient" x1="6" y1="2" x2="24" y2="30" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FBBF24"/>
+              <stop offset="1" stop-color="#DC2626"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        Alex Perdel
+      </a>
+
+      <nav class="nav">
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav__list">
+          <li><a href="../index.html" class="nav__link">Inicio</a></li>
+          <li><a href="../sobre-mi.html" class="nav__link">Sobre mí</a></li>
+          <li><a href="../proyectos/index.html" class="nav__link">Proyectos</a></li>
+          <li><a href="./index.html" class="nav__link nav__link--active">El libro</a></li>
+          <li>
+            <button class="theme-toggle" onclick="ThemeToggle.toggle()" aria-label="Cambiar tema">
+              <i class="fas fa-moon icon-moon"></i>
+              <i class="fas fa-sun icon-sun"></i>
+            </button>
+          </li>
+          <li><a href="#lista-de-espera" class="btn btn--primary">Avísame</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========== HERO ========== -->
+    <section class="libro-hero">
+      <div class="container libro-hero__inner">
+        <div class="libro-hero__content">
+          <span class="libro-hero__badge">
+            <i class="fas fa-circle"></i>
+            Próximamente · principios de 2027
+          </span>
+
+          <h1 class="libro-hero__title">Hiperautomatizaciones</h1>
+          <hr class="libro-rule">
+          <p class="libro-hero__subtitle">Manual honesto y sin humos para automatizar de verdad tu empresa.</p>
+
+          <div class="libro-hero__hook">
+            <p><strong>La mayoría de las automatizaciones no se caen por la tecnología.</strong></p>
+            <p>Se caen antes: en la reunión donde todo el mundo sabía que aquello no iba a salir y nadie dijo nada. En el proceso que se automatizó sin que nadie lo hubiera hecho nunca a mano. En el «esto se hace en un rato».</p>
+          </div>
+
+          <div class="libro-hero__cta">
+            <a href="#lista-de-espera" class="btn btn--primary btn--large">
+              <i class="fas fa-envelope"></i>
+              Avísame cuando salga
+            </a>
+            <a href="#indice" class="btn btn--outline btn--large">Ver el índice</a>
+          </div>
+
+          <p class="libro-hero__meta">18 capítulos · 4 partes · 336 páginas · papel y Kindle</p>
+        </div>
+
+        <div class="libro-cover">
+          <img src="../assets/img/libro/portada-hiperautomatizaciones-demo.png"
+               alt="Portada provisional de Hiperautomatizaciones, de Alex Perdel"
+               class="libro-cover__img" width="1000" height="1534">
+          <span class="libro-cover__note">Portada provisional</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== EL ARGUMENTO (azul: el corte del espejo) ==========
+         Aquí vivían dos secciones que decían lo mismo: «El argumento» (ni
+         tutorial · cicatrices · no caduca) y el panel «No es» (tutorial ·
+         motivacional · 30 días · programar). Fusionadas: el claim abre, las
+         tres razones lo sostienen y las negaciones bajan a una tira corta,
+         que es donde pegan más — leídas de golpe, no en un panel a la par
+         del de «es para ti», que además quedaba medio vacío. -->
+    <section class="libro-section libro-section--azul">
+      <div class="container">
+        <p class="libro-claim">No es un libro sobre herramientas. Es un libro sobre <em>criterio</em>.</p>
+
+        <ul class="libro-claim-list">
+          <li>
+            <strong>Ni tutorial ni manifiesto</strong>
+            No hay capturas de pantalla, ni versiones de modelo, ni menús de herramienta. El libro se lo prohíbe a sí mismo, y explica por qué.
+          </li>
+          <li>
+            <strong>Las cicatrices son mías</strong>
+            Cada capítulo del espejo lleva un error propio confesado. Aquí no hay casos de escuela de negocios ni clientes anónimos a los que culpar.
+          </li>
+          <li>
+            <strong>No caduca en una temporada</strong>
+            Habla de cómo se piensa, se decide y se cierra. Eso sigue valiendo cuando cambie el modelo de moda.
+          </li>
+        </ul>
+
+        <ul class="libro-nots">
+          <li>No es un tutorial</li>
+          <li>No es un curso motivacional</li>
+          <li>No transforma en 30 días</li>
+          <li>No exige saber programar</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== PARA QUIÉN ========== -->
+    <section class="libro-section libro-section--crema">
+      <div class="container">
+        <span class="libro-kicker">Para quién</span>
+        <h2 class="libro-h2">Para quien decide sobre automatización<br>y está harto del humo</h2>
+        <p class="libro-lead">Directivos, propietarios, consultores, responsables de innovación y todo el que se juega presupuestos y equipos en proyectos de IA, RPA y agentes.</p>
+
+        <ul class="libro-foryou">
+          <li>Apruebas o defiendes proyectos de automatización y <strong>has visto morir alguno</strong>.</li>
+          <li>Te toca decidir entre <strong>construirlo dentro o encargárselo</strong> a alguien.</li>
+          <li>Eres consultor o freelance y necesitas <strong>argumentos para decirle «no»</strong> a un cliente.</li>
+          <li>Ejecutas lo que otros prometieron y quieres saber <strong>por qué pasa siempre</strong>.</li>
+          <li>Enseñas o estudias automatización aplicada y quieres <strong>el lado que no sale en clase</strong>.</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ========== QUÉ TE LLEVAS ========== -->
+    <section class="libro-section libro-section--surface">
+      <div class="container">
+        <span class="libro-kicker">Al terminarlo</span>
+        <h2 class="libro-h2">Tres cosas que te llevas puestas</h2>
+        <p class="libro-lead">Porque la herramienta es lo de menos si el criterio falla.</p>
+
+        <div class="libro-takeaways">
+          <article class="libro-takeaway">
+            <h3>Pensar antes de construir</h3>
+            <p>Cómo se piensa una automatización antes de escribir código —o antes de encargárselo a alguien—. Lo que hay que haber hecho a mano antes de automatizarlo.</p>
+          </article>
+          <article class="libro-takeaway">
+            <h3>Detectar el proyecto que va a morir</h3>
+            <p>Las señales que aparecen meses antes del entierro: el kickoff épico, el «casi listo» que dura ocho meses, la métrica que solo sirve para el comité.</p>
+          </article>
+          <article class="libro-takeaway">
+            <h3>Mantener el criterio dentro</h3>
+            <p>Humanos, cuentas y sentido común en el proceso: dónde va un humano en el bucle, qué cuesta de verdad en tokens y cuándo cerrar en vez de mejorar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CTA INTERMEDIO ==========
+         La página tenía un único CTA y estaba al final, detrás del índice
+         completo y de la bio. Quien se cansaba a mitad se iba sin ver nunca
+         el formulario. Este corta el scroll justo cuando ya sabe de qué va
+         el libro y todavía no ha empezado la parte larga. -->
+    <section class="libro-cta-mid">
+      <div class="container libro-cta-mid__inner">
+        <div>
+          <p class="libro-cta-mid__title">Sale a principios de 2027.</p>
+          <p class="libro-cta-mid__text">Déjame un correo y te aviso el día que esté. Nada más.</p>
+        </div>
+        <a href="#lista-de-espera" class="btn btn--primary btn--large">
+          <i class="fas fa-bell"></i>
+          Avísame cuando salga
+        </a>
+      </div>
+    </section>
+
+    <!-- ========== ÍNDICE ========== -->
+    <section class="libro-section libro-section--crema" id="indice">
+      <div class="container">
+        <span class="libro-kicker">El índice</span>
+        <h2 class="libro-h2">Cuatro partes, dieciocho capítulos</h2>
+        <p class="libro-lead">La Parte I se puede saltar quien ya la sepa. Las Partes II y IV son las que incomodan.</p>
+
+        <div class="libro-toc">
+          <div class="libro-part">
+            <div>
+              <p class="libro-part__label">Parte I</p>
+              <h3 class="libro-part__name">Fundamentos</h3>
+              <p class="libro-part__desc">El vocabulario mínimo. Sin esto, la conversación con tu equipo o tu proveedor es un malentendido caro.</p>
+            </div>
+            <ol class="libro-chapters">
+              <li><span>1</span> Qué es una hiperautomatización y qué tipos existen</li>
+              <li><span>2</span> Vocabulario mínimo: sin él no hay conversación</li>
+              <li><span>3</span> Cómo se piensa una automatización: recetas de cocina, no líneas de código</li>
+            </ol>
+          </div>
+
+          <div class="libro-part">
+            <div>
+              <p class="libro-part__label">Parte II</p>
+              <h3 class="libro-part__name">El espejo</h3>
+              <p class="libro-part__desc">Por qué fracasan los proyectos. Una trampa por capítulo, con la escena real, el patrón nombrado y qué hacer el lunes por la mañana.</p>
+            </div>
+            <ol class="libro-chapters">
+              <li><span>4</span> Empezar la casa por el tejado: automatizar sin haber hecho el proceso a mano</li>
+              <li><span>5</span> Kickoffs épicos, muertes silenciosas: por qué se caen los proyectos</li>
+              <li><span>6</span> Esto se hace en un rato: el síndrome de las expectativas mágicas</li>
+              <li><span>7</span> Teatro y métricas: cuando la tecnología es coartada</li>
+            </ol>
+          </div>
+
+          <div class="libro-part">
+            <div>
+              <p class="libro-part__label">Parte III</p>
+              <h3 class="libro-part__name">La ejecución</h3>
+              <p class="libro-part__desc">Cómo se hace bien. Del POC al MVP, escalar sin espagueti, cuándo delegar en el modelo y cuánto cuesta de verdad.</p>
+            </div>
+            <ol class="libro-chapters">
+              <li><span>8</span> Del POC al MVP: cómo arrancar sin morir de complejidad</li>
+              <li><span>9</span> Requerimientos y las cuatro percepciones: dirección, negocio, dev, usuario</li>
+              <li><span>10</span> Less is more: por qué los flujos cortos siempre ganan</li>
+              <li><span>11</span> Ampliar sin volverlo espagueti: escalar un MVP sin perder la cabeza</li>
+              <li><span>12</span> Determinismo vs IA: cuándo delegar en el modelo y cuándo no</li>
+              <li><span>13</span> Human in the loop y gobernanza: humanos, datos, seguridad</li>
+              <li><span>14</span> Rentabilidad, observabilidad y ROI real: los tokens, los KPIs y el precio de no medir</li>
+            </ol>
+          </div>
+
+          <div class="libro-part">
+            <div>
+              <p class="libro-part__label">Parte IV</p>
+              <h3 class="libro-part__name">Barro y cicatrices</h3>
+              <p class="libro-part__desc">Lo que un máster no te enseña: la parte política. Los cuatro capítulos llevan cicatriz propia obligatoria.</p>
+            </div>
+            <ol class="libro-chapters">
+              <li><span>15</span> Nadie pregunta: los tres silencios</li>
+              <li><span>16</span> La ansiedad tecnológica del directivo: gestionar al que quiere la luna sin ponerte a la defensiva</li>
+              <li><span>17</span> Cerrar en vez de mejorar: el coste del casi-listo</li>
+              <li><span>18</span> El último punto único de fallo</li>
+            </ol>
+          </div>
+        </div>
+
+        <p class="libro-toc__extra">
+          <strong>Además:</strong> un prólogo que empieza por lo que este libro no es · un epílogo sobre el paso del hacedor al líder · y cuatro apéndices — glosario ampliado, fichas de herramientas, recursos y fuentes.
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== AUTOR ========== -->
+    <section class="libro-section libro-section--surface">
+      <div class="container">
+        <span class="libro-kicker">Quién lo escribe</span>
+        <div class="libro-author">
+          <div>
+            <img src="../assets/img/alexperdel_cgto.png" alt="Alex Perdel, autor de Hiperautomatizaciones" class="libro-author__photo" loading="lazy">
+          </div>
+          <div class="libro-author__body">
+            <p class="libro-author__quote">Hoy dirige. Y llegó a dirigir habiendo construido.</p>
+            <p>Alex Perdel lleva más de una década montando automatizaciones, integraciones y agentes para empresas que no se parecen en nada entre sí. Primero con sus propias manos, después coordinando equipos, y hoy como Chief Growth &amp; Transformation Officer en Grupo Cuidacasa, sentado en el comité de dirección.</p>
+            <p>Ese recorrido —de negocio a tecnología, y de construir a dirigir— es lo que hace este libro incómodo en las dos direcciones: conoce los proyectos que se caen desde el lado de quien los firma <strong>y</strong> desde el lado de quien se los come. El espejo del libro tampoco le absuelve a él.</p>
+            <p>Enseña sobre esto mismo en dos másteres de EBIS Business Techschool. Y el dato que sostiene el libro no es el cargo: <strong>dirige una decena larga de proyectos y están todos en producción. Ninguno es un piloto</strong> — que es justo la enfermedad que el Capítulo 5 denuncia.</p>
+            <p><em>Hiperautomatizaciones</em> es su primer libro.</p>
+            <p>
+              <a href="../sobre-mi.html" class="btn btn--outline">La trayectoria completa</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== LISTA DE ESPERA ==========
+         La ficha («El libro, en datos») era una sección entera para cinco
+         datos y empujaba el formulario una pantalla más abajo. Baja aquí
+         como tira: se lee de un golpe y deja el CTA arriba del pliegue. -->
+    <section class="libro-waitlist" id="lista-de-espera">
+      <div class="container libro-waitlist__inner">
+
+        <dl class="libro-facts">
+          <div class="libro-fact"><dt>Formato</dt><dd>Tapa blanda y Kindle</dd></div>
+          <div class="libro-fact"><dt>Extensión</dt><dd>336 páginas</dd></div>
+          <div class="libro-fact"><dt>Idioma</dt><dd>Castellano, de origen</dd></div>
+          <div class="libro-fact"><dt>Edición</dt><dd>Independiente</dd></div>
+          <div class="libro-fact"><dt>Disponible</dt><dd>Principios de 2027</dd></div>
+        </dl>
+
+        <h2>Te aviso el día que salga</h2>
+        <p><strong>Un correo. El día que salga.</strong> No hay newsletter detrás, ni secuencia de bienvenida, ni nada que no hayas pedido — y te puedes borrar de un clic.</p>
+
+        <form class="libro-form" id="waitlist-form" novalidate>
+          <div class="libro-form__row">
+            <label for="waitlist-email" class="visually-hidden">Tu email</label>
+            <input type="email" id="waitlist-email" name="email" placeholder="tu@email.com" autocomplete="email" required>
+            <button type="submit" class="btn btn--primary btn--large" id="waitlist-submit">
+              <i class="fas fa-bell"></i>
+              Avísame
+            </button>
+          </div>
+
+          <label class="libro-form__consent">
+            <input type="checkbox" id="waitlist-consent" name="consent" required>
+            <span>Acepto recibir el aviso de lanzamiento de <em>Hiperautomatizaciones</em> y he leído la <a href="../politica-privacidad.html">política de privacidad</a>.</span>
+          </label>
+
+          <p class="libro-form__msg" id="waitlist-msg" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="libro-form__fine">Sin seguimiento comercial, sin cesión a terceros y sin correos semanales que nadie pidió.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="../index.html" class="footer__logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
+        </svg>
+        Alex Perdel
+      </a>
+
+      <div class="footer__social">
+        <a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+
+      <div class="footer__legal">
+        <a href="../aviso-legal.html">Aviso Legal</a>
+        <a href="../politica-privacidad.html">Privacidad</a>
+        <a href="../politica-cookies.html">Cookies</a>
+      </div>
+
+      <p class="footer__copy">&copy; 2026 Alex Perdel</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/libro-waitlist.js"></script>
+</body>
+</html>

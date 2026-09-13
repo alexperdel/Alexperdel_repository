@@ -52,6 +52,13 @@ RewriteCond %{QUERY_STRING} ^lang=en [NC]
 RewriteRule ^(.*)$ https://alexperdel.com/? [R=301,L]
 
 # =============================================
+# ATAJOS - LIBRO
+# =============================================
+Redirect 301 /libro https://alexperdel.com/hiperautomatizaciones/
+Redirect 301 /el-libro https://alexperdel.com/hiperautomatizaciones/
+Redirect 301 /hiperautomatizaciones.html https://alexperdel.com/hiperautomatizaciones/
+
+# =============================================
 # SEGURIDAD
 # =============================================
 # Proteger archivos sensibles
