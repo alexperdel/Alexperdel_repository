@@ -58,7 +58,8 @@ partir() {
 escapar() { printf '%s' "$1" | sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'; }
 
 svg() {
-  local slug="$1" tag="$2" var="$3" tit="$4" W="$5" H="$6" suf="$7"
+  # $8 = "sin-titulo" para la variante del correo. Vacio en las demas.
+  local slug="$1" tag="$2" var="$3" tit="$4" W="$5" H="$6" suf="$7" sintit="${8:-}"
   read -r C1 C2 <<< "$(colores "$var")"
   local M=$(( W / 18 ))                   # margen
   local WORD=$(( W / 5 ))                  # la herramienta, en hueco
@@ -74,6 +75,20 @@ svg() {
   L2=$(escapar "$(printf '%s' "$partido" | sed -n '2p')")
   local Y1=$(( H / 2 )) TSPAN=""
   [ -n "$L2" ] && Y1=$(( H / 2 - TS / 2 )) && TSPAN="<tspan x=\"$M\" dy=\"$(( TS + TS / 5 ))\">$L2</tspan>"
+
+  # La variante del correo va SIN el titular grabado.
+  #
+  # La plantilla del correo ya pone el titular como texto debajo de la imagen, y
+  # tiene que ponerlo: media bandeja de entrada abre con las imagenes
+  # bloqueadas —el Outlook de escritorio lo hace de fabrica— y si el titular
+  # vive solo dentro del JPEG, esa gente abre un correo sin titular.
+  #
+  # Con el titular fuera de la imagen no hay que elegir: la portada funciona
+  # como banner y el titular se lee siempre, con imagenes o sin ellas.
+  local TITULO_SVG=""
+  if [ -z "$sintit" ]; then
+    TITULO_SVG="<text class=\"f\" x=\"$M\" y=\"$Y1\" font-size=\"$TS\" font-weight=\"800\" letter-spacing=\"-0.02em\" fill=\"#F4EFE5\">$L1$TSPAN</text>"
+  fi
 
   cat > "$OUT/${slug}${suf}.svg" <<SVG
 <svg xmlns="http://www.w3.org/2000/svg" width="$W" height="$H" viewBox="0 0 $W $H" role="img" aria-label="$(escapar "$tit")">
@@ -103,7 +118,7 @@ svg() {
     <text class="f" x="22" y="30" font-size="19" font-weight="700" letter-spacing="0.16em" fill="#F4EFE5">$TAGUP</text>
   </g>
 
-  <text class="f" x="$M" y="$Y1" font-size="$TS" font-weight="800" letter-spacing="-0.02em" fill="#F4EFE5">$L1$TSPAN</text>
+  $TITULO_SVG
 
   <text class="f" x="$M" y="$(( H - M ))" font-size="22" font-weight="600" letter-spacing="0.06em" fill="#F4EFE5" fill-opacity="0.6">alexperdel.com</text>
 </svg>

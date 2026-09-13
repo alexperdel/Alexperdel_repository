@@ -54,23 +54,39 @@ Lo que hay montado hoy, con sus ids. Verificado por API, no de memoria.
 
 📌 **La web no incrusta estos formularios**: publica su propio HTML contra el endpoint `jsonp`. Los de MailerLite existen porque son los que crean el grupo y disparan el doble opt-in, pero su diseño sólo se ve en la URL de vista previa.
 
-**Automatizaciones** — 1 de las 3 del plan está activa.
+**Automatizaciones** — 2 de las 3 del plan, las dos activas.
 
 | Automatización | id | Estado |
 |---|---|---|
 | Bienvenida · lista de espera del libro | `198500616499103361` | ✅ **activa**, completa, sin avisos |
-| Bienvenida · newsletter de marca | `198508561423140304` | 🔴 **PAUSADA · el cuerpo del correo está a medias** |
+| Bienvenida · newsletter de marca | `198508561423140304` | ✅ **activa**, completa, sin avisos |
 
-🔴 **La bienvenida de marca no está terminada y por eso NO se ha activado.** El disparador y los ajustes están bien —grupo correcto, castellano, UTM, remitente—, pero el cuerpo del correo sigue teniendo texto del libro. Está pausada a propósito: así no le llega a nadie.
+Las dos mandan **un solo correo** al confirmar el alta, y no se cruzan: quien se apunta al aviso del libro no entra en la newsletter, y al revés.
 
-**Por qué se quedó a medias**, que es lo que importa para el siguiente que lo intente: el editor visual de MailerLite tiene dos comportamientos que destrozan el contenido si se automatiza a golpe de clic.
+| | Asunto | Precabecera |
+|---|---|---|
+| Libro | *Estás en la lista* | Un correo el día que salga. Nada más. |
+| Marca | *Ya estás dentro* | Un correo al mes. El primero, el que viene. |
 
-1. **Al escribir sobre una selección, reaplica la selección en cada pulsación.** Resultado: de un párrafo entero sólo sobreviven los dos últimos caracteres. **La vuelta: seleccionar, pulsar Borrar, y escribir después.** Con eso entra limpio.
-2. **Borrar una selección fusiona el bloque con el siguiente.** Y partirlos otra vez exige clicar en una posición exacta de texto, que es donde se acaba rompiendo.
+### El editor visual, y cómo se le gana
 
-Y una tercera, más tonta: en ventana grande **las coordenadas de la captura no coinciden con las del DOM**. Las capturas vuelven a 1280, 1369 o 1421 px según el momento. Clicar calculando desde `getBoundingClientRect()` falla; hay que leer las coordenadas de la propia captura.
+Montar la bienvenida de marca costó tres intentos. Queda escrito porque el siguiente va a tropezar igual, y la vuelta no es evidente.
 
-Terminar ese correo son diez minutos **a mano**, y es lo que recomiendo.
+**Lo que hace mal.** Al escribir sobre texto seleccionado, **reaplica la selección en cada pulsación**: de un párrafo entero sobreviven los dos últimos caracteres. Y **borrar una selección fusiona el bloque con el siguiente**, así que vaciar un párrafo se lleva por delante el de abajo.
+
+**La secuencia que sí funciona**, y es la única que ha entrado limpia:
+
+```
+1. triple clic sobre el párrafo      selecciona el bloque entero
+2. Shift+Izquierda                   deja UN carácter fuera de la selección
+3. Retroceso                         borra; el bloque NO se queda vacío, así que no se fusiona
+4. escribir el texto nuevo           entra entero, la selección ya está deshecha
+5. Supr                              se lleva el carácter que quedaba
+```
+
+El paso 2 es el truco: **mientras el bloque tenga un carácter, no se fusiona con el de abajo.**
+
+⚠️ Y dos avisos más. Al elegir un correo existente como plantilla, **se sobrescriben el nombre, el asunto y la precabecera** con los del original — hay que volver a ponerlos. Y las coordenadas de una captura de pantalla **no coinciden con las del DOM**: las capturas vuelven a 1280, 1369 o 1421 px según el momento, así que hay que leerlas de la propia imagen y no calcularlas con `getBoundingClientRect()`.
 
 **Campañas**
 
@@ -78,6 +94,49 @@ Terminar ese correo son diez minutos **a mano**, y es lo que recomiendo.
 |---|---|---|
 | Lanzamiento · Hiperautomatizaciones ya está a la venta | `198502586079250421` | Borrador. Le faltan la portada y la URL de Amazon |
 | Newsletter · Por qué uso FastAPI y no Flask ni Django | `198508421041882407` | Borrador de PRUEBA. Se creó por API para validar la plantilla del número semanal. **Se puede borrar** |
+
+---
+
+## Qué dispara cada correo
+
+Hay **dos mecanismos y no son intercambiables**. Confundirlos es el error que hace que la gente reciba el correo equivocado, o ninguno.
+
+| | **Automatización** | **Campaña** |
+|---|---|---|
+| Qué la dispara | Algo que **hace el suscriptor** | Una **fecha**, o alguien dándole a enviar |
+| A quién llega | A **esa persona**, en su momento | A **todo el grupo** a la vez |
+| Cuándo | Relativo a su alta | Absoluto, el día que sea |
+| Se crea por API | ❌ **NO.** Sólo lectura | ✅ CRUD completo |
+
+### La regla: un correo, una campaña
+
+🔴 **Una campaña es UN correo. No un contenedor de doce.**
+
+Doce números son **doce campañas**, una por artículo, creadas de una en una el día que toca. No existe «la campaña de la newsletter» con doce correos dentro: eso sería una automatización, y en el plan gratuito no cabe.
+
+```
+cada semana:
+    el circuito publica el artículo en la web
+        └─ y crea UNA campaña en borrador con ese artículo
+            └─ Alex la mira y le da a enviar
+
+doce semanas  =  doce artículos  =  doce campañas  =  doce correos
+```
+
+### Y lo que NO se puede hacer, que es lo que se preguntará el que llegue
+
+El circuito perenne —te apuntas hoy, número 1 el mes que viene, número 2 al otro— **necesita una automatización con 24 pasos** (doce correos y doce esperas). El plan gratuito topa en **5**. No cabe, y no es cuestión de maña.
+
+Consecuencia, y hay que asumirla: **quien se suscriba nuevo no recibe los números anteriores.** Recibe la bienvenida y espera al siguiente. Si algún día compensa, son ~12 $/mes y sube a 100 pasos.
+
+### Hoy, en una línea cada uno
+
+| Correo | Mecanismo | Qué lo dispara | Estado |
+|---|---|---|---|
+| Bienvenida del libro | Automatización | Confirmar el alta en la lista del libro | ✅ activa |
+| Bienvenida de la newsletter | Automatización | Confirmar el alta en la lista de marca | ✅ activa |
+| Número semanal | Campaña | Lo crea el circuito, lo envía Alex | Plantilla lista, sin artículos todavía |
+| «Ya está a la venta» | Campaña | Lo envía Alex el día del lanzamiento | Borrador, le faltan portada y URL |
 
 ---
 
@@ -229,7 +288,6 @@ El servicio no comprueba «que no sea SVG» sino **que sea uno de los que se ven
 
 | | Qué |
 |---|---|
-| 🔴 | **Terminar el cuerpo de la bienvenida de marca y activarla.** Hoy está pausada con texto del libro |
 | 🔲 | **El perenne de doce meses no cabe en el plan gratuito** (5 pasos). Plan en [`newsletter_marca.md`](newsletter_marca.md), pendiente de que Alex decida si compensa pagar |
 | 🔲 | **Desactivar o poner en noindex el archivo público de MailerLite**, o competirá con los artículos del sitio por el mismo contenido |
 | 🔲 | **Probar la cadena entera de una lista**: ningún formulario ha recibido todavía un alta real (`conversions_count: 0` en los dos) |

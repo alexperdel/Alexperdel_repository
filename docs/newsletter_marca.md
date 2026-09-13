@@ -6,6 +6,29 @@
 
 ---
 
+## 🔴 ESTO NO SE HA MONTADO, Y HOY NO SE PUEDE
+
+**Lo de abajo es el plan, no lo que existe.** Se escribió antes de saber lo que da el plan gratuito de MailerLite, y una de sus cifras lo tumba:
+
+> **5 pasos por automatización.**
+
+La secuencia perenne de doce números son **24 pasos** —doce correos y doce esperas—. No caben, y no es cuestión de maña: es un tope de plan. Subir cuesta unos **12 $/mes** y sube a 100 pasos; Alex decidió el 2026-09-13 **no pagar**.
+
+**Lo que sí está montado y funcionando** es otra cosa, y está en [`mailerlite.md`](mailerlite.md):
+
+| | |
+|---|---|
+| **Bienvenida de la newsletter** | Automatización de un correo. ✅ Activa |
+| **Número semanal** | **Campañas**, una por artículo. Un artículo = un número |
+
+La diferencia que importa: las campañas van por **calendario**, así que **quien llegue nuevo no recibe los números anteriores**. Es justo lo que este documento quería evitar, y es el precio de no pagar.
+
+**Este documento sigue aquí porque el trabajo de pensarlo no se tira**: los doce temas, el tono y la regla de que nada caduque valen igual para las campañas. Lo único que no vale es el mecanismo.
+
+---
+
+---
+
 ## La regla que lo gobierna todo: perenne, no calendario
 
 **Nadie se pierde el número 1 por llegar tarde.** La secuencia no va por meses del año: va por **meses desde que te apuntas**.
@@ -15,7 +38,7 @@ te apuntas hoy            → dentro de 1 mes recibes el nº 1
 te apuntas dentro de 6    → dentro de 7 meses recibes el nº 1
 ```
 
-En MailerLite esto es **un solo workflow**: `se une al grupo` → `espera 30 días` → `email 1` → `espera 30 días` → `email 2` → … El motor ya lo hace; no hay que programar envíos ni acordarse de nada.
+En MailerLite esto **sería** un solo workflow —y por eso no cabe, ver el aviso de arriba—: `se une al grupo` → `espera 30 días` → `email 1` → `espera 30 días` → `email 2` → … El motor ya lo hace; no hay que programar envíos ni acordarse de nada.
 
 **Por qué así y no por calendario**, que es la pregunta que va a hacer alguien:
 
