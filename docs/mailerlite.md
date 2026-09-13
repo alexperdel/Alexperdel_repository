@@ -209,7 +209,15 @@ Crea la campaña **en borrador** contra el grupo de marca y devuelve su id. **No
 
 ### Tres trampas que ya están resueltas en el código
 
-🔴 **El SVG no se ve en el correo.** Las portadas de los artículos se generan en SVG y ningún cliente de correo las pinta: sale un hueco. La plantilla las quiere en **PNG de 1200×630** —la misma medida que la portada de redes— y las muestra a 600 px. El servicio **rechaza** una URL `.svg` en vez de mandar un correo roto.
+🔴 **El SVG no se ve en el correo.** Las portadas de los artículos se generan en SVG para la web y ningún cliente de correo las pinta: sale un hueco. Para el correo hay una versión **JPEG de 1200×630** —la misma medida que la de redes— que la plantilla muestra a 600 px:
+
+    assets/social/<slug>-og.jpg
+
+JPEG y no PNG porque son degradados sin una sola zona transparente, que es justo donde el PNG comprime mal: **1,2 MB los doce frente a 2,7 MB**. En correo el peso importa.
+
+El servicio no comprueba «que no sea SVG» sino **que sea uno de los que se ven en todas partes** —`jpg`, `jpeg`, `png`, `gif`—. Es lista blanca a propósito: WebP y AVIF fallan igual en Outlook de escritorio y nadie se acordaría de añadirlos a una lista negra.
+
+📌 **El tag no se repite si hay portada**, porque ya va grabado dentro de ella. **El título sí se repite**, y eso es deliberado: media bandeja de entrada abre con las imágenes bloqueadas —Outlook de escritorio lo hace de fábrica— y si el titular vive sólo dentro del JPEG, esa gente abre un correo sin titular.
 
 🔴 **Una campaña sin grupo se envía a nadie y la API responde 200.** El grupo es obligatorio y se comprueba antes de llamar. Y al leer una campaña, **el grupo vive en `c.filter`, no en `c.groups`**.
 
