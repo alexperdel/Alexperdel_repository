@@ -278,9 +278,33 @@
 
   Array.prototype.forEach.call(abridores, function (btn) {
     btn.addEventListener('click', function (e) {
-      // Sin <dialog> (navegador viejo) se deja pasar el clic: el href lleva
-      // a la sección de la landing, que sigue funcionando.
-      if (typeof HTMLDialogElement === 'undefined') return;
+      /* Sin <dialog> no hay modal, y entonces el clic tiene que llevar igual
+         a la sección de la landing, que sigue en la página con su formulario.
+
+         Cómo se llega depende de qué es el elemento, y no son lo mismo:
+           · En la home es un <a> a la landing. Se deja pasar el clic: eso es
+             navegación de verdad y el navegador ya sabe hacerla.
+           · En la landing son <button> sin href desde el 396890e. Ahí no hay
+             nada que dejar pasar, así que se baja a la sección a mano. Sin
+             esto el botón se quedaría muerto: ni abre modal ni va a ningún
+             sitio, que es peor que no tener botón. */
+      if (typeof HTMLDialogElement === 'undefined') {
+        if (btn.tagName === 'A' && btn.getAttribute('href')) return;
+        e.preventDefault();
+        /* Las dos cosas, y no es redundancia:
+             · El hash deja la URL compartible y es lo que entiende cualquier
+               navegador desde siempre.
+             · scrollIntoView() SIN opciones mueve la página de verdad. Se
+               llama sin argumentos a propósito: la versión con {behavior} no
+               existe en los navegadores viejos, que son justo los que llegan
+               aquí. Comprobado que el hash solo no arrastra en esta página. */
+        var seccion = document.getElementById('lista-de-espera');
+        window.location.hash = 'lista-de-espera';
+        if (seccion && seccion.scrollIntoView) {
+          try { seccion.scrollIntoView(); } catch (err) { /* da igual: ya está el hash */ }
+        }
+        return;
+      }
       e.preventDefault();
       abrirModal();
     });
