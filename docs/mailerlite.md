@@ -268,15 +268,23 @@ Crea la campaña **en borrador** contra el grupo de marca y devuelve su id. **No
 
 ### Tres trampas que ya están resueltas en el código
 
-🔴 **El SVG no se ve en el correo.** Las portadas de los artículos se generan en SVG para la web y ningún cliente de correo las pinta: sale un hueco. Para el correo hay una versión **JPEG de 1200×630** —la misma medida que la de redes— que la plantilla muestra a 600 px:
+🔴 **La portada del correo NO es la misma que la de redes.** Hay tres variantes por artículo y **sólo una sirve aquí**:
 
-    assets/social/<slug>-og.jpg
+| Fichero | Qué lleva | Para qué |
+|---|---|---|
+| `<slug>-correo.jpg` | Banner **sin titular grabado** | ✅ **El correo. Esta es la buena** |
+| `<slug>-og.svg` | Con titular | LinkedIn, X, WhatsApp |
+| `<slug>-cuadrado.svg` | Con titular, 1080×1080 | Instagram |
 
-JPEG y no PNG porque son degradados sin una sola zona transparente, que es justo donde el PNG comprime mal: **1,2 MB los doce frente a 2,7 MB**. En correo el peso importa.
+    https://raw.githubusercontent.com/alexperdel/Alexperdel_repository/main/assets/social/<slug>-correo.jpg
 
-El servicio no comprueba «que no sea SVG» sino **que sea uno de los que se ven en todas partes** —`jpg`, `jpeg`, `png`, `gif`—. Es lista blanca a propósito: WebP y AVIF fallan igual en Outlook de escritorio y nadie se acordaría de añadirlos a una lista negra.
+**Por qué el correo lleva una sin titular y las redes con titular.** En redes la imagen va sola y tiene que explicarse; en el correo va acompañada del titular en texto justo debajo, así que grabarlo dentro lo decía dos veces.
 
-📌 **El tag no se repite si hay portada**, porque ya va grabado dentro de ella. **El título sí se repite**, y eso es deliberado: media bandeja de entrada abre con las imágenes bloqueadas —Outlook de escritorio lo hace de fábrica— y si el titular vive sólo dentro del JPEG, esa gente abre un correo sin titular.
+**Por qué el titular va en texto y no dentro de la imagen.** Media bandeja de entrada abre con las imágenes bloqueadas —Outlook de escritorio lo hace de fábrica—. Si el titular vive sólo dentro del JPEG, esa gente abre un correo sin titular. **El tag sí va dentro**, porque es decorativo y si se pierde no pasa nada; por eso el servicio no lo repite debajo cuando hay portada.
+
+**Y por qué JPEG y no PNG**: son degradados sin una sola zona transparente, que es justo donde el PNG comprime mal. 1,2 MB los doce frente a 2,7 MB. En correo el peso importa.
+
+⚠️ El servicio no comprueba «que no sea SVG» sino **que sea uno de los que se ven en todas partes** —`jpg`, `jpeg`, `png`, `gif`—. Es lista blanca a propósito: WebP y AVIF fallan igual en Outlook y nadie se acordaría de añadirlos a una lista negra. **Efecto secundario útil**: si alguien pasa por error la de redes, que es `.svg`, revienta en vez de mandar un hueco.
 
 🔴 **Una campaña sin grupo se envía a nadie y la API responde 200.** El grupo es obligatorio y se comprueba antes de llamar. Y al leer una campaña, **el grupo vive en `c.filter`, no en `c.groups`**.
 
