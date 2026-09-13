@@ -947,36 +947,50 @@ html { scroll-behavior: smooth; }
 /* --------------------------------------------------------------------------
    MODAL DE LISTA DE ESPERA
    Lo abren los botones «Avísame cuando salga» de la home y de la landing.
-   Va en azul noche a propósito: así hereda tal cual los estilos de
-   .libro-form, que están escritos para fondo oscuro, y no hay una segunda
-   versión del formulario que mantener.
+
+   La tarjeta va en BLANCO con letra azul: el modal aparece sobre la home,
+   que es clara, y un bloque azul noche a pantalla completa pesaba demasiado.
+   El fondo difuminado sí se queda: es lo que separa el modal de la página.
+
+   Como .libro-form está escrito para fondo oscuro, todo lo que hereda de él
+   se reescribe aquí abajo. Es la contrapartida de tener una sola versión del
+   formulario, y es deliberada.
    -------------------------------------------------------------------------- */
 
 .waitlist-modal {
   /* La paleta del libro vive bajo .libro-page, y este <dialog> cuelga del
      <body>, fuera de ese ámbito. Además la home no tiene .libro-page en
      ninguna parte. Se declaran aquí para que el modal sea autónomo. */
-  --libro-crema: #F4EFE5;
   --libro-azul: #12273F;
-  --libro-azul-2: #1B3554;
   --libro-rojo: #DC2626;
-  --libro-rojo-claro: #EF4444;
 
   width: min(540px, calc(100vw - 2rem));
   /* El reset del sitio pone margin:0 a todo y eso mata el centrado que el
      navegador le da por defecto a un <dialog> modal. Se devuelve aquí. */
   margin: auto;
   padding: 0;
-  border: 0;
+  /* Blanco literal, no una variable: si algún día se vuelve a quedar fuera
+     de ámbito, un color inválido hace que el <dialog> caiga a transparente
+     y se lea la página de debajo a través del modal. */
+  background: #FFFFFF;
+  color: #12273F;
+  border: 1px solid rgba(18, 39, 63, 0.12);
   border-radius: var(--radius-xl);
-  background: var(--libro-azul);
-  color: #F4EFE5;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 24px 60px rgba(18, 39, 63, 0.28);
 }
 
+/* El fondo de cristal. Esto es lo único translúcido de todo el conjunto. */
 .waitlist-modal::backdrop {
   background: rgba(18, 39, 63, 0.72);
   backdrop-filter: blur(3px);
+}
+
+/* En oscuro la tarjeta sigue siendo blanca a propósito: es una hoja de papel
+   sobre la página, y el contraste con el fondo difuminado es justo el efecto
+   que se busca. Solo se refuerza la sombra, que en oscuro no se ve. */
+[data-theme="dark"] .waitlist-modal {
+  border-color: rgba(18, 39, 63, 0.35);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
 }
 
 .waitlist-modal__inner {
@@ -1002,23 +1016,65 @@ html { scroll-behavior: smooth; }
 }
 
 .waitlist-modal__close:hover {
-  background: var(--libro-azul-2);
-  color: #F4EFE5;
+  background: #F1EEE8;
+  color: var(--libro-azul);
 }
 
 .waitlist-modal__title {
   font-size: var(--text-2xl);
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: #F4EFE5;
+  color: var(--libro-azul);
   margin: 0 0 var(--space-3);
   padding-right: var(--space-8);
 }
 
 .waitlist-modal__text {
-  color: #B9C6D4;
+  color: #4A5C70;
   font-size: var(--text-base);
   margin: 0 0 var(--space-6);
+}
+
+/* --------------------------------------------------------------------------
+   Reescritura de .libro-form para fondo claro.
+   Los colores de origen están pensados para el azul noche de la landing y
+   sobre blanco no se leen: el gris del consentimiento se pierde y el enlace
+   de la política, que es crema, desaparece del todo.
+   -------------------------------------------------------------------------- */
+
+/* El cajón del email: borde azul, que es lo que lo dibuja sobre el blanco.
+   El relleno crema de la landing se quita; aquí no tiene contra qué destacar. */
+.waitlist-modal .libro-form input[type="email"] {
+  background: #FFFFFF;
+  color: var(--libro-azul);
+  border: 2px solid var(--libro-azul);
+}
+
+.waitlist-modal .libro-form input[type="email"]::placeholder {
+  color: #8A9AAC;
+}
+
+/* Al enfocar pasa a rojo para que el foco se distinga del borde en reposo,
+   y de paso empareja con el botón. */
+.waitlist-modal .libro-form input[type="email"]:focus {
+  border-color: var(--libro-rojo);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+}
+
+.waitlist-modal .libro-form__consent {
+  color: #4A5C70;
+}
+
+.waitlist-modal .libro-form__consent a {
+  color: var(--libro-azul);
+}
+
+.waitlist-modal .libro-form__msg {
+  color: var(--libro-azul);
+}
+
+.waitlist-modal .libro-form__msg.is-error {
+  color: var(--libro-rojo);
 }
 
 /* En el modal el botón cae debajo del campo: hay menos ancho que en la
@@ -1041,4 +1097,7 @@ html { scroll-behavior: smooth; }
 .waitlist-modal .libro-form__fine {
   margin-top: var(--space-5);
   margin-bottom: 0;
+  /* El #8A9AAC de origen se lee sobre el azul noche de la landing, pero
+     sobre blanco se queda en 2,4:1 y deja de ser texto legible. */
+  color: #6B7A8C;
 }

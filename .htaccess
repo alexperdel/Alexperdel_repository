@@ -12,9 +12,10 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\.alexperdel\.com [NC]
 RewriteRule ^(.*)$ https://alexperdel.com/$1 [L,R=301]
 
-# Forzar HTTPS (descomenta si tienes SSL)
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Forzar HTTPS. Estaba comentado y http:// respondia 200, asi que cada URL
+# existia por duplicado para Google. El SSL lleva activo desde hace tiempo.
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # =============================================
 # REDIRECCIONES 301 - URLs antiguas (WordPress)
@@ -33,6 +34,17 @@ Redirect 301 /page/5/ https://alexperdel.com/
 # Páginas de autor y perfil
 Redirect 301 /author/alexperdel/ https://alexperdel.com/sobre-mi.html
 Redirect 301 /alexperdel-desarrollo-web-y-marketing-digital/ https://alexperdel.com/sobre-mi.html
+
+# Secciones de la web antigua que Search Console sigue dando como 404
+# (6 URLs, ultimo rastreo entre marzo y junio de 2026). Mismo criterio que
+# las variantes /en/ de abajo: cada una a su equivalente actual, y solo a la
+# home la que no tiene equivalente.
+Redirect 301 /portfolio/ https://alexperdel.com/proyectos/
+Redirect 301 /desarrollo-web/ https://alexperdel.com/proyectos/
+Redirect 301 /crecer-en-ingles/ https://alexperdel.com/proyectos/crecer-en-ingles.html
+Redirect 301 /seo/ https://alexperdel.com/proyectos/gestion-proyectos-seo.html
+Redirect 301 /marketing-digital/ https://alexperdel.com/proyectos/gestion-proyectos-seo.html
+Redirect 301 /tarifas/ https://alexperdel.com/
 
 # Portfolio y proyectos en inglés
 Redirect 301 /en/portfolio/ https://alexperdel.com/proyectos/
