@@ -9,24 +9,27 @@ Lo que está en MailerLite salió de aquí.
 
 ```
 KICKER            Número 1
-TITULAR           Lo que más veo romperse
+TITULAR           Un bot llamando a cobrar: lo bueno y lo que casi lo tumba
 
-1. LA HERIDA      Algo que me pasó a mí, en primera persona.
-                  🔴 Es lo único que NO está en la web.
-
-2. PARA LEER      Dos o tres artículos con una línea de resumen.
-                  Salen del calendario. Tarjeta con filo rojo.
-
-3. EL PIE         LinkedIn para responder + el libro.
-                  Enlaces, no botones: dos botones iguales compiten
-                  y no gana ninguno.
+1. UNA DE CAL     Algo que salió BIEN, con el dato al lado.
+2. UNA DE ARENA   Algo que se rompió, con el motivo.
+                  🔴 Las dos cosas. No todo puede ser fracaso: hablar de
+                  errores ayuda, pero un correo que solo trae desastres
+                  cansa y no da ninguna razón para seguir leyendo.
+3. LA REGLA       Lo que se aprende, en una línea.
+4. PARA LEER      Dos o tres artículos del calendario, con resumen.
+5. EL PIE         LinkedIn para responder + el libro.
+                  Enlaces, no botones: dos botones iguales compiten.
 ```
 
-**Por qué la herida va primero y por qué tiene que ser propia.** Si el correo solo
-lleva enlaces, es un índice: se abre una vez y a la segunda ya no. Lo que hace que
-se abra el siguiente es que haya algo dentro que no esté en la web.
+**Lo que va en el correo NO está en la web.** Si solo lleva enlaces es un índice:
+se abre una vez y a la segunda ya no. Lo que hace que se abra el siguiente es la
+historia de dentro.
 
----
+**El primero es distinto**: es la bienvenida y no puede abrir con un fracaso. Da
+la bienvenida, dice qué va a llegar —lo bueno y lo malo— y **entrega un consejo
+ya**, porque nadie se suscribe para esperar un mes. No enlaza artículos: sale el
+día que alguien se apunta y para entonces puede que aún no exista ninguno.
 
 ## La secuencia
 
@@ -34,11 +37,11 @@ Automatización `Bienvenida · newsletter de marca` (`198519056538535656`). Se d
 cuando alguien **confirma** el alta y cuenta desde ese día — no por calendario.
 Quien se apunte en marzo recibe el nº1 en marzo.
 
-| | Fichero | Día | Asunto | La herida |
-|---|---|---|---|---|
-| 1 | `1-bienvenida.html` | 0 | Ya estás dentro | — (es la bienvenida) |
-| 2 | `2-lo-que-mas-se-rompe.html` | 30 | Lo que más veo romperse | El flujo de 40 nodos que no entendía nadie |
-| 3 | `3-elegir-mal-la-herramienta.html` | 60 | Elegí mal y tardé tres semanas en verlo | Tres semanas cambiando de modelo |
+| | Fichero | Día | Asunto |
+|---|---|---|---|
+| 1 | `1-bienvenida.html` | 0 | Bienvenido a un mundo hiperautomatizado |
+| 2 | `2-el-voicebot-que-cobra.html` | 30 | Un bot llamando a cobrar |
+| 3 | `3-quitar-antes-que-anadir.html` | 60 | Quitar suele funcionar mejor que añadir |
 
 🔴 **Son 5 pasos de los 5 que da el plan gratuito** (tres correos y dos esperas).
 **No cabe un cuarto.**
