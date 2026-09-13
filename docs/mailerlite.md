@@ -34,6 +34,53 @@ El dominio está en cdmon. Tres registros, y el segundo tiene trampa:
 
 ---
 
+## Estado de la cuenta · 2026-09-13
+
+Lo que hay montado hoy, con sus ids. Verificado por API, no de memoria.
+
+**Grupos**
+
+| Grupo | id | Suscriptores |
+|---|---|---|
+| Libro · lista de espera | `198500367728641050` | 0 |
+| Marca · novedades y promociones | `198500367899559057` | 0 |
+
+**Formularios** — 2 de los 3 que da el plan. Los dos con doble opt-in.
+
+| Formulario | id | Grupo |
+|---|---|---|
+| Libro · lista de espera (web) | `198500400349840797` | Libro |
+| Newsletter · marca (web) | `198505466917028909` | Marca |
+
+📌 **La web no incrusta estos formularios**: publica su propio HTML contra el endpoint `jsonp`. Los de MailerLite existen porque son los que crean el grupo y disparan el doble opt-in, pero su diseño sólo se ve en la URL de vista previa.
+
+**Automatizaciones** — 1 de las 3 del plan está activa.
+
+| Automatización | id | Estado |
+|---|---|---|
+| Bienvenida · lista de espera del libro | `198500616499103361` | ✅ **activa**, completa, sin avisos |
+| Bienvenida · newsletter de marca | `198508561423140304` | 🔴 **PAUSADA · el cuerpo del correo está a medias** |
+
+🔴 **La bienvenida de marca no está terminada y por eso NO se ha activado.** El disparador y los ajustes están bien —grupo correcto, castellano, UTM, remitente—, pero el cuerpo del correo sigue teniendo texto del libro. Está pausada a propósito: así no le llega a nadie.
+
+**Por qué se quedó a medias**, que es lo que importa para el siguiente que lo intente: el editor visual de MailerLite tiene dos comportamientos que destrozan el contenido si se automatiza a golpe de clic.
+
+1. **Al escribir sobre una selección, reaplica la selección en cada pulsación.** Resultado: de un párrafo entero sólo sobreviven los dos últimos caracteres. **La vuelta: seleccionar, pulsar Borrar, y escribir después.** Con eso entra limpio.
+2. **Borrar una selección fusiona el bloque con el siguiente.** Y partirlos otra vez exige clicar en una posición exacta de texto, que es donde se acaba rompiendo.
+
+Y una tercera, más tonta: en ventana grande **las coordenadas de la captura no coinciden con las del DOM**. Las capturas vuelven a 1280, 1369 o 1421 px según el momento. Clicar calculando desde `getBoundingClientRect()` falla; hay que leer las coordenadas de la propia captura.
+
+Terminar ese correo son diez minutos **a mano**, y es lo que recomiendo.
+
+**Campañas**
+
+| Campaña | id | Estado |
+|---|---|---|
+| Lanzamiento · Hiperautomatizaciones ya está a la venta | `198502586079250421` | Borrador. Le faltan la portada y la URL de Amazon |
+| Newsletter · Por qué uso FastAPI y no Flask ni Django | `198508421041882407` | Borrador de PRUEBA. Se creó por API para validar la plantilla del número semanal. **Se puede borrar** |
+
+---
+
 ## Las dos listas
 
 | Grupo | id | Qué promete | De quién es |
@@ -132,10 +179,49 @@ utm_term = {$campaign_date}
 
 ---
 
+## El número semanal: un artículo = un número
+
+La newsletter no tiene contenido propio. **Sale de lo que ya se escribe para la web**, que es lo que hace sostenible publicar una vez al mes sin una segunda máquina de contenidos.
+
+**Por qué es una CAMPAÑA y no una automatización.** Por dos motivos independientes, y cualquiera de los dos bastaría:
+
+1. El plan gratuito topa las automatizaciones en **5 pasos**. Doce números son 24 (doce correos y doce esperas).
+2. Las automatizaciones **no se pueden crear por API**. Las campañas sí, con CRUD completo.
+
+📌 **Lo que se pierde y conviene saberlo**: una campaña se envía en una fecha a todos. El circuito perenne que se llegó a plantear —te apuntas hoy, número 1 el mes que viene— **necesita una automatización y no cabe en el plan gratuito**. Quien llegue nuevo no recibe los números anteriores. Si algún día compensa, la bienvenida puede mandarle al índice de artículos.
+
+### Dónde vive el código
+
+Está en Scarif, no aquí, porque aquí no puede haber credenciales:
+
+    backend/app/services/mailerlite_service.py            el cliente
+    backend/app/services/templates/newsletter_article.html la plantilla del correo
+    backend/tests/unit/test_mailerlite_service.py          11 tests, ninguno llama a MailerLite
+
+La frontera con el circuito de contenidos es una función:
+
+    create_article_draft(asunto, preheader, titulo, entradilla,
+                         cuerpo_html, url, tag=None, portada_url=None) -> str
+
+Crea la campaña **en borrador** contra el grupo de marca y devuelve su id. **No envía.** Enviar lo hace Alex desde el panel, que es el gesto de aprobación.
+
+**Por qué `asunto` va separado de `titulo`**: el título del artículo está escrito para Google y lleva la palabra clave delante —*«Por qué uso FastAPI y no Flask ni Django»*—; el asunto se lee en una bandeja llena y compite con otros cuarenta —*«Por qué no uso Django»*—. Con un solo campo hay que elegir entre posicionar y que lo abran.
+
+### Tres trampas que ya están resueltas en el código
+
+🔴 **El SVG no se ve en el correo.** Las portadas de los artículos se generan en SVG y ningún cliente de correo las pinta: sale un hueco. La plantilla las quiere en **PNG de 1200×630** —la misma medida que la portada de redes— y las muestra a 600 px. El servicio **rechaza** una URL `.svg` en vez de mandar un correo roto.
+
+🔴 **Una campaña sin grupo se envía a nadie y la API responde 200.** El grupo es obligatorio y se comprueba antes de llamar. Y al leer una campaña, **el grupo vive en `c.filter`, no en `c.groups`**.
+
+🔴 **Gmail recorta a partir de 102 KB** y mete un «ver mensaje completo» que se lleva por delante el pie y el enlace de baja. La plantilla ronda los 5 KB. Si algún día el cuerpo crece mucho, esto es lo que se rompe primero y no avisa.
+
+---
+
 ## Pendiente
 
 | | Qué |
 |---|---|
-| 🔲 | **El workflow perenne de doce meses** — plan en [`newsletter_marca.md`](newsletter_marca.md) |
+| 🔴 | **Terminar el cuerpo de la bienvenida de marca y activarla.** Hoy está pausada con texto del libro |
+| 🔲 | **El perenne de doce meses no cabe en el plan gratuito** (5 pasos). Plan en [`newsletter_marca.md`](newsletter_marca.md), pendiente de que Alex decida si compensa pagar |
 | 🔲 | **Desactivar o poner en noindex el archivo público de MailerLite**, o competirá con los artículos del sitio por el mismo contenido |
 | 🔲 | **Probar la cadena entera de una lista**: ningún formulario ha recibido todavía un alta real (`conversions_count: 0` en los dos) |
