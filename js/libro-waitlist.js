@@ -26,11 +26,11 @@
 
   var WAITLIST = {
     // '' | 'mailerlite' | 'brevo' | 'formspree'
-    provider: '',
+    provider: 'mailerlite',
 
     mailerlite: {
-      accountId: '',
-      formId: ''
+      accountId: '2631545',
+      formId: '198500400349840797'
     },
 
     brevo: {
@@ -38,7 +38,7 @@
     },
 
     formspree: {
-      formId: '' // https://formspree.io/f/XXXXXXX  →  'XXXXXXX'
+      formId: '198500400349840797' // https://formspree.io/f/XXXXXXX  →  'XXXXXXX'
     },
 
     linkedin: 'https://www.linkedin.com/in/alexperdel/'
