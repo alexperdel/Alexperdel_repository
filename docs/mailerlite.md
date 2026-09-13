@@ -54,14 +54,22 @@ Lo que hay montado hoy, con sus ids. Verificado por API, no de memoria.
 
 📌 **La web no incrusta estos formularios**: publica su propio HTML contra el endpoint `jsonp`. Los de MailerLite existen porque son los que crean el grupo y disparan el doble opt-in, pero su diseño sólo se ve en la URL de vista previa.
 
-**Automatizaciones** — 2 de las 3 del plan, las dos activas.
+**Automatizaciones** — 2 de las 3 del plan. **Sólo una activa.**
 
 | Automatización | id | Estado |
 |---|---|---|
 | Bienvenida · lista de espera del libro | `198500616499103361` | ✅ **activa**, completa, sin avisos |
-| Bienvenida · newsletter de marca | `198508561423140304` | ✅ **activa**, completa, sin avisos |
+| Bienvenida · newsletter de marca | `198508561423140304` | 🔴 **PAUSADA · el cuerpo del correo está roto** |
 
 Las dos mandan **un solo correo** al confirmar el alta, y no se cruzan: quien se apunta al aviso del libro no entra en la newsletter, y al revés.
+
+🔴 **La de marca está PAUSADA y su cuerpo está roto.** Se construyó copiando el correo del libro y el editor visual nunca llegó a guardar los cambios: durante un rato estuvo **activa mandando el texto del libro** —«Te escribo el día que el libro salga»— a quien se suscribiera a la newsletter. No le llegó a nadie porque no hay suscriptores, pero el fallo era real.
+
+**Cómo se detectó, que es lo que hay que repetir**: leyendo la **URL de vista previa publicada**, no el editor. El editor mostraba los cambios; lo guardado no los tenía. Comprobar en el editor no sirve.
+
+    https://preview.mailerlite.io/preview/2631545/emails/<email_id>
+
+**Por qué se rompió**: elegir un correo existente como plantilla y editarlo a continuación **reaplica la plantilla al guardar** y se lleva por delante lo editado.
 
 | | Asunto | Precabecera |
 |---|---|---|
@@ -296,6 +304,7 @@ Crea la campaña **en borrador** contra el grupo de marca y devuelve su id. **No
 
 | | Qué |
 |---|---|
+| 🔴 | **Rehacer el cuerpo de la bienvenida de marca desde lienzo en blanco y activarla** |
 | 🔲 | **El perenne de doce meses no cabe en el plan gratuito** (5 pasos). Plan en [`newsletter_marca.md`](newsletter_marca.md), pendiente de que Alex decida si compensa pagar |
 | 🔲 | **Desactivar o poner en noindex el archivo público de MailerLite**, o competirá con los artículos del sitio por el mismo contenido |
 | 🔲 | **Probar la cadena entera de una lista**: ningún formulario ha recibido todavía un alta real (`conversions_count: 0` en los dos) |
