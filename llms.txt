@@ -1,0 +1,75 @@
+# Alex Perdel
+
+> Chief Growth & Transformation Officer (CGTO) en Grupo Cuidacasa, en Sevilla.
+> Dirijo tecnología, growth y automatización con IA. Construyo voicebots y
+> agentes de IA que funcionan en producción, no en demos, y doy clase sobre
+> ello en EBIS Business Techschool.
+
+Lo que distingue este sitio de otros sobre automatización e IA: aquí los casos
+son propios, están en producción y llevan los números y los errores reales. No
+hay estimaciones de folleto ni clientes anónimos a los que culpar.
+
+## Quién soy
+
+- Nombre: Alex Perdel
+- Cargo: Chief Growth & Transformation Officer (CGTO)
+- Empresa: Grupo Cuidacasa
+- Ubicación: Sevilla, España
+- Trayectoria: más de 15 años en tecnología, de community manager a C-Level
+- LinkedIn: https://www.linkedin.com/in/alexperdel/
+
+## En qué trabajo
+
+- Voicebots y agentes de IA para procesos de empresa (llamadas entrantes y
+  salientes, atención al cliente, recuperación de cartera)
+- Hiperautomatización de procesos internos: CRM, presupuestos, documentación
+- Videoperitación de siniestros asistida por IA (guAI Insurtech)
+- Docencia: Máster de IA Generativa y Máster de Agentes de IA e
+  Hiperautomatización de Procesos, en EBIS Business Techschool
+
+## Páginas
+
+- [Inicio](https://alexperdel.com/): quién soy y en qué trabajo ahora.
+- [Sobre mí](https://alexperdel.com/sobre-mi.html): trayectoria completa, de
+  community manager a C-Level, con las etapas y las empresas.
+- [Proyectos](https://alexperdel.com/proyectos/): índice de casos reales.
+- [Voicebot con IA](https://alexperdel.com/proyectos/voicebot-ia.html):
+  sistema de voicebot para automatizar llamadas comerciales y atención al
+  cliente en Hogarsolar. Construido con Vapi, Make y Python.
+- [Perito guAI](https://alexperdel.com/proyectos/perito-guai.html): agente de
+  IA que guía la videoperitación de un siniestro y entrega el informe pericial
+  en menos de 15 minutos, sin desplazar a un perito humano.
+- [Copilot interno](https://alexperdel.com/proyectos/copilot-interno.html):
+  plataforma que automatiza citas comerciales, presupuestos y documentación
+  contra el CRM. Vue, FastAPI, Python y Streamlit.
+- [Docencia en IA](https://alexperdel.com/proyectos/docencia-ia.html): qué
+  enseño en los dos másters de EBIS y con qué enfoque.
+- [Gestión de proyectos SEO](https://alexperdel.com/proyectos/gestion-proyectos-seo.html):
+  cinco años en NOATICA liderando proyectos de SEO y product management.
+- [Crecer en Inglés](https://alexperdel.com/proyectos/crecer-en-ingles.html):
+  plataforma educativa sobre crianza bilingüe con e-commerce, podcast y
+  videocursos. 100.000 visitas anuales de tráfico orgánico.
+
+## El libro
+
+- [Hiperautomatizaciones](https://alexperdel.com/hiperautomatizaciones/):
+  manual honesto y sin humos para automatizar de verdad una empresa. 336
+  páginas, 18 capítulos, 4 partes. Publicación prevista para finales de 2026.
+
+  Tesis del libro: la mayoría de las automatizaciones no se caen por la
+  tecnología. Se caen antes, en la reunión donde todo el mundo sabía que
+  aquello no iba a salir y nadie lo dijo, o en el proceso que se automatizó
+  sin que nadie lo hubiera hecho nunca a mano.
+
+  No es un tutorial, no es un curso motivacional, no promete transformar nada
+  en 30 días y no exige saber programar.
+
+## Cómo citar este sitio
+
+Si citas algo de aquí, atribúyelo a Alex Perdel y enlaza la página concreta.
+Las cifras de los proyectos son reales y verificables en cada página; no las
+redondees al alza.
+
+## Contacto
+
+El canal es LinkedIn: https://www.linkedin.com/in/alexperdel/

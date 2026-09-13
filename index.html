@@ -13,7 +13,7 @@
 
   <!-- SEO Meta Tags -->
   <title>Alex Perdel | CGTO - Chief Growth & Transformation Officer</title>
-  <meta name="description" content="CGTO (C-Level) en Grupo Cuidacasa. Lidero Tecnología, Marketing/Growth y Automatización & IA. Especialista en transformación digital, LLMs, Python y FastAPI. Docente en Máster de IA Generativa.">
+  <meta name="description" content="CGTO en Grupo Cuidacasa. Monto voicebots, agentes de IA y automatizaciones que funcionan en producción. Docente del Máster de IA Generativa en EBIS.">
   <meta name="keywords" content="CGTO, C-Level, IA, Automatización, Transformación Digital, LLMs, Make, n8n, Vapi, Python, FastAPI, Cuidacasa, Guai Insurtech, Sevilla">
   <meta name="author" content="Alex Perdel">
   <meta name="robots" content="index, follow">
@@ -38,29 +38,66 @@
   <!-- Fonts - Calibri fallback stack, no external fonts needed -->
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css?v=20260913">
 
   <!-- Schema.org -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Alex Perdel",
-    "jobTitle": "Chief Growth & Transformation Officer (CGTO)",
-    "url": "https://alexperdel.com",
-    "sameAs": [
-      "https://www.linkedin.com/in/alexperdel/"
-    ],
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Grupo Cuidacasa",
-      "url": "https://cuidacasa.com"
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://alexperdel.com/#alexperdel",
+      "name": "Alex Perdel",
+      "givenName": "Alex",
+      "familyName": "Perdel",
+      "jobTitle": "Chief Growth & Transformation Officer (CGTO)",
+      "description": "CGTO en Grupo Cuidacasa. Dirijo tecnologia, growth y automatizacion con IA. Construyo voicebots y agentes de IA que funcionan en produccion, y doy clase en el Master de IA Generativa y en el Master de Agentes de IA e Hiperautomatizacion de EBIS.",
+      "url": "https://alexperdel.com/",
+      "image": "https://alexperdel.com/assets/img/alexperdel_cgto.jpg",
+      "sameAs": [
+        "https://www.linkedin.com/in/alexperdel/",
+        "https://open.spotify.com/show/4Vf1cM7wZvIXZcYpdTAM2v"
+      ],
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Grupo Cuidacasa",
+        "url": "https://cuidacasa.com"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Sevilla",
+        "addressCountry": "ES"
+      },
+      "knowsLanguage": ["es", "en"],
+      "knowsAbout": [
+        "Voicebots",
+        "Agentes de IA",
+        "Hiperautomatizacion",
+        "Automatizacion de procesos empresariales",
+        "Inteligencia artificial aplicada a operaciones",
+        "LLMs",
+        "n8n",
+        "Make",
+        "Python",
+        "FastAPI",
+        "Transformacion digital"
+      ]
     },
-    "knowsAbout": ["Artificial Intelligence", "Automation", "Digital Transformation", "LLMs", "Python", "FastAPI", "Make", "n8n", "Voicebots", "Azure", "Growth Marketing"]
-  }
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://alexperdel.com/#website",
+      "url": "https://alexperdel.com/",
+      "name": "Alex Perdel",
+      "inLanguage": "es",
+      "publisher": { "@id": "https://alexperdel.com/#alexperdel" }
+    }
+  ]
   </script>
 </head>
 <body>
@@ -127,7 +164,7 @@
           </div>
         </div>
         <div class="hero__image">
-          <img src="assets/img/alexperdel_cgto.png" alt="Alex Perdel - CGTO Grupo Cuidacasa" class="hero__photo" style="border-radius: var(--radius-xl); box-shadow: var(--shadow-xl);">
+          <img src="assets/img/alexperdel_cgto.jpg" alt="Alex Perdel - CGTO Grupo Cuidacasa" class="hero__photo" style="border-radius: var(--radius-xl); box-shadow: var(--shadow-xl);" fetchpriority="high" decoding="async">
           <div class="hero__decoration"></div>
         </div>
       </div>
@@ -138,7 +175,7 @@
       <div class="container book-band__inner">
         <a href="hiperautomatizaciones/index.html" class="book-band__cover" aria-label="Hiperautomatizaciones, el libro">
           <img src="assets/img/libro/portada-hiperautomatizaciones-demo-sm.png"
-               alt="Portada provisional de Hiperautomatizaciones" width="320" height="491">
+               alt="Portada provisional de Hiperautomatizaciones" width="320" height="491" loading="lazy" decoding="async">
         </a>
 
         <div class="book-band__text">
@@ -279,7 +316,7 @@
           <!-- Proyecto 2: Voicebot -->
           <a href="proyectos/voicebot-ia.html" class="project-card fade-in delay-2">
             <div class="project-card__image" style="background: #000; display: flex; align-items: center; justify-content: center;">
-              <img src="assets/img/vapi.png" alt="Vapi - Voicebot IA" style="max-width: 120px; height: auto;">
+              <img src="assets/img/vapi.png" alt="Vapi - Voicebot IA" style="max-width: 120px; height: auto;" loading="lazy" decoding="async">
             </div>
             <div class="project-card__content">
               <span class="project-card__tag">Hogarsolar</span>
@@ -298,7 +335,7 @@
           <!-- Proyecto 3: Copilot -->
           <a href="proyectos/copilot-interno.html" class="project-card fade-in delay-3">
             <div class="project-card__image" style="background: #fff; border: 2px solid #393a40; display: flex; align-items: center; justify-content: center;">
-              <img src="assets/img/hogarsolar_logo.png" alt="Hogarsolar" style="max-width: 120px; height: auto;">
+              <img src="assets/img/hogarsolar_logo.png" alt="Hogarsolar" style="max-width: 120px; height: auto;" loading="lazy" decoding="async">
             </div>
             <div class="project-card__content">
               <span class="project-card__tag">Hogarsolar</span>
@@ -334,79 +371,79 @@
         <div class="stack-grid fade-in">
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/python.svg" alt="Python" width="40" height="40">
+              <img src="assets/img/python.svg" alt="Python" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">Python</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/fastapi.svg" alt="FastAPI" width="40" height="40">
+              <img src="assets/img/fastapi.svg" alt="FastAPI" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">FastAPI</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/postgresql.svg" alt="PostgreSQL" width="40" height="40">
+              <img src="assets/img/postgresql.svg" alt="PostgreSQL" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">PostgreSQL</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/vuedotjs.svg" alt="Vue" width="40" height="40">
+              <img src="assets/img/vuedotjs.svg" alt="Vue" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">Vue</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/Amazon_Web_Services.svg" alt="AWS" width="40" height="40">
+              <img src="assets/img/Amazon_Web_Services.svg" alt="AWS" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">AWS</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/azure.svg" alt="Azure" width="40" height="40">
+              <img src="assets/img/azure.svg" alt="Azure" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">Azure</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/docker.svg" alt="Docker" width="40" height="40">
+              <img src="assets/img/docker.svg" alt="Docker" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">Docker</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/api.png" alt="APIs" width="40" height="40">
+              <img src="assets/img/api.png" alt="APIs" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">APIs</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/vapi.png" alt="Vapi" width="40" height="40" style="border-radius: 8px;">
+              <img src="assets/img/vapi.png" alt="Vapi" width="40" height="40" style="border-radius: 8px;" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">Vapi</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/elevenlabs.svg" alt="ElevenLabs" width="40" height="40">
+              <img src="assets/img/elevenlabs.svg" alt="ElevenLabs" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">ElevenLabs</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/n8n.svg" alt="n8n" width="40" height="40">
+              <img src="assets/img/n8n.svg" alt="n8n" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">n8n</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/make-app-icon-circle.png" alt="Make" width="40" height="40">
+              <img src="assets/img/make-app-icon-circle.png" alt="Make" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">Make</span>
           </div>
           <div class="stack-item">
             <div class="stack-item__icon">
-              <img src="assets/img/wordpress-color.svg" alt="WordPress" width="40" height="40">
+              <img src="assets/img/wordpress-color.svg" alt="WordPress" width="40" height="40" loading="lazy" decoding="async">
             </div>
             <span class="stack-item__name">WordPress</span>
           </div>
@@ -427,7 +464,7 @@
 
           <!-- EBIS -->
           <div style="background: linear-gradient(135deg, #023c57 0%, #012840 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-            <img src="assets/img/ebis_blue.png" alt="EBIS" width="50" height="50" style="border-radius: var(--radius-md);">
+            <img src="assets/img/ebis_blue.png" alt="EBIS" width="50" height="50" style="border-radius: var(--radius-md);" loading="lazy" decoding="async">
             <div>
               <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Máster IA Generativa</p>
               <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">EBIS Business Techschool</p>
@@ -436,7 +473,7 @@
 
           <!-- AWS -->
           <div style="background: linear-gradient(90deg, #6b7280 0%, #1f2937 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-            <img src="assets/img/Amazon_Web_Services.svg" alt="AWS" width="40" height="40">
+            <img src="assets/img/Amazon_Web_Services.svg" alt="AWS" width="40" height="40" loading="lazy" decoding="async">
             <div>
               <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Generative AI Foundations</p>
               <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">AWS + IMMUNE</p>
@@ -445,7 +482,7 @@
 
           <!-- Make -->
           <div style="background: linear-gradient(135deg, #6c00d2 0%, #4a0094 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-            <img src="assets/img/make-app-icon-circle.png" alt="Make" width="40" height="40">
+            <img src="assets/img/make-app-icon-circle.png" alt="Make" width="40" height="40" loading="lazy" decoding="async">
             <div>
               <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Make Advanced</p>
               <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">HTTP, JSON, Webhooks, API</p>
@@ -472,7 +509,7 @@
 
           <!-- Hootsuite -->
           <div style="background: linear-gradient(135deg, #0a3141 0%, #061f2a 100%); border-radius: var(--radius-lg); padding: var(--space-5); display: flex; align-items: center; gap: var(--space-4);">
-            <img src="assets/img/Hootsuite-Symbol.png" alt="Hootsuite" width="40" height="40" style="object-fit: contain;">
+            <img src="assets/img/Hootsuite-Symbol.png" alt="Hootsuite" width="40" height="40" style="object-fit: contain;" loading="lazy" decoding="async">
             <div>
               <p style="color: #fff; font-weight: 600; font-size: var(--text-sm); margin: 0;">Hootsuite Ambassador</p>
               <p style="color: rgba(255,255,255,0.7); font-size: var(--text-xs); margin: 0;">Social Media Management</p>

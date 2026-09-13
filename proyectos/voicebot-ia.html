@@ -20,10 +20,23 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23DC2626' d='M18 2L6 18h8l-2 12 12-16h-8z'/%3E%3C/svg%3E">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
   <!-- Styles -->
   <link rel="stylesheet" href="../css/styles.css?v=20260913">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://alexperdel.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Proyectos", "item": "https://alexperdel.com/proyectos/" },
+      { "@type": "ListItem", "position": 3, "name": "Voicebot con IA", "item": "https://alexperdel.com/proyectos/voicebot-ia.html" }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- ========== HEADER ========== -->
@@ -73,7 +86,7 @@
           </div>
         </div>
         <div style="background: #000; border-radius: var(--radius-xl); padding: var(--space-16); display: flex; align-items: center; justify-content: center; min-height: 300px;">
-          <img src="../assets/img/vapi.png" alt="Vapi - Plataforma de Voicebots" style="max-width: 200px; height: auto;">
+          <img src="../assets/img/vapi.png" alt="Vapi - Plataforma de Voicebots" style="max-width: 200px; height: auto;" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
@@ -123,7 +136,7 @@
         <p>Con un presupuesto de <strong>60€ al mes</strong> (incluyendo llamadas, APIs, automatizaciones y procesamiento de lenguaje natural), la IA trabaja como si fueran 10 agentes operando en paralelo, liberando al equipo comercial para enfocarse en las visitas presenciales.</p>
 
         <div style="margin-top: var(--space-8);">
-          <img src="../assets/img/hogarsolar_oficina.png" alt="Setup de trabajo con Vapi, Make y herramientas de IA" style="width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
+          <img src="../assets/img/hogarsolar_oficina.jpg" alt="Setup de trabajo con Vapi, Make y herramientas de IA" style="width: 100%; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);" loading="lazy" decoding="async">
           <p style="text-align: center; color: var(--color-text-muted); font-size: var(--text-sm); margin-top: var(--space-4);">Mi setup de trabajo: Vapi, Make, ChatGPT y automatizaciones en acción.</p>
         </div>
 

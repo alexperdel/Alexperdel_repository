@@ -64,3 +64,19 @@
     padding: 0 var(--space-4);
   }
 }
+
+/* ==========================================================================
+   RESERVA DE ESPACIO PARA ICONOS
+   Font Awesome se carga sin bloquear el render (media="print" + onload), asi
+   que la hoja llega despues del primer pintado. Sin esto, los iconos ocupan
+   cero ancho hasta que llega y luego empujan el texto de botones y enlaces:
+   es desplazamiento de diseno (CLS) puro, y ademas se ve como un tiron.
+   Reservando 1em de ancho desde el principio, el hueco ya esta hecho cuando
+   el icono aparece y nada se mueve.
+   ========================================================================== */
+.fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
+  display: inline-block;
+  width: 1em;
+  text-align: center;
+  font-style: normal;
+}

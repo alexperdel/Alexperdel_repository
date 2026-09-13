@@ -20,10 +20,23 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23DC2626' d='M18 2L6 18h8l-2 12 12-16h-8z'/%3E%3C/svg%3E">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
   <!-- Styles -->
   <link rel="stylesheet" href="../css/styles.css?v=20260913">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://alexperdel.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Proyectos", "item": "https://alexperdel.com/proyectos/" },
+      { "@type": "ListItem", "position": 3, "name": "Gestión de Proyectos SEO", "item": "https://alexperdel.com/proyectos/gestion-proyectos-seo.html" }
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- ========== HEADER ========== -->
@@ -73,7 +86,7 @@
           </div>
         </div>
         <div style="background: #002f7c; border-radius: var(--radius-xl); padding: var(--space-16); display: flex; align-items: center; justify-content: center; min-height: 300px;">
-          <img src="../assets/img/Logo-Noatica-blanco_transp.png" alt="NOATICA" style="max-width: 220px; height: auto;">
+          <img src="../assets/img/Logo-Noatica-blanco_transp.png" alt="NOATICA" style="max-width: 220px; height: auto;" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
