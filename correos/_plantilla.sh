@@ -1,29 +1,39 @@
 #!/usr/bin/env bash
-# Genera un correo a partir del esqueleto comun. Uso:
-#   ./_plantilla.sh <fichero> <preheader> <titulo> <cuerpo_html> [texto_boton] [url_boton]
+# Esqueleto comun de los correos de la newsletter. Uso:
+#   ./_plantilla.sh <fichero> <kicker> <preheader> <titular> <cuerpo_html> [articulos_html]
 #
-# El esqueleto vive aqui y no en cada fichero para que los cuatro correos se
-# vean como el mismo correo. Si cambia el pie o el color, cambia una vez.
+# LA FORMA DE UN NUMERO, y es siempre la misma:
+#
+#   1. Una HERIDA. Algo que me paso a mi, contado en primera persona. Es lo
+#      unico que no esta en la web y es la razon de abrir el correo: si el
+#      correo solo lleva enlaces, es un indice y no lo abre nadie dos veces.
+#   2. Los ARTICULOS relacionados, con una linea de resumen cada uno. Salen
+#      del calendario y solo se enlazan los que ya estaran publicados.
+#   3. El PIE con las dos salidas: LinkedIn para responder, y el libro.
+#      Enlaces, no botones: dos botones iguales compiten y no gana ninguno.
+#
+# El esqueleto vive aqui y no en cada fichero para que los tres se vean como
+# el mismo correo. Si cambia el pie o el color, cambia una vez.
 set -euo pipefail
-F="$1"; PRE="$2"; TIT="$3"; CUERPO="$4"; BTXT="${5:-}"; BURL="${6:-}"
+F="$1"; KICK="$2"; PRE="$3"; TIT="$4"; CUERPO="$5"; ARTS="${6:-}"
 
-BOTON=""
-if [ -n "$BTXT" ]; then
-BOTON=$(cat <<BLOQUE
-
+BLOQUE_ARTS=""
+if [ -n "$ARTS" ]; then
+BLOQUE_ARTS="
           <tr>
-            <td align="center" style="padding:32px 40px 8px 40px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td align="center" style="background-color:#DC2626; border-radius:8px;">
-                    <a href="$BURL" style="display:inline-block; padding:15px 34px; font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:20px; font-weight:bold; color:#FFFFFF; text-decoration:none;">$BTXT</a>
-                  </td>
-                </tr>
+            <td style=\"padding:30px 40px 0 40px;\">
+              <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\">
+                <tr><td style=\"height:1px; line-height:1px; font-size:0; background-color:#E5E7EB;\">&nbsp;</td></tr>
               </table>
             </td>
           </tr>
-BLOQUE
-)
+
+          <tr>
+            <td style=\"padding:26px 40px 0 40px; font-family:Helvetica,Arial,sans-serif;\">
+              <p style=\"margin:0 0 18px 0; font-size:12px; line-height:16px; letter-spacing:1.6px; text-transform:uppercase; font-weight:bold; color:#9CA3AF;\">Para leer</p>
+$ARTS
+            </td>
+          </tr>"
 fi
 
 cat > "$F" <<PAGINA
@@ -49,7 +59,10 @@ cat > "$F" <<PAGINA
           <tr><td style="height:4px; line-height:4px; font-size:0; background-color:#DC2626;">&nbsp;</td></tr>
 
           <tr>
-            <td style="padding:40px 40px 0 40px;">
+            <td style="padding:38px 40px 0 40px;">
+              <p style="margin:0 0 12px 0; font-family:Helvetica,Arial,sans-serif; font-size:12px; line-height:16px; letter-spacing:1.6px; text-transform:uppercase; font-weight:bold; color:#DC2626;">
+                $KICK
+              </p>
               <h1 style="margin:0; font-family:Helvetica,Arial,sans-serif; font-size:28px; line-height:36px; font-weight:bold; color:#0F0F0F;">
                 $TIT
               </h1>
@@ -61,15 +74,33 @@ cat > "$F" <<PAGINA
 $CUERPO
             </td>
           </tr>
-$BOTON
+$BLOQUE_ARTS
           <tr>
-            <td style="padding:28px 40px 40px 40px;">
+            <td style="padding:30px 40px 0 40px;">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
                 <tr><td style="height:1px; line-height:1px; font-size:0; background-color:#E5E7EB;">&nbsp;</td></tr>
               </table>
               <p style="margin:20px 0 0 0; font-family:Helvetica,Arial,sans-serif; font-size:16px; line-height:26px; color:#374151;">
                 Alex
               </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:24px 40px 40px 40px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#F9FAFB; border-radius:8px;">
+                <tr>
+                  <td style="padding:20px 22px; font-family:Helvetica,Arial,sans-serif; font-size:15px; line-height:25px; color:#4B5563;">
+                    ¿Te ha pasado algo parecido? Cuéntamelo
+                    <a href="https://www.linkedin.com/in/alexperdel/" style="color:#DC2626; font-weight:bold;">por LinkedIn</a>
+                    o respondiendo a este correo, que lo leo yo.
+                    <br><br>
+                    Y estoy escribiendo un libro sobre todo esto:
+                    <a href="https://alexperdel.com/hiperautomatizaciones/" style="color:#DC2626; font-weight:bold;"><em>Hiperautomatizaciones</em></a>,
+                    a la venta a finales de 2026.
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 

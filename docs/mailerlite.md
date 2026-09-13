@@ -145,7 +145,7 @@ Consecuencia, y hay que asumirla: **quien se suscriba nuevo no recibe los númer
 
 ---
 
-## La secuencia de la newsletter · 3 correos y el tope del plan
+## La secuencia de la newsletter · 3 correos en 60 días
 
 Se dispara al **confirmar** el alta y cuenta desde ese día, no por calendario. Quien se apunte en marzo recibe el nº1 en marzo.
 
@@ -153,18 +153,30 @@ Se dispara al **confirmar** el alta y cuenta desde ese día, no por calendario. 
 [confirma el alta en · Marca]
     día 0   ✉️  Ya estás dentro
     espera 30 días
-    día 30  ✉️  Lo que más veo romperse      → lleva al índice de artículos
+    día 30  ✉️  Lo que más veo romperse
     espera 30 días
-    día 60  ✉️  Estoy escribiendo un libro   → lleva a la landing del libro
+    día 60  ✉️  Elegí mal y tardé tres semanas en verlo
 ```
 
-🔴 **Son 5 pasos de los 5 que da el plan. No cabe un cuarto correo.** Los correos y las esperas cuentan igual; el disparador no cuenta.
+🔴 **Son 5 pasos de los 5 que da el plan. No cabe un cuarto correo.** Los correos y las esperas cuentan igual; el disparador no.
 
-Para alargarla hay dos caminos y ninguno es gratis del todo: **pagar** —sube a 100 pasos, ~12 $/mes— o **encadenar** con «Mover a grupos» al final de un flujo para disparar otro, que da unos 6 o 7 correos a costa de grupos extra y de un montaje que se entiende regular seis meses después.
+### La forma de cada número
 
-📌 **Ninguno de los tres puede hablar de actualidad.** Entre el primero y el último pasan dos meses, y cada persona los recibe en fechas distintas: lo que se cuente tiene que valer igual dentro de dos años. Eso también es lo que hace que la secuencia no caduque y no haya que mantenerla.
+**Una herida, los artículos, y el pie.** En ese orden y siempre igual:
 
-⚠️ **El tercero menciona el libro pero no suscribe a nadie**: lleva a la landing y es la persona quien decide. Las dos listas no se cruzan, y el consentimiento de una no sirve para la otra.
+1. **La herida** — algo que le pasó a Alex, en primera persona. Es lo único que **no está en la web**, y es lo que hace que se abra el siguiente. Un correo que sólo lleva enlaces es un índice: se abre una vez.
+2. **Para leer** — dos o tres artículos del calendario con una línea de resumen, en tarjeta con filo rojo.
+3. **El pie** — LinkedIn para responder y el libro. **Enlaces, no botones**: dos botones iguales compiten y no gana ninguno.
+
+### 🔴 Los artículos se enlazan EN FRÍO
+
+Los artículos enlazados **todavía no existen**. Es deliberado: el correo que los lleva no sale hasta 30 días después del alta, y para entonces estarán publicados.
+
+**La regla: no se enlaza nada con menos de 7 días de colchón** entre su fecha de publicación y la fecha más temprana en que puede salir el correo.
+
+⚠️ **Si el calendario se retrasa, esos enlaces dan 404.** La tabla con las fechas, los colchones y el script para recalcularla está en [`correos/LEEME.md`](../correos/LEEME.md). Mientras no haya suscriptores no corre prisa; **con el primero, sí**.
+
+⚠️ **El libro ya no ocupa un correo entero.** Ocupaba uno de los tres que caben, que es demasiado para lo que aporta. Ahora va en el pie de los tres, como enlace.
 
 **El HTML de los tres vive en [`correos/`](../correos/LEEME.md)**, no sólo en MailerLite.
 
