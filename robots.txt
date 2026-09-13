@@ -3,5 +3,12 @@
 User-agent: *
 Allow: /
 
+# La plantilla de artículo no es contenido: es un fichero de trabajo con
+# marcadores [[ ]] dentro. Si alguna vez sube por FTP, que no se indexe.
+# Va en el mismo bloque que el Allow a propósito: los rastreadores aplican
+# solo el primer grupo que les encaja, así que un segundo "User-agent: *"
+# se ignoraría entero.
+Disallow: /articulos/_
+
 # Sitemap location
 Sitemap: https://alexperdel.com/sitemap.xml
