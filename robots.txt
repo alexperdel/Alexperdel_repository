@@ -9,6 +9,8 @@ Allow: /
 # solo el primer grupo que les encaja, así que un segundo "User-agent: *"
 # se ignoraría entero.
 Disallow: /articulos/_
+Disallow: /docs/
+Disallow: /tools/
 
 # Sitemap location
 Sitemap: https://alexperdel.com/sitemap.xml
