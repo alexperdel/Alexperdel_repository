@@ -269,6 +269,8 @@ La frontera con el circuito de contenidos es una función:
 
 Crea la campaña **en borrador** contra el grupo de marca y devuelve su id. **No envía.** Enviar lo hace Alex desde el panel, que es el gesto de aprobación.
 
+📌 **`url` es opcional, y con ella el botón.** Así la misma plantilla cubre los dos envíos que va a haber: el **número semanal**, que cuelga de un artículo y lleva botón; y el **aviso suelto** —un cambio de fecha del libro, por ejemplo— que no cuelga de nada y no lo lleva. Un «Leerlo en la web» que no va a ninguna parte es peor que no tener botón.
+
 **Por qué `asunto` va separado de `titulo`**: el título del artículo está escrito para Google y lleva la palabra clave delante —*«Por qué uso FastAPI y no Flask ni Django»*—; el asunto se lee en una bandeja llena y compite con otros cuarenta —*«Por qué no uso Django»*—. Con un solo campo hay que elegir entre posicionar y que lo abran.
 
 ### Tres trampas que ya están resueltas en el código
