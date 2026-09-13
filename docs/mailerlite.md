@@ -54,54 +54,51 @@ Lo que hay montado hoy, con sus ids. Verificado por API, no de memoria.
 
 📌 **La web no incrusta estos formularios**: publica su propio HTML contra el endpoint `jsonp`. Los de MailerLite existen porque son los que crean el grupo y disparan el doble opt-in, pero su diseño sólo se ve en la URL de vista previa.
 
-**Automatizaciones** — 2 de las 3 del plan. **Sólo una activa.**
+**Automatizaciones** — 2 de las 3 del plan, las dos activas.
 
 | Automatización | id | Estado |
 |---|---|---|
 | Bienvenida · lista de espera del libro | `198500616499103361` | ✅ **activa**, completa, sin avisos |
-| Bienvenida · newsletter de marca | `198508561423140304` | 🔴 **PAUSADA · el cuerpo del correo está roto** |
+| Bienvenida · newsletter de marca | `198519056538535656` | ✅ **activa**, completa, sin avisos |
 
 Las dos mandan **un solo correo** al confirmar el alta, y no se cruzan: quien se apunta al aviso del libro no entra en la newsletter, y al revés.
 
-🔴 **La de marca está PAUSADA y su cuerpo está roto.** Se construyó copiando el correo del libro y el editor visual nunca llegó a guardar los cambios: durante un rato estuvo **activa mandando el texto del libro** —«Te escribo el día que el libro salga»— a quien se suscribiera a la newsletter. No le llegó a nadie porque no hay suscriptores, pero el fallo era real.
+### 🎯 El editor visual no se pelea: se esquiva
 
-**Cómo se detectó, que es lo que hay que repetir**: leyendo la **URL de vista previa publicada**, no el editor. El editor mostraba los cambios; lo guardado no los tenía. Comprobar en el editor no sirve.
-
-    https://preview.mailerlite.io/preview/2631545/emails/<email_id>
-
-**Por qué se rompió**: elegir un correo existente como plantilla y editarlo a continuación **reaplica la plantilla al guardar** y se lleva por delante lo editado.
-
-| | Asunto | Precabecera |
-|---|---|---|
-| Libro | *Estás en la lista* | Un correo el día que salga. Nada más. |
-| Marca | *Ya estás dentro* | Un correo al mes. El primero, el que viene. |
-
-### El editor visual, y cómo se le gana
-
-Montar la bienvenida de marca costó tres intentos. Queda escrito porque el siguiente va a tropezar igual, y la vuelta no es evidente.
-
-**Lo que hace mal.** Al escribir sobre texto seleccionado, **reaplica la selección en cada pulsación**: de un párrafo entero sobreviven los dos últimos caracteres. Y **borrar una selección fusiona el bloque con el siguiente**, así que vaciar un párrafo se lleva por delante el de abajo.
-
-**La secuencia que sí funciona**, y es la única que ha entrado limpia:
+**Los correos se escriben en HTML y se importan.** Se intentó montarlos a base de clics y el editor visual destrozó el contenido cuatro veces; la vía buena estaba escondida y es mucho mejor.
 
 ```
-1. triple clic sobre el párrafo      selecciona el bloque entero
-2. Shift+Izquierda                   deja UN carácter fuera de la selección
-3. Retroceso                         borra; el bloque NO se queda vacío, así que no se fusiona
-4. escribir el texto nuevo           entra entero, la selección ya está deshecha
-5. Supr                              se lleva el carácter que quedaba
+Diseñar email → Empezar desde cero → Editor HTML personalizado → Importar código HTML
 ```
 
-El paso 2 es el truco: **mientras el bloque tenga un carácter, no se fusiona con el de abajo.**
+Pide un **ZIP con un index.html dentro**. Entra literal, sin tocar una coma.
 
-⚠️ Y dos avisos más. Al elegir un correo existente como plantilla, **se sobrescriben el nombre, el asunto y la precabecera** con los del original — hay que volver a ponerlos. Y las coordenadas de una captura de pantalla **no coinciden con las del DOM**: las capturas vuelven a 1280, 1369 o 1421 px según el momento, así que hay que leerlas de la propia imagen y no calcularlas con `getBoundingClientRect()`.
+```bash
+mkdir bienvenida && cp correo.html bienvenida/index.html
+cd bienvenida && zip ../bienvenida.zip index.html
+```
 
-**Campañas**
+Ventajas sobre el editor de bloques, y no son pequeñas: **el HTML es el que tú escribiste**, se versiona en git, se renderiza en local para verlo antes, y no hay nada que un editor pueda fusionar o comerse.
 
-| Campaña | id | Estado |
-|---|---|---|
-| Lanzamiento · Hiperautomatizaciones ya está a la venta | `198502586079250421` | Borrador. Le faltan la portada y la URL de Amazon |
-| Newsletter · Por qué uso FastAPI y no Flask ni Django | `198508421041882407` | Borrador de PRUEBA. Se creó por API para validar la plantilla del número semanal. **Se puede borrar** |
+📌 El CSS que no sea media query **se convierte a estilos en línea al enviar**, así que da igual escribirlo en un `<style>`. Aun así conviene escribirlo ya en línea, que es lo que aguanta en Outlook.
+
+### 🔴 Cómo se comprueba lo que hay GUARDADO
+
+**El editor NO es fuente de verdad.** Llegó a mostrar los cambios mientras lo guardado seguía teniendo el correo del libro, y la automatización estuvo un rato activa mandando el texto equivocado. No llegó a nadie porque no había suscriptores, pero el fallo era real.
+
+Lo que sí sirve, por orden:
+
+**1. La captura que genera MailerLite del correo guardado.** Es una imagen del contenido real en su servidor, no del editor:
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://connect.mailerlite.com/api/automations/<id> \
+  | jq -r '.data.steps[]|select(.type=="email")|.email.screenshot_url'
+```
+
+**2. Las banderas del paso**: `complete`, `eligible_for_sending`, `has_unsubscribe_url`, `broken`.
+
+⚠️ La URL de `preview.mailerlite.io` **no vale para correos de HTML personalizado**: responde *«Preview is disabled»*. Sí vale para los del editor de bloques.
 
 ---
 
@@ -304,7 +301,6 @@ Crea la campaña **en borrador** contra el grupo de marca y devuelve su id. **No
 
 | | Qué |
 |---|---|
-| 🔴 | **Rehacer el cuerpo de la bienvenida de marca desde lienzo en blanco y activarla** |
 | 🔲 | **El perenne de doce meses no cabe en el plan gratuito** (5 pasos). Plan en [`newsletter_marca.md`](newsletter_marca.md), pendiente de que Alex decida si compensa pagar |
 | 🔲 | **Desactivar o poner en noindex el archivo público de MailerLite**, o competirá con los artículos del sitio por el mismo contenido |
 | 🔲 | **Probar la cadena entera de una lista**: ningún formulario ha recibido todavía un alta real (`conversions_count: 0` en los dos) |
