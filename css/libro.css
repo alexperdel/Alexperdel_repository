@@ -943,3 +943,102 @@ html { scroll-behavior: smooth; }
   .libro-cta-mid__inner { flex-direction: column; align-items: flex-start; }
   .libro-cta-mid .btn { width: 100%; justify-content: center; }
 }
+
+/* --------------------------------------------------------------------------
+   MODAL DE LISTA DE ESPERA
+   Lo abren los botones «Avísame cuando salga» de la home y de la landing.
+   Va en azul noche a propósito: así hereda tal cual los estilos de
+   .libro-form, que están escritos para fondo oscuro, y no hay una segunda
+   versión del formulario que mantener.
+   -------------------------------------------------------------------------- */
+
+.waitlist-modal {
+  /* La paleta del libro vive bajo .libro-page, y este <dialog> cuelga del
+     <body>, fuera de ese ámbito. Además la home no tiene .libro-page en
+     ninguna parte. Se declaran aquí para que el modal sea autónomo. */
+  --libro-crema: #F4EFE5;
+  --libro-azul: #12273F;
+  --libro-azul-2: #1B3554;
+  --libro-rojo: #DC2626;
+  --libro-rojo-claro: #EF4444;
+
+  width: min(540px, calc(100vw - 2rem));
+  /* El reset del sitio pone margin:0 a todo y eso mata el centrado que el
+     navegador le da por defecto a un <dialog> modal. Se devuelve aquí. */
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-xl);
+  background: var(--libro-azul);
+  color: #F4EFE5;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.waitlist-modal::backdrop {
+  background: rgba(18, 39, 63, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.waitlist-modal__inner {
+  padding: var(--space-8) var(--space-8) var(--space-6);
+  position: relative;
+}
+
+.waitlist-modal__close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: #8A9AAC;
+  font-size: var(--text-xl);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.waitlist-modal__close:hover {
+  background: var(--libro-azul-2);
+  color: #F4EFE5;
+}
+
+.waitlist-modal__title {
+  font-size: var(--text-2xl);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #F4EFE5;
+  margin: 0 0 var(--space-3);
+  padding-right: var(--space-8);
+}
+
+.waitlist-modal__text {
+  color: #B9C6D4;
+  font-size: var(--text-base);
+  margin: 0 0 var(--space-6);
+}
+
+/* En el modal el botón cae debajo del campo: hay menos ancho que en la
+   sección de la landing y partirlo en dos columnas lo deja estrecho. */
+.waitlist-modal .libro-form__row {
+  flex-direction: column;
+}
+
+/* Con la fila en columna, el eje principal pasa a ser el vertical: el
+   flex-basis de 320px del campo se leería como ALTO. Se anula. */
+.waitlist-modal .libro-form__row input[type="email"] {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.waitlist-modal .libro-form__row .btn {
+  width: 100%;
+}
+
+.waitlist-modal .libro-form__fine {
+  margin-top: var(--space-5);
+  margin-bottom: 0;
+}
