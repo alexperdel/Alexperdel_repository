@@ -5,13 +5,18 @@
 # Lee articulos/calendario.json y escribe un SVG por articulo en
 # assets/social/, en dos formatos:
 #
-#   <slug>-og.svg        1200x630  · LinkedIn, X, WhatsApp, og:image
-#   <slug>-cuadrado.svg  1080x1080 · Instagram, carruseles de LinkedIn
+#   <slug>-og.svg         1200x630  · LinkedIn, X, WhatsApp, og:image
+#   <slug>-cuadrado.svg   1080x1080 · Instagram, carruseles de LinkedIn
+#   <slug>-correo.jpg     1200x630  · newsletter, SIN el titular grabado
 #
-# Son SVG a proposito: pesan dos kilobytes, se ven nitidos a cualquier tamano
-# y se pueden abrir y retocar en cualquier editor. Si una red no admite SVG
-# —Instagram y LinkedIn piden mapa de bits para subir imagen—, se abre el SVG
-# en el navegador y se exporta a PNG, o se usa tools/portadas-png.html.
+# Los dos primeros son SVG a proposito: pesan dos kilobytes, se ven nitidos a
+# cualquier tamano y se abren en cualquier editor.
+#
+# El del correo va en JPEG porque EL SVG NO SE VE EN CORREO, y va sin el
+# titular grabado porque la plantilla del correo ya lo pone como texto debajo
+# de la imagen. Tiene que ponerlo: media bandeja de entrada abre con las
+# imagenes bloqueadas, y si el titular vive solo dentro del JPEG esa gente
+# abre un correo sin titular.
 #
 #   Uso:  bash tools/portadas.sh
 # =============================================================================
@@ -131,6 +136,7 @@ while IFS=$'\t' read -r fichero tag var titulo; do
   slug="${fichero%.html}"
   svg "$slug" "$tag" "$var" "$titulo" 1200 630  "-og"
   svg "$slug" "$tag" "$var" "$titulo" 1080 1080 "-cuadrado"
+  svg "$slug" "$tag" "$var" "$titulo" 1200 630  "-correo" "sin-titulo"
   n=$((n+1))
 done < <(jq -r '.articulos[] | [.fichero, .tag, .variante, .titulo] | @tsv' "$CAL")
 
@@ -155,14 +161,17 @@ done < <(jq -r '.articulos[] | [.fichero, .tag, .variante, .titulo] | @tsv' "$CA
 # que ya hace la conversion.
 # -----------------------------------------------------------------------------
 if command -v rsvg-convert >/dev/null; then
-  for f in "$OUT"/*-og.svg; do
+  for f in "$OUT"/*-correo.svg; do
     tmp="${f%.svg}.tmp.png"
     rsvg-convert -w 1200 -h 630 -o "$tmp" "$f"
     sips -s format jpeg -s formatOptions 82 "$tmp" --out "${f%.svg}.jpg" >/dev/null 2>&1
     rm -f "$tmp"
   done
+  # El SVG del correo solo existe como paso intermedio: en el correo se usa el
+  # JPEG, y en la web y en redes se usa la version CON titular.
+  rm -f "$OUT"/*-correo.svg
   echo
-  echo "JPEG 1200x630 generados para el correo"
+  echo "JPEG 1200x630 para el correo, sin el titular grabado"
 else
   echo
   echo "AVISO: falta rsvg-convert, no se han generado las imagenes del correo."
@@ -170,4 +179,4 @@ else
 fi
 
 echo
-echo "$n articulos · $((n*2)) SVG + $n JPEG en $OUT/"
+echo "$n articulos · $((n*2)) SVG + $n JPEG (correo) en $OUT/"
