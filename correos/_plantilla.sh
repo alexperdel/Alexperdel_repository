@@ -12,6 +12,12 @@
 #   3. El PIE con las dos salidas: LinkedIn para responder, y el libro.
 #      Enlaces, no botones: dos botones iguales compiten y no gana ninguno.
 #
+#      🔴 EL PIE NO LLEVA FECHA NI ESTADO DEL LIBRO. Ni "sale a finales de
+#      2026" ni "ya a la venta". Estos correos los recibe cada persona en una
+#      fecha distinta y siguen vivos anos despues: cualquier fecha caduca sola
+#      y deja el correo mintiendo. El estado lo cuenta la landing, que si se
+#      puede actualizar.
+#
 # El esqueleto vive aqui y no en cada fichero para que los tres se vean como
 # el mismo correo. Si cambia el pie o el color, cambia una vez.
 set -euo pipefail
@@ -95,9 +101,8 @@ $BLOQUE_ARTS
                     <a href="https://www.linkedin.com/in/alexperdel/" style="color:#DC2626; font-weight:bold;">por LinkedIn</a>
                     o respondiendo a este correo, que lo leo yo.
                     <br><br>
-                    Y estoy escribiendo un libro sobre todo esto:
-                    <a href="https://alexperdel.com/hiperautomatizaciones/" style="color:#DC2626; font-weight:bold;"><em>Hiperautomatizaciones</em></a>,
-                    a la venta a finales de 2026.
+                    Y hay un libro donde lo abordo entero:
+                    <a href="https://alexperdel.com/hiperautomatizaciones/" style="color:#DC2626; font-weight:bold;"><em>Hiperautomatizaciones</em></a>.
                   </td>
                 </tr>
               </table>
