@@ -59,7 +59,7 @@ Lo que hay montado hoy, con sus ids. Verificado por API, no de memoria.
 | Automatización | id | Estado |
 |---|---|---|
 | Bienvenida · lista de espera del libro | `198500616499103361` | ✅ **activa**, completa, sin avisos |
-| Bienvenida · newsletter de marca | `198519056538535656` | ✅ **activa**, completa, sin avisos |
+| Bienvenida · newsletter de marca | `198519056538535656` | ✅ **activa** · **5 pasos de 5**, tope del plan |
 
 Las dos mandan **un solo correo** al confirmar el alta, y no se cruzan: quien se apunta al aviso del libro no entra en la newsletter, y al revés.
 
@@ -139,9 +139,34 @@ Consecuencia, y hay que asumirla: **quien se suscriba nuevo no recibe los númer
 | Correo | Mecanismo | Qué lo dispara | Estado |
 |---|---|---|---|
 | Bienvenida del libro | Automatización | Confirmar el alta en la lista del libro | ✅ activa |
-| Bienvenida de la newsletter | Automatización | Confirmar el alta en la lista de marca | ✅ activa |
+| **Secuencia de la newsletter** | Automatización | Confirmar el alta en la lista de marca | ✅ activa · **3 correos** en días 0, 30 y 60 |
 | Número semanal | Campaña | Lo crea el circuito, lo envía Alex | Plantilla lista, sin artículos todavía |
 | «Ya está a la venta» | Campaña | Lo envía Alex el día del lanzamiento | Borrador, le faltan portada y URL |
+
+---
+
+## La secuencia de la newsletter · 3 correos y el tope del plan
+
+Se dispara al **confirmar** el alta y cuenta desde ese día, no por calendario. Quien se apunte en marzo recibe el nº1 en marzo.
+
+```
+[confirma el alta en · Marca]
+    día 0   ✉️  Ya estás dentro
+    espera 30 días
+    día 30  ✉️  Lo que más veo romperse      → lleva al índice de artículos
+    espera 30 días
+    día 60  ✉️  Estoy escribiendo un libro   → lleva a la landing del libro
+```
+
+🔴 **Son 5 pasos de los 5 que da el plan. No cabe un cuarto correo.** Los correos y las esperas cuentan igual; el disparador no cuenta.
+
+Para alargarla hay dos caminos y ninguno es gratis del todo: **pagar** —sube a 100 pasos, ~12 $/mes— o **encadenar** con «Mover a grupos» al final de un flujo para disparar otro, que da unos 6 o 7 correos a costa de grupos extra y de un montaje que se entiende regular seis meses después.
+
+📌 **Ninguno de los tres puede hablar de actualidad.** Entre el primero y el último pasan dos meses, y cada persona los recibe en fechas distintas: lo que se cuente tiene que valer igual dentro de dos años. Eso también es lo que hace que la secuencia no caduque y no haya que mantenerla.
+
+⚠️ **El tercero menciona el libro pero no suscribe a nadie**: lleva a la landing y es la persona quien decide. Las dos listas no se cruzan, y el consentimiento de una no sirve para la otra.
+
+**El HTML de los tres vive en [`correos/`](../correos/LEEME.md)**, no sólo en MailerLite.
 
 ---
 
