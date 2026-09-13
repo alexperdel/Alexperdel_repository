@@ -245,19 +245,25 @@
   margin: 0 auto;
 }
 
+/* El cuerpo va a --text-lg y no a --text-base: son tres columnas estrechas
+   sobre azul noche, y a 16px con texto gris claro sobre fondo oscuro costaba
+   leerlas. El texto claro sobre oscuro necesita un punto mas de cuerpo que
+   el mismo texto sobre blanco para leerse igual de comodo. */
 .libro-claim-list li {
   list-style: none;
   padding-top: var(--space-4);
   border-top: 2px solid rgba(244, 239, 229, 0.22);
-  color: #C9D4E0;
-  font-size: var(--text-base);
-  line-height: 1.55;
+  color: #D6DFE9;
+  font-size: var(--text-lg);
+  line-height: 1.6;
 }
 
 .libro-claim-list li strong {
   display: block;
   color: #F4EFE5;
-  margin-bottom: var(--space-2);
+  font-size: var(--text-xl);
+  line-height: 1.3;
+  margin-bottom: var(--space-3);
 }
 
 /* --------------------------------------------------------------------------
@@ -800,9 +806,17 @@ html { scroll-behavior: smooth; }
    -------------------------------------------------------------------------- */
 .libro-nots {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-4);
+  /* En flex y no en grid a proposito. Con cuatro columnas de 1fr las equis
+     quedaban alineadas pero los textos miden muy distinto ("No es un
+     tutorial" frente a "No es un curso motivacional"), asi que el hueco
+     entre el final de una etiqueta y la siguiente equis salia irregular y
+     la tira se leia descuadrada. En flex cada etiqueta ocupa lo que mide y
+     el hueco entre todas es el mismo, que es lo que se percibe como
+     alineado en una tira de etiquetas cortas. */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4) var(--space-10);
   /* Mismo ancho y mismo centrado que .libro-claim-list: si no, la tira
      arranca en el borde del contenedor y no cuadra con las tres columnas. */
   max-width: 920px;
@@ -932,14 +946,14 @@ html { scroll-behavior: smooth; }
 }
 
 @media (max-width: 860px) {
-  .libro-nots { grid-template-columns: repeat(2, 1fr); }
+  /* En pantallas medias la tira pasa a dos filas de dos sola, por el wrap. */
   .libro-foryou { grid-template-columns: 1fr; }
   .libro-author { grid-template-columns: 1fr; max-width: 560px; }
   .libro-author__photo { max-width: 240px; }
 }
 
 @media (max-width: 560px) {
-  .libro-nots { grid-template-columns: 1fr; }
+  .libro-nots { flex-direction: column; align-items: flex-start; }
   .libro-cta-mid__inner { flex-direction: column; align-items: flex-start; }
   .libro-cta-mid .btn { width: 100%; justify-content: center; }
 }

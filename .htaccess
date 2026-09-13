@@ -92,8 +92,14 @@ Options -Indexes
     ExpiresByType image/png "access plus 1 year"
     ExpiresByType image/svg+xml "access plus 1 year"
     ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
+    # CSS y JS bajan de 1 mes a 1 dia. Con un mes paso esto: se publico la
+    # landing del libro, styles.css empezo a importar libro.css, y los
+    # navegadores que ya tenian styles.css cacheado de julio siguieron
+    # sirviendo la version sin ese import durante 30 dias. La pagina cargaba
+    # pero sin sus estilos, con los botones del color del sitio y el hero
+    # apilado. Un dia es margen de sobra para una web que cambia poco.
+    ExpiresByType text/css "access plus 1 day"
+    ExpiresByType application/javascript "access plus 1 day"
     ExpiresByType text/html "access plus 1 day"
 </IfModule>
 
