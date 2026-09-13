@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- Theme (antes del render para evitar flash) -->
+  <script src="../js/theme.js"></script>
+
+  <!-- Google Consent Mode v2 + Analytics 4 (inyectado dinámicamente) -->
+  <script src="../js/cookies.js"></script>
+
+  <!-- SEO Meta Tags -->
+  <title>Artículos sobre automatización e IA | Alex Perdel</title>
+  <meta name="description" content="Tutoriales y experiencias reales con Vapi, n8n, Make, FastAPI y RAG. Lo que funcionó, lo que rompí y lo que hice distinto la segunda vez.">
+  <meta name="author" content="Alex Perdel">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://alexperdel.com/articulos/">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://alexperdel.com/articulos/">
+  <meta property="og:title" content="Artículos sobre automatización e IA | Alex Perdel">
+  <meta property="og:description" content="Por qué fallan las automatizaciones y qué hacer antes de meter IA en un proceso. Casos propios, con sus números y sus errores.">
+  <meta property="og:image" content="https://alexperdel.com/assets/img/alex-perdel-og.jpg">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Artículos sobre automatización e IA | Alex Perdel">
+  <meta name="twitter:description" content="Por qué fallan las automatizaciones y qué hacer antes de meter IA en un proceso.">
+  <meta name="twitter:image" content="https://alexperdel.com/assets/img/alex-perdel-og.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23DC2626' d='M18 2L6 18h8l-2 12 12-16h-8z'/%3E%3C/svg%3E">
+
+  <!-- Font Awesome -->
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/styles.css?v=20260913b">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://alexperdel.com/articulos/#blog",
+    "url": "https://alexperdel.com/articulos/",
+    "name": "Artículos de Alex Perdel",
+    "description": "Por qué fallan las automatizaciones y qué hacer antes de meter IA en un proceso. Casos propios, con sus números y sus errores.",
+    "inLanguage": "es",
+    "author": { "@id": "https://alexperdel.com/#alexperdel" },
+    "publisher": { "@id": "https://alexperdel.com/#alexperdel" }
+  }
+  </script>
+</head>
+<body>
+  <!-- ========== HEADER ========== -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="header__logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="url(#bolt-gradient-a)"/>
+          <defs>
+            <linearGradient id="bolt-gradient-a" x1="6" y1="2" x2="24" y2="30" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FBBF24"/>
+              <stop offset="1" stop-color="#DC2626"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        Alex Perdel
+      </a>
+
+      <nav class="nav">
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav__list">
+          <li><a href="../index.html" class="nav__link">Inicio</a></li>
+          <li><a href="../sobre-mi.html" class="nav__link">Sobre mí</a></li>
+          <li><a href="../proyectos/index.html" class="nav__link">Proyectos</a></li>
+          <li><a href="./index.html" class="nav__link nav__link--active">Artículos</a></li>
+          <li><a href="../hiperautomatizaciones/index.html" class="nav__link">El libro</a></li>
+          <li>
+            <button class="theme-toggle" onclick="ThemeToggle.toggle()" aria-label="Cambiar tema">
+              <i class="fas fa-moon icon-moon"></i>
+              <i class="fas fa-sun icon-sun"></i>
+            </button>
+          </li>
+          <li><a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" class="btn btn--primary">LinkedIn</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" style="padding-top: calc(var(--header-height) + var(--space-12));">
+      <div class="container">
+        <header class="section__header fade-in">
+          <h1 class="section__title">Artículos</h1>
+          <p class="section__subtitle">Tutoriales, trucos y cosas que he roto montando voicebots, automatizaciones y agentes. Desde lo que he hecho, no desde lo que he leído.</p>
+        </header>
+
+        <div class="articulos-grid">
+<!--TARJETAS-->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="../index.html" class="footer__logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
+        </svg>
+        Alex Perdel
+      </a>
+      <div class="footer__social">
+        <a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+      <div class="footer__legal">
+        <a href="../aviso-legal.html">Aviso Legal</a>
+        <a href="../politica-privacidad.html">Privacidad</a>
+        <a href="../politica-cookies.html">Cookies</a>
+      </div>
+      <p class="footer__copy">&copy; 2026 Alex Perdel</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

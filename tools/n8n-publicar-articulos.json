@@ -1,0 +1,229 @@
+{
+  "name": "alexperdel.com · Publicar artículos",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 9 * * *" }
+          ]
+        }
+      },
+      "id": "cron",
+      "name": "Cada día a las 9:00",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-420, 0]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/alexperdel/Alexperdel_repository/main/articulos/calendario.json",
+        "options": { "response": { "response": { "neverError": false } } }
+      },
+      "id": "cal",
+      "name": "Leer calendario",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-200, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Decide que esta publicado HOY.\n//\n// El indice es una FUNCION PURA del calendario y de la fecha: publicado es\n// todo lo que tiene fecha <= hoy. No se guarda estado en ningun sitio, asi\n// que el flujo se puede volver a lanzar las veces que haga falta y el\n// resultado es siempre el mismo. Si guardase una lista de \"ya publicados\",\n// cualquier fallo a medias dejaria el indice y el servidor descuadrados.\n\nconst cal = $input.first().json;\nconst arts = cal.articulos || [];\n\nconst hoy = new Date().toISOString().slice(0, 10);\n\nconst publicados = arts.filter(a => a.fecha <= hoy);\nconst pendientes = arts.filter(a => a.fecha > hoy);\n\n// Los que hay que SUBIR en esta pasada: los que tocan hoy. Los anteriores ya\n// estan arriba de pasadas previas, pero el indice y el sitemap se regeneran\n// enteros de todas formas.\nconst nuevos = arts.filter(a => a.fecha === hoy);\n\nreturn [{\n  json: {\n    hoy,\n    nuevos,\n    hay_nuevos: nuevos.length > 0,\n    publicados,\n    pendientes,\n    total_publicados: publicados.length\n  }\n}];"
+      },
+      "id": "decidir",
+      "name": "¿Toca publicar algo?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [20, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "version": 2 },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.hay_nuevos }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "si",
+      "name": "Hay artículo nuevo",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "nuevos",
+        "options": {}
+      },
+      "id": "split",
+      "name": "Uno por uno",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [460, -120]
+    },
+    {
+      "parameters": {
+        "url": "=https://raw.githubusercontent.com/alexperdel/Alexperdel_repository/main/articulos/_borradores/{{ $json.fichero }}",
+        "options": { "response": { "response": { "responseFormat": "text" } } }
+      },
+      "id": "borrador",
+      "name": "Bajar el borrador",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, -120]
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "options": {}
+      },
+      "id": "abin",
+      "name": "HTML a fichero",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [900, -120]
+    },
+    {
+      "parameters": {
+        "protocol": "ftp",
+        "operation": "upload",
+        "path": "=/web/articulos/{{ $('Uno por uno').item.json.fichero }}",
+        "binaryData": true,
+        "options": {}
+      },
+      "id": "subirart",
+      "name": "Subir artículo por FTP",
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [1120, -120],
+      "credentials": {
+        "ftp": { "id": "PON_AQUI_TU_CREDENCIAL", "name": "cdmon FTP" }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/alexperdel/Alexperdel_repository/main/articulos/_indice.tpl.html",
+        "options": { "response": { "response": { "responseFormat": "text" } } }
+      },
+      "id": "tplidx",
+      "name": "Plantilla del índice",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 100]
+    },
+    {
+      "parameters": {
+        "url": "https://raw.githubusercontent.com/alexperdel/Alexperdel_repository/main/articulos/_sitemap.tpl.xml",
+        "options": { "response": { "response": { "responseFormat": "text" } } }
+      },
+      "id": "tplmap",
+      "name": "Plantilla del sitemap",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 260]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Reconstruye el indice y el sitemap ENTEROS desde el calendario.\n//\n// Se regeneran completos en cada pasada, no se van parcheando. Parchear un\n// HTML con expresiones regulares funciona hasta el dia que no, y entonces el\n// indice queda con una tarjeta duplicada o media etiqueta suelta y nadie se\n// entera hasta semanas despues.\n\nconst d = $('¿Toca publicar algo?').first().json;\nconst tplIdx = $('Plantilla del índice').first().json.data;\nconst tplMap = $('Plantilla del sitemap').first().json.data;\n\nconst esc = s => String(s)\n  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n\nconst MESES = ['enero','febrero','marzo','abril','mayo','junio','julio',\n               'agosto','septiembre','octubre','noviembre','diciembre'];\nconst enLetra = f => {\n  const [a, m, dia] = f.split('-');\n  return `${Number(dia)} de ${MESES[Number(m) - 1]} de ${a}`;\n};\n\n// --- Tarjetas ------------------------------------------------------------\n// Los publicados van arriba, del mas nuevo al mas viejo. Los pendientes\n// debajo, en orden de salida, y SIN enlace: un enlace que no lleva a ningun\n// sitio gasta la confianza de quien lo pulsa.\n\nconst pub = [...d.publicados].sort((x, y) => y.fecha.localeCompare(x.fecha));\nconst pen = d.pendientes;\n\nfunction tarjeta(a, publicado, destacado) {\n  const clases = ['articulo-card'];\n  if (!publicado) clases.push('articulo-card--pendiente');\n  if (destacado) clases.push('articulo-card--destacado');\n  clases.push('fade-in');\n\n  const abre = publicado\n    ? `<a href=\"${a.fichero}\" class=\"${clases.join(' ')}\">`\n    : `<div class=\"${clases.join(' ')}\">`;\n  const cierra = publicado ? '</a>' : '</div>';\n\n  const meta = publicado\n    ? `<span>${enLetra(a.fecha)}</span>`\n    : `<span class=\"articulo-card__estado\">En camino</span>`;\n  const pie = publicado ? 'Leer &rarr;' : 'Aún sin publicar';\n\n  return `\n          ${abre}\n            <div class=\"articulo-card__cover articulo-card__cover--${a.variante}\">\n              <span class=\"articulo-card__num\">${esc(a.tag)}</span>\n              <span class=\"articulo-card__kicker\">${esc(a.tag)}</span>\n            </div>\n            <div class=\"articulo-card__body\">\n              <div class=\"articulo-card__meta\">${meta}</div>\n              <h2 class=\"articulo-card__title\">${esc(a.titulo)}</h2>\n              <p class=\"articulo-card__text\">${esc(a.entradilla)}</p>\n              <span class=\"articulo-card__pie\">${pie}</span>\n            </div>\n          ${cierra}`;\n}\n\nconst tarjetas = [\n  ...pub.map((a, i) => tarjeta(a, true, i === 0)),\n  ...pen.map(a => tarjeta(a, false, pub.length === 0 && a === pen[0]))\n].join('\\n');\n\nconst indice = tplIdx.replace('<!--TARJETAS-->', tarjetas);\n\n// --- Sitemap -------------------------------------------------------------\n// Solo los publicados. Meter en el sitemap una URL que todavia no existe es\n// pedirle a Google que rastree un 404.\n\nconst urls = pub.map(a => `  <url>\n    <loc>https://alexperdel.com/articulos/${a.fichero}</loc>\n    <lastmod>${a.fecha}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>`).join('\\n');\n\nconst sitemap = tplMap.replace('<!--ARTICULOS-->', urls);\n\nreturn [{\n  json: {\n    resumen: `${pub.length} publicados, ${pen.length} pendientes`,\n    nuevos: d.nuevos.map(a => a.titulo)\n  },\n  binary: {\n    indice: {\n      data: Buffer.from(indice, 'utf8').toString('base64'),\n      mimeType: 'text/html',\n      fileName: 'index.html'\n    },\n    sitemap: {\n      data: Buffer.from(sitemap, 'utf8').toString('base64'),\n      mimeType: 'application/xml',\n      fileName: 'sitemap.xml'\n    }\n  }\n}];"
+      },
+      "id": "generar",
+      "name": "Regenerar índice y sitemap",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 180]
+    },
+    {
+      "parameters": {
+        "protocol": "ftp",
+        "operation": "upload",
+        "path": "/web/articulos/index.html",
+        "binaryData": true,
+        "binaryPropertyName": "indice",
+        "options": {}
+      },
+      "id": "subiridx",
+      "name": "Subir índice",
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [1120, 100],
+      "credentials": {
+        "ftp": { "id": "PON_AQUI_TU_CREDENCIAL", "name": "cdmon FTP" }
+      }
+    },
+    {
+      "parameters": {
+        "protocol": "ftp",
+        "operation": "upload",
+        "path": "/web/sitemap.xml",
+        "binaryData": true,
+        "binaryPropertyName": "sitemap",
+        "options": {}
+      },
+      "id": "subirmap",
+      "name": "Subir sitemap",
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [1120, 260],
+      "credentials": {
+        "ftp": { "id": "PON_AQUI_TU_CREDENCIAL", "name": "cdmon FTP" }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.google.com/ping",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "sitemap", "value": "https://alexperdel.com/sitemap.xml" }
+          ]
+        },
+        "options": { "response": { "response": { "neverError": true } } }
+      },
+      "id": "avisar",
+      "name": "Avisar a Google del sitemap",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1340, 180]
+    }
+  ],
+  "connections": {
+    "Cada día a las 9:00": { "main": [[{ "node": "Leer calendario", "type": "main", "index": 0 }]] },
+    "Leer calendario": { "main": [[{ "node": "¿Toca publicar algo?", "type": "main", "index": 0 }]] },
+    "¿Toca publicar algo?": { "main": [[{ "node": "Hay artículo nuevo", "type": "main", "index": 0 }]] },
+    "Hay artículo nuevo": {
+      "main": [
+        [
+          { "node": "Uno por uno", "type": "main", "index": 0 },
+          { "node": "Plantilla del índice", "type": "main", "index": 0 },
+          { "node": "Plantilla del sitemap", "type": "main", "index": 0 }
+        ],
+        []
+      ]
+    },
+    "Uno por uno": { "main": [[{ "node": "Bajar el borrador", "type": "main", "index": 0 }]] },
+    "Bajar el borrador": { "main": [[{ "node": "HTML a fichero", "type": "main", "index": 0 }]] },
+    "HTML a fichero": { "main": [[{ "node": "Subir artículo por FTP", "type": "main", "index": 0 }]] },
+    "Plantilla del índice": { "main": [[{ "node": "Regenerar índice y sitemap", "type": "main", "index": 0 }]] },
+    "Plantilla del sitemap": { "main": [[{ "node": "Regenerar índice y sitemap", "type": "main", "index": 0 }]] },
+    "Regenerar índice y sitemap": {
+      "main": [
+        [
+          { "node": "Subir índice", "type": "main", "index": 0 },
+          { "node": "Subir sitemap", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Subir índice": { "main": [[{ "node": "Avisar a Google del sitemap", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "meta": {
+    "descripcion": "Publica los articulos de alexperdel.com segun articulos/calendario.json. Lee los borradores del repo publico de GitHub y sube por FTP a cdmon. El indice y el sitemap se REGENERAN enteros en cada pasada desde el calendario, no se parchean: asi el flujo es idempotente y se puede relanzar sin miedo."
+  }
+}
