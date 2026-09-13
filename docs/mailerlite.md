@@ -76,6 +76,38 @@ GET /api/automations   → enabled, complete, broken, eligible_for_sending
 GET /api/groups        → active_count por grupo
 ```
 
+📌 **Y un tercer sitio donde no llega la API: el CONTENIDO de los formularios.** `GET /api/forms/embedded` devuelve el grupo, el estado y las métricas, pero **no el texto**. Para leer lo que de verdad está publicado sin abrir el panel, sirve la URL de vista previa, que es pública y sale en el propio JSON:
+
+```
+.share_url            → https://preview.mailerlite.io/forms/<cuenta>/<form>/share
+.preview_url del email → https://preview.mailerlite.io/preview/<cuenta>/emails/<email>
+```
+
+Con eso se comprueba por `curl` que un cambio ha entrado, en vez de fiarse de una captura.
+
+---
+
+## 🔴 Lo que el plan actual no deja tocar
+
+Hay dos textos que **ve todo el que se suscribe** y que no se pueden editar:
+
+| | Qué es | Qué dice hoy |
+|---|---|---|
+| **Email de confirmación** | El PRIMER correo que recibe, antes que ninguna bienvenida | *«¡Gracias por tu interés en nuestra newsletter!»* |
+| **Página de gracias** | Donde aterriza tras pulsar el enlace de confirmar | *«¡Te has suscripto a la newsletter!»* |
+
+No es configuración mal puesta: en el panel los botones **Editar** salen deshabilitados y el editor de la plantilla responde **403 · «No disponible en el plan gratis»**.
+
+⚠️ **Dónde molesta de verdad es en la lista del libro**, que promete explícitamente *«no hay newsletter detrás»* y cuyo primer correo dice lo contrario.
+
+**Salidas, de menos a más trabajo:**
+
+1. **Dejarlo.** Son dos pantallas de trámite y el correo de bienvenida, que sí controlamos, llega justo después y corrige la impresión.
+2. **Redirigir la confirmación a una página propia.** En *Double opt-in → Página de agradecimiento* hay un campo **«O usa tu propia landing page»** que acepta una URL. Es gratis y esquiva el editor bloqueado, pero pide crear esa página en el sitio — y entonces se puede escribir una por lista, que es lo correcto.
+3. **Subir de plan**, si algún día hace falta por otra cosa.
+
+La opción 2 es la buena en cuanto haya volumen. Hoy no lo hay.
+
 ---
 
 ## Medición — el matiz que descuadra los números
@@ -106,3 +138,4 @@ utm_term = {$campaign_date}
 |---|---|
 | 🔲 | **El workflow perenne de doce meses** — plan en [`newsletter_marca.md`](newsletter_marca.md) |
 | 🔲 | **Desactivar o poner en noindex el archivo público de MailerLite**, o competirá con los artículos del sitio por el mismo contenido |
+| 🔲 | **Probar la cadena entera de una lista**: ningún formulario ha recibido todavía un alta real (`conversions_count: 0` en los dos) |
