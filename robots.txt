@@ -9,6 +9,12 @@ Allow: /
 # solo el primer grupo que les encaja, así que un segundo "User-agent: *"
 # se ignoraría entero.
 Disallow: /articulos/_
+
+# Los correos de la newsletter no son paginas del sitio: son el HTML fuente
+# que se importa a MailerLite. Viven aqui para versionarlos, no para que los
+# lea nadie. Si alguna vez se sincroniza el repo entero por FTP, que no se
+# indexen como contenido duplicado.
+Disallow: /correos/
 Disallow: /docs/
 Disallow: /tools/
 
