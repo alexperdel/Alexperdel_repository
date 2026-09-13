@@ -1117,15 +1117,9 @@ html { scroll-behavior: smooth; }
 }
 
 /* --------------------------------------------------------------------------
-   LAS DOS COLUMNAS DEL «HABLEMOS» DE LA HOME
-   Izquierda, quien quiere hablar contigo. Derecha, quien quiere que le
-   escribas tú. Van separadas porque apiladas se leían como lo mismo dicho
-   dos veces.
-
-   Y los botones NO son iguales a propósito: el de LinkedIn es el rojo de
-   marca —la acción principal del sitio— y el de suscribirse va en azul
-   noche. Dos rojos idénticos compitiendo a la misma altura es lo que hace
-   que no se distinga qué es cada cosa.
+   LA NEWSLETTER DE LA HOME
+   Una sola tarjeta centrada al final de la página. LinkedIn NO va aquí: ya
+   está en el hero y en el pie, y una tercera llamada a lo mismo resta.
 
    Mismo problema que el modal: .libro-form está escrito para fondo oscuro y
    esto cae sobre la sección gris clara, así que hay que repintar lo que
@@ -1133,78 +1127,25 @@ html { scroll-behavior: smooth; }
    .libro-page y las variables del libro no llegan.
    -------------------------------------------------------------------------- */
 
-.cta-dual {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-10);
-  align-items: start;
-  max-width: 980px;
+.cta-news {
+  max-width: 520px;
   margin: 0 auto;
-}
-
-.cta-dual__col {
   background: #FFFFFF;
   border: 1px solid rgba(18, 39, 63, 0.12);
+  border-top: 3px solid #DC2626;
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   text-align: left;
-  height: 100%;
 }
 
-/* La columna de la newsletter lleva la regla roja de la cubierta arriba.
-   Es el único adorno, y sirve para que las dos tarjetas no sean gemelas. */
-.cta-dual__col--news {
-  border-top: 3px solid #DC2626;
-}
-
-.cta-dual__kicker {
-  display: block;
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #8A9AAC;
-  margin-bottom: var(--space-3);
-}
-
-.cta-dual__title {
-  font-size: var(--text-xl);
-  line-height: 1.25;
-  color: #12273F;
-  margin: 0 0 var(--space-3);
-}
-
-.cta-dual__text {
-  font-size: var(--text-base);
-  line-height: 1.6;
-  color: #4A5C70;
-  margin: 0 0 var(--space-6);
-}
-
-.cta-dual__btn {
-  width: 100%;
-  justify-content: center;
-}
-
-/* Azul noche, no rojo: así no compite con el de LinkedIn. */
-.cta-dual__btn--news {
-  background: #12273F;
-  border: 1px solid #12273F;
-  color: #FFFFFF;
-}
-
-.cta-dual__btn--news:hover {
-  background: #1B3554;
-  border-color: #1B3554;
-}
-
-/* El formulario, repintado para fondo claro */
-.cta-dual__form .libro-form__row {
+/* El campo y el botón, uno debajo del otro: a 520px de ancho partirlos en
+   dos columnas deja el campo demasiado estrecho para un email. */
+.cta-news__form .libro-form__row {
   flex-direction: column;
   gap: var(--space-3);
 }
 
-.cta-dual__form input[type="email"] {
+.cta-news__form input[type="email"] {
   flex: 0 0 auto;
   width: 100%;
   background: #FFFFFF;
@@ -1212,40 +1153,18 @@ html { scroll-behavior: smooth; }
   border: 2px solid rgba(18, 39, 63, 0.25);
 }
 
-.cta-dual__form input[type="email"]::placeholder { color: #8A9AAC; }
-.cta-dual__form input[type="email"]:focus { border-color: #DC2626; }
+.cta-news__form input[type="email"]::placeholder { color: #8A9AAC; }
+.cta-news__form input[type="email"]:focus { border-color: #DC2626; }
+
+.cta-news__btn {
+  width: 100%;
+  justify-content: center;
+}
 
 /* El gris de origen (#A9B7C6) sobre fondo claro se queda en 2,4:1 y no se
    lee. Se sube a un azul apagado que sí pasa el contraste. */
-.cta-dual__col .libro-form__consent { color: #4A5C70; }
-.cta-dual__col .libro-form__consent a { color: #12273F; text-decoration: underline; }
-.cta-dual__col .libro-form__msg { color: #12273F; }
-.cta-dual__col .libro-form__msg.is-error { color: #DC2626; }
-.cta-dual__col .libro-form__fine { color: #6B7A8C; margin-top: var(--space-4); }
-
-@media (max-width: 768px) {
-  .cta-dual {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-}
-
-/* Las dos tarjetas, cuadradas entre sí:
-   · El borde de 3px de la de newsletter desplazaba su contenido esos 3px.
-     La otra lleva ahora un borde transparente del mismo grosor, así los dos
-     kickers arrancan a la misma altura.
-   · Y el contenido se estira para que el botón de LinkedIn caiga abajo en
-     vez de dejar medio bloque vacío debajo. */
-.cta-dual__col {
-  display: flex;
-  flex-direction: column;
-  border-top: 3px solid transparent;
-}
-
-.cta-dual__col--news {
-  border-top-color: #DC2626;
-}
-
-.cta-dual__col > .cta-dual__btn {
-  margin-top: auto;
-}
+.cta-news .libro-form__consent { color: #4A5C70; }
+.cta-news .libro-form__consent a { color: #12273F; text-decoration: underline; }
+.cta-news .libro-form__msg { color: #12273F; }
+.cta-news .libro-form__msg.is-error { color: #DC2626; }
+.cta-news .libro-form__fine { color: #6B7A8C; margin-top: var(--space-4); }

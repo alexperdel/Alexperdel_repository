@@ -553,54 +553,34 @@
     </style>
 
     <!-- ========== CTA FINAL ========== -->
+    <!-- Solo newsletter. LinkedIn ya está en el hero y en el pie: una
+         tercera llamada a lo mismo no añade, resta. -->
     <section class="section section--gray">
       <div class="container">
-        <div class="text-center fade-in" style="margin-bottom: var(--space-10);">
-          <h2 class="section__title">Hablemos</h2>
-          <p class="section__subtitle">Dos formas, y no son la misma.</p>
+        <div class="text-center fade-in" style="margin-bottom: var(--space-8);">
+          <h2 class="section__title">Te escribo una vez al mes</h2>
+          <p class="section__subtitle">Lo que aprendo montando automatizaciones: lo que funciona, lo que se cae y por qué.</p>
         </div>
 
-        <!-- Dos columnas a propósito: son intenciones distintas. A la
-             izquierda, quien quiere hablar contigo. A la derecha, quien
-             quiere que le escribas tú. Apiladas se leían como lo mismo
-             dicho dos veces. -->
-        <div class="cta-dual fade-in">
+        <div class="cta-news fade-in">
+          <form class="libro-form cta-news__form" data-lista="marca" novalidate>
+            <div class="libro-form__row">
+              <label for="news-email" class="visually-hidden">Tu email</label>
+              <input type="email" id="news-email" name="email" placeholder="tu@email.com" autocomplete="email" required>
+              <button type="submit" class="btn btn--primary btn--large cta-news__btn">
+                Suscribirme
+              </button>
+            </div>
 
-          <div class="cta-dual__col">
-            <span class="cta-dual__kicker">Para un proyecto</span>
-            <h3 class="cta-dual__title">Trabajemos juntos</h3>
-            <p class="cta-dual__text">Si buscas integrar IA y automatización en tu empresa, o quieres colaborar en algo, el sitio para empezar es LinkedIn.</p>
-            <a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" class="btn btn--primary btn--large cta-dual__btn">
-              <i class="fab fa-linkedin"></i>
-              Conectar en LinkedIn
-            </a>
-          </div>
+            <label class="libro-form__consent">
+              <input type="checkbox" id="news-consent" name="consent" required>
+              <span>Acepto recibir la newsletter y he leído la <a href="politica-privacidad.html">política de privacidad</a>.</span>
+            </label>
 
-          <div class="cta-dual__col cta-dual__col--news">
-            <span class="cta-dual__kicker">Para leerme</span>
-            <h3 class="cta-dual__title">Te escribo una vez al mes</h3>
-            <p class="cta-dual__text">Lo que aprendo montando automatizaciones: lo que funciona, lo que se cae y por qué. Un correo, una idea y nada de relleno.</p>
+            <p class="libro-form__msg" role="status" aria-live="polite"></p>
+          </form>
 
-            <form class="libro-form cta-dual__form" data-lista="marca" novalidate>
-              <div class="libro-form__row">
-                <label for="news-email" class="visually-hidden">Tu email</label>
-                <input type="email" id="news-email" name="email" placeholder="tu@email.com" autocomplete="email" required>
-                <button type="submit" class="btn btn--large cta-dual__btn cta-dual__btn--news">
-                  Suscribirme
-                </button>
-              </div>
-
-              <label class="libro-form__consent">
-                <input type="checkbox" id="news-consent" name="consent" required>
-                <span>Acepto recibir la newsletter y he leído la <a href="politica-privacidad.html">política de privacidad</a>.</span>
-              </label>
-
-              <p class="libro-form__msg" role="status" aria-live="polite"></p>
-            </form>
-
-            <p class="libro-form__fine">Un correo al mes. Te borras de un clic y no hay preguntas.</p>
-          </div>
-
+          <p class="libro-form__fine">Un correo, una idea y nada de relleno. Te borras de un clic y no hay preguntas.</p>
         </div>
       </div>
     </section>
