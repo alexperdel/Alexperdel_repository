@@ -344,17 +344,32 @@ las UTMs y el contrato con el circuito semanal. Los correos del libro, en
 
 ### Lo que cruza entre las dos partes
 
-**Portadas para el correo.** `tools/portadas.sh` genera, además de los SVG,
-**un JPEG de 1200×630 por artículo**. Es el ancho que pide la plantilla del
-correo, al doble de lo que se muestra para que se vea nítido en retina.
+**Portadas.** `tools/portadas.sh` genera **tres por artículo** y no son
+intercambiables:
 
-Va en JPEG y no en PNG aunque se pidió PNG: son degradados sin transparencia y
-ahí el PNG comprime fatal. Medido sobre la misma imagen, **183 KB en PNG frente
-a 97 en JPEG**; por los doce, 2,7 MB contra 1,2. En correo el peso importa.
+| Fichero | Para | Titular |
+|---|---|---|
+| `<slug>-correo.jpg` | **La newsletter** | ❌ **Sin titular grabado** |
+| `<slug>-og.svg` | LinkedIn, X, WhatsApp, `og:image` | ✅ Con titular |
+| `<slug>-cuadrado.svg` | Instagram | ✅ Con titular |
 
-**El SVG no se puede usar en el correo.** El servicio de MailerLite rechaza una
-URL acabada en `.svg` a propósito, para que reviente en vez de dejar un hueco
-roto en la bandeja de alguien.
+**El motivo de que el correo lleve una distinta**, que es lo que se olvida: en
+redes la imagen va sola y tiene que explicarse sin ayuda. En el correo va
+acompañada del titular en texto justo debajo, así que grabarlo dentro lo
+duplica.
+
+Y **el titular tiene que seguir en texto** fuera de la imagen: media bandeja de
+entrada abre con las imágenes bloqueadas —el Outlook de escritorio lo hace de
+fábrica— y si viviera solo dentro del JPEG, esa gente abriría un correo sin
+titular.
+
+Va en JPEG y no en PNG: son degradados sin transparencia y ahí el PNG comprime
+fatal. Medido, **183 KB en PNG frente a 97 en JPEG**. En correo el peso importa.
+
+⚠️ **Pasar la variante equivocada al correo no canta:** el titular sale dos
+veces y no se ve hasta tenerlo en la bandeja. La validación de MailerLite
+protege el caso a medias —las de redes son `.svg` y las rechaza—, pero si algún
+día hubiera un `-og.jpg`, pasaría.
 
 ---
 
