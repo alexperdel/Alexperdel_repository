@@ -1,0 +1,209 @@
+/* ==========================================================================
+   ARTICULOS
+   Listado y pagina de articulo.
+
+   No hereda de .legal-content aunque se parezcan: esa esta pensada para
+   textos que nadie quiere leer (avisos, politicas) y va apretada a proposito.
+   Un articulo se lee entero, asi que necesita mas aire, medida mas corta y
+   jerarquia real entre encabezados.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Listado
+   -------------------------------------------------------------------------- */
+
+.articulos-lista {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* Cada entrada es un bloque con una linea superior, no una tarjeta con
+   sombra. Un indice de textos se recorre leyendo, y las tarjetas invitan a
+   mirar en vez de a leer. */
+.articulo-item {
+  display: block;
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--color-border, rgba(18, 39, 63, 0.14));
+  transition: all var(--transition-fast);
+}
+
+.articulo-item:hover .articulo-item__title {
+  color: var(--color-primary);
+}
+
+.articulo-item__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.articulo-item__tag {
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--bg-secondary, rgba(18, 39, 63, 0.06));
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.articulo-item__title {
+  font-size: var(--text-2xl);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin-bottom: var(--space-3);
+  transition: color var(--transition-fast);
+}
+
+.articulo-item__text {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+/* Los que aun no estan escritos se anuncian pero no enlazan. Prometer un
+   enlace que no lleva a ningun sitio es peor que no prometerlo. */
+.articulo-item--pendiente {
+  opacity: 0.62;
+  cursor: default;
+}
+
+.articulo-item--pendiente:hover .articulo-item__title {
+  color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Pagina de articulo
+   -------------------------------------------------------------------------- */
+
+.articulo {
+  padding-top: calc(var(--header-height) + var(--space-12));
+  padding-bottom: var(--space-20);
+}
+
+/* 68ch es la medida en la que se lee comodo. Mas ancho y el ojo pierde el
+   renglon al volver; mas estrecho y se corta demasiado la frase. */
+.articulo__cuerpo {
+  max-width: 68ch;
+  margin: 0 auto;
+}
+
+.articulo__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.articulo__title {
+  font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: var(--space-5);
+}
+
+.articulo__entradilla {
+  font-size: var(--text-xl);
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--color-border, rgba(18, 39, 63, 0.14));
+}
+
+.articulo__cuerpo p {
+  font-size: var(--text-lg);
+  line-height: 1.7;
+  margin-bottom: var(--space-6);
+}
+
+.articulo__cuerpo h2 {
+  font-size: var(--text-2xl);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  margin: var(--space-12) 0 var(--space-4);
+}
+
+.articulo__cuerpo h3 {
+  font-size: var(--text-xl);
+  margin: var(--space-8) 0 var(--space-3);
+}
+
+.articulo__cuerpo ul,
+.articulo__cuerpo ol {
+  margin: 0 0 var(--space-6) var(--space-6);
+  font-size: var(--text-lg);
+  line-height: 1.7;
+}
+
+.articulo__cuerpo ul { list-style: disc; }
+.articulo__cuerpo ol { list-style: decimal; }
+
+.articulo__cuerpo li {
+  margin-bottom: var(--space-3);
+  padding-left: var(--space-2);
+}
+
+.articulo__cuerpo a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* La cita es el gancho del texto, no un adorno. Va en rojo y con barra,
+   igual que el hook de la landing del libro, para que se lea como la misma
+   voz y no como una plantilla distinta. */
+.articulo__cuerpo blockquote {
+  border-left: 3px solid var(--color-primary);
+  padding-left: var(--space-5);
+  margin: var(--space-8) 0;
+  font-size: var(--text-xl);
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.articulo__cuerpo blockquote p:last-child { margin-bottom: 0; }
+
+.articulo__cuerpo hr {
+  border: 0;
+  border-top: 1px solid var(--color-border, rgba(18, 39, 63, 0.14));
+  margin: var(--space-12) 0;
+}
+
+/* --------------------------------------------------------------------------
+   Pie del articulo: de donde sale y a donde lleva
+   -------------------------------------------------------------------------- */
+
+.articulo__origen {
+  margin-top: var(--space-12);
+  padding: var(--space-6);
+  border-left: 3px solid var(--color-primary);
+  background: var(--bg-secondary, rgba(18, 39, 63, 0.04));
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+
+.articulo__origen p:last-child { margin-bottom: 0; }
+
+.articulo__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border, rgba(18, 39, 63, 0.14));
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 560px) {
+  .articulo__nav { flex-direction: column; }
+}

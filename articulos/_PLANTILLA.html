@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  PLANTILLA DE ARTÍCULO — no se publica, se copia.
+
+  Este fichero empieza por guion bajo a propósito: así queda junto a los
+  artículos pero se distingue de un vistazo, y no está en el sitemap.
+
+  PARA PUBLICAR UN ARTÍCULO:
+
+  1. Copia este fichero con el nombre definitivo. El nombre ES la URL, así
+     que escríbelo pensando en qué se busca, no en el título bonito:
+       articulos/por-que-se-caen-las-automatizaciones.html
+     Sin fecha, sin números, sin acentos, separado por guiones.
+
+  2. Busca los bloques [[ ]] y sustitúyelos. Están todos marcados.
+
+  3. Escribe el texto dentro de <div class="articulo__cuerpo">.
+     Usa <p>, <h2>, <h3>, <ul>, <blockquote>. Nada más hace falta.
+
+  4. En articulos/index.html mueve su bloque al grupo PUBLICADOS, cámbiale
+     el <div> por <a href="su-fichero.html">, y quítale --pendiente.
+
+  5. Añádelo a sitemap.xml con la fecha de hoy en <lastmod>.
+
+  6. Sube por FTP: el artículo, el índice y el sitemap.
+  ============================================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <script src="../js/theme.js"></script>
+  <script src="../js/cookies.js"></script>
+
+  <!-- SEO. El título va por debajo de 60 caracteres: lo que Google muestra
+       antes de cortar. No se ve en la página, solo en la pestaña y en el
+       resultado de búsqueda, así que escríbelo para quien busca. -->
+  <title>[[TÍTULO, máx. 60 car.]] | Alex Perdel</title>
+  <!-- La descripción, por debajo de 160. Si te pasas, Google la corta a
+       media frase y queda peor que si la escribes corta a propósito. -->
+  <meta name="description" content="[[DESCRIPCIÓN, máx. 160 car.]]">
+  <meta name="author" content="Alex Perdel">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://alexperdel.com/articulos/[[FICHERO.html]]">
+
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://alexperdel.com/articulos/[[FICHERO.html]]">
+  <meta property="og:title" content="[[TÍTULO]]">
+  <meta property="og:description" content="[[DESCRIPCIÓN]]">
+  <meta property="og:image" content="https://alexperdel.com/assets/img/alex-perdel-og.jpg">
+  <meta property="og:locale" content="es_ES">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="[[TÍTULO]]">
+  <meta name="twitter:description" content="[[DESCRIPCIÓN]]">
+  <meta name="twitter:image" content="https://alexperdel.com/assets/img/alex-perdel-og.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23DC2626' d='M18 2L6 18h8l-2 12 12-16h-8z'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+  <link rel="stylesheet" href="../css/styles.css?v=20260913">
+
+  <!-- Schema.org. El author y el publisher apuntan por @id a la ficha Person
+       que vive en la home: así Google suma todo lo que publicas a UNA misma
+       entidad en vez de tratar cada página como de un autor distinto. Eso es
+       justo lo que hace falta para salir el primero por tu propio nombre. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "[[TÍTULO]]",
+    "description": "[[DESCRIPCIÓN]]",
+    "inLanguage": "es",
+    "url": "https://alexperdel.com/articulos/[[FICHERO.html]]",
+    "mainEntityOfPage": "https://alexperdel.com/articulos/[[FICHERO.html]]",
+    "image": "https://alexperdel.com/assets/img/alex-perdel-og.jpg",
+    "datePublished": "[[AAAA-MM-DD]]",
+    "dateModified": "[[AAAA-MM-DD]]",
+    "author": { "@id": "https://alexperdel.com/#alexperdel" },
+    "publisher": { "@id": "https://alexperdel.com/#alexperdel" },
+    "isPartOf": { "@id": "https://alexperdel.com/articulos/#blog" }
+  }
+  </script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="header__logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="url(#bolt-gradient-p)"/>
+          <defs>
+            <linearGradient id="bolt-gradient-p" x1="6" y1="2" x2="24" y2="30" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#FBBF24"/>
+              <stop offset="1" stop-color="#DC2626"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        Alex Perdel
+      </a>
+
+      <nav class="nav">
+        <button class="nav__toggle" aria-label="Menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav__list">
+          <li><a href="../index.html" class="nav__link">Inicio</a></li>
+          <li><a href="../sobre-mi.html" class="nav__link">Sobre mí</a></li>
+          <li><a href="../proyectos/index.html" class="nav__link">Proyectos</a></li>
+          <li><a href="./index.html" class="nav__link nav__link--active">Artículos</a></li>
+          <li><a href="../hiperautomatizaciones/index.html" class="nav__link">El libro</a></li>
+          <li>
+            <button class="theme-toggle" onclick="ThemeToggle.toggle()" aria-label="Cambiar tema">
+              <i class="fas fa-moon icon-moon"></i>
+              <i class="fas fa-sun icon-sun"></i>
+            </button>
+          </li>
+          <li><a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" class="btn btn--primary">LinkedIn</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="articulo">
+      <div class="container">
+        <div class="articulo__cuerpo">
+
+          <div class="articulo__meta">
+            <a href="./index.html">Artículos</a>
+            <span>·</span>
+            <time datetime="[[AAAA-MM-DD]]">[[D de mes de AAAA]]</time>
+            <span>·</span>
+            <span>[[N]] min de lectura</span>
+          </div>
+
+          <!-- Este h1 SÍ se ve en la página. Puede ser distinto del <title>
+               de arriba: aquel es para Google, este es para quien ya entró. -->
+          <h1 class="articulo__title">[[TITULAR]]</h1>
+
+          <!-- La entradilla es el gancho. Dos o tres frases, y que se
+               entienda el artículo entero aunque no se siga leyendo. -->
+          <p class="articulo__entradilla">[[ENTRADILLA]]</p>
+
+          <!-- ================== AQUÍ EMPIEZA EL TEXTO ================== -->
+
+          <p>[[Primer párrafo.]]</p>
+
+          <h2>[[Primer apartado]]</h2>
+
+          <p>[[Texto.]]</p>
+
+          <blockquote>
+            <p>[[La frase que resume el artículo. Es lo que la gente cita y lo
+            que los buscadores con IA se llevan, así que que sea concreta.]]</p>
+          </blockquote>
+
+          <h2>[[Segundo apartado]]</h2>
+
+          <p>[[Texto.]]</p>
+
+          <ul>
+            <li>[[Punto.]]</li>
+            <li>[[Punto.]]</li>
+          </ul>
+
+          <!-- =================== AQUÍ TERMINA EL TEXTO ================== -->
+
+          <!-- De dónde sale. Enlaza el libro desde cada artículo: es tráfico
+               interno hacia la página que quieres que rankee. -->
+          <div class="articulo__origen">
+            <p>Esto sale del capítulo [[N]] de <a href="../hiperautomatizaciones/index.html"><strong>Hiperautomatizaciones</strong></a>, el libro que estoy escribiendo. Sale a finales de 2026 y puedes pedir que te avise el día que esté.</p>
+          </div>
+
+          <nav class="articulo__nav">
+            <a href="./index.html">← Todos los artículos</a>
+            <a href="../hiperautomatizaciones/index.html">El libro →</a>
+          </nav>
+
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="../index.html" class="footer__logo">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
+        </svg>
+        Alex Perdel
+      </a>
+      <div class="footer__social">
+        <a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
+      <div class="footer__legal">
+        <a href="../aviso-legal.html">Aviso Legal</a>
+        <a href="../politica-privacidad.html">Privacidad</a>
+        <a href="../politica-cookies.html">Cookies</a>
+      </div>
+      <p class="footer__copy">&copy; 2026 Alex Perdel</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
