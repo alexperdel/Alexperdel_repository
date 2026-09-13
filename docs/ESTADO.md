@@ -337,4 +337,43 @@ la falta de ideas, es que se pierden.
 
 Ninguna de las dos toca el terreno de la otra sin avisar antes.
 
-Lo de MailerLite está documentado por la otra sesión.
+**Todo lo de MailerLite está en [`docs/mailerlite.md`](mailerlite.md):** cuenta,
+grupos, formularios, automatizaciones, campañas, los topes del plan gratuito,
+las UTMs y el contrato con el circuito semanal. Los correos del libro, en
+`hiperautomatizaciones-libro/propuesta_editorial/correos_del_libro.md`.
+
+### Lo que cruza entre las dos partes
+
+**Portadas para el correo.** `tools/portadas.sh` genera, además de los SVG,
+**un JPEG de 1200×630 por artículo**. Es el ancho que pide la plantilla del
+correo, al doble de lo que se muestra para que se vea nítido en retina.
+
+Va en JPEG y no en PNG aunque se pidió PNG: son degradados sin transparencia y
+ahí el PNG comprime fatal. Medido sobre la misma imagen, **183 KB en PNG frente
+a 97 en JPEG**; por los doce, 2,7 MB contra 1,2. En correo el peso importa.
+
+**El SVG no se puede usar en el correo.** El servicio de MailerLite rechaza una
+URL acabada en `.svg` a propósito, para que reviente en vez de dejar un hueco
+roto en la bandeja de alguien.
+
+---
+
+## 13. 🔴 Lo que NO está probado
+
+Conviene que esto no se pierda entre lo demás, porque es lo único que puede
+estar roto ahora mismo sin que se note:
+
+**Nadie se ha suscrito nunca.** Los dos formularios marcan
+`conversions_count: 0`. La cadena entera —alta, correo de confirmación,
+bienvenida— **no se ha probado con un correo real**.
+
+Y hay una sospecha concreta: el formulario del libro **tiene casilla de
+consentimiento configurada en MailerLite**, mientras que nuestro JavaScript
+solo manda el email. Si el servidor la exige, las altas **fallan en silencio**:
+el usuario ve «te he mandado un correo», el evento de GA4 se dispara igual
+—porque el envío va en `no-cors` y no puede leer la respuesta— y no se
+suscribe nadie.
+
+**Es lo primero que hay que probar**, y son dos minutos: darse de alta con un
+correo propio y comprobar que llega la confirmación y que el suscriptor aparece
+en el grupo.

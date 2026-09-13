@@ -119,5 +119,40 @@ while IFS=$'\t' read -r fichero tag var titulo; do
   n=$((n+1))
 done < <(jq -r '.articulos[] | [.fichero, .tag, .variante, .titulo] | @tsv' "$CAL")
 
+# -----------------------------------------------------------------------------
+# Mapa de bits para el correo
+#
+# EL SVG NO SE VE EN CORREO. Gmail, Outlook y Apple Mail no lo renderizan: sale
+# un hueco o un icono roto. La plantilla de la newsletter necesita mapa de bits
+# si o si, asi que del formato 1200x630 se saca tambien.
+#
+# 1200 de ancho y no 600, que es a lo que se muestra la plantilla: el doble,
+# para que se vea nitido en pantallas retina, que son casi todas las que abren
+# un correo.
+#
+# JPEG y no PNG, aunque se pidio PNG: son degradados sin una sola zona
+# transparente, y ahi el PNG comprime fatal. Medido sobre la misma imagen, 183
+# KB en PNG frente a 97 en JPEG al 82. Por los doce articulos son 2,7 MB contra
+# 1,2. En correo el peso importa: hay clientes que recortan el mensaje y redes
+# moviles que tardan. JPEG lo entiende todo cliente de correo desde siempre.
+#
+# El cuadrado NO se convierte: es para Instagram, y ahi se sube desde el movil,
+# que ya hace la conversion.
+# -----------------------------------------------------------------------------
+if command -v rsvg-convert >/dev/null; then
+  for f in "$OUT"/*-og.svg; do
+    tmp="${f%.svg}.tmp.png"
+    rsvg-convert -w 1200 -h 630 -o "$tmp" "$f"
+    sips -s format jpeg -s formatOptions 82 "$tmp" --out "${f%.svg}.jpg" >/dev/null 2>&1
+    rm -f "$tmp"
+  done
+  echo
+  echo "JPEG 1200x630 generados para el correo"
+else
+  echo
+  echo "AVISO: falta rsvg-convert, no se han generado las imagenes del correo."
+  echo "       brew install librsvg"
+fi
+
 echo
-echo "$n articulos · $((n*2)) imagenes en $OUT/"
+echo "$n articulos · $((n*2)) SVG + $n JPEG en $OUT/"
