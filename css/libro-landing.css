@@ -535,7 +535,7 @@ html { scroll-behavior: smooth; }
    8b · PREGUNTAS FRECUENTES
    -------------------------------------------------------------------------- */
 
-.lp-faq > * { max-width: 820px; }
+.lp-faq { max-width: 820px; }
 .lp-faq__item {
   border-bottom: 1px solid var(--lp-borde);
 }
