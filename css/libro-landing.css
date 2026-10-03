@@ -1,0 +1,813 @@
+/* ==========================================================================
+   LANDING DEL LIBRO - Hiperautomatizaciones
+   Solo la carga /hiperautomatizaciones/. Sale de la cubierta de Rafa:
+   - amarillo con la trama de flujos de fondo
+   - el título en caja negra redondeada, letra de palo muy gruesa
+   - de la caja baja una flecha a una píldora blanca con el subtítulo en
+     serif y las palabras clave en rojo
+   - otra flecha baja al círculo negro con el rayo rojo y la firma
+   La página entera es ese diagrama: cada sección es un paso del flujo.
+   La marca no cambia con el tema claro/oscuro; solo el «papel» se oscurece.
+   ========================================================================== */
+
+.libro-page {
+  --lp-amarillo: var(--libro-amarillo);
+  --lp-tinta: var(--libro-tinta);
+  --lp-rojo: var(--libro-rojo);
+  --lp-papel: #FFFFFF;
+  --lp-papel-2: #F6F6F4;
+  --lp-texto: #141414;
+  --lp-texto-suave: #4A4A4A;
+  --lp-borde: rgba(20, 20, 20, 0.12);
+
+  --lp-palo: 'Archivo', var(--font-primary);
+  --lp-serif: 'Merriweather', Georgia, serif;
+  --lp-radio-caja: 18px;
+
+  /* El rojo de la web, en la landing, es el de la cubierta */
+  --color-primary: var(--libro-rojo);
+  --color-primary-dark: #C41E23;
+  --color-primary-light: var(--libro-rojo-claro);
+
+  background: var(--lp-papel);
+  color: var(--lp-texto);
+}
+
+[data-theme="dark"] .libro-page {
+  --lp-papel: #121212;
+  --lp-papel-2: #1A1A1A;
+  --lp-texto: #F2F2F0;
+  --lp-texto-suave: #B4B4B0;
+  --lp-borde: rgba(255, 255, 255, 0.12);
+}
+
+.libro-page [id] {
+  scroll-margin-top: calc(var(--header-height) + var(--space-6));
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* --------------------------------------------------------------------------
+   Piezas de la cubierta, reutilizables
+   -------------------------------------------------------------------------- */
+
+/* Fondo amarillo con la trama de flujos */
+.lp-amarillo {
+  background: var(--libro-velo), var(--libro-trama) center / cover no-repeat, var(--lp-amarillo);
+  color: var(--lp-tinta);
+}
+.lp-amarillo--liso { background: var(--libro-velo), var(--lp-amarillo); }
+.lp-tinta { background: var(--lp-tinta); color: #F2F2F0; }
+.lp-papel { background: var(--lp-papel); color: var(--lp-texto); }
+.lp-papel-2 { background: var(--lp-papel-2); color: var(--lp-texto); }
+
+.lp-section { padding: var(--space-20) 0; }
+
+/* Caja negra redondeada (título de la cubierta, recuadro de la contra) */
+.lp-caja {
+  background: var(--lp-tinta);
+  color: #F2F2F0;
+  border-radius: var(--lp-radio-caja);
+  box-shadow: 0 18px 36px -18px rgba(0, 0, 0, 0.55);
+}
+
+/* Píldora blanca con sombra (subtítulo de la cubierta) */
+.lp-pildora {
+  display: inline-block;
+  background: #FFFFFF;
+  color: var(--lp-tinta);
+  border-radius: 999px;
+  box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.45);
+}
+
+/* Flecha de conector: línea + punta, en tinta o en blanco */
+.lp-flecha {
+  display: block;
+  width: 26px;
+  height: 34px;
+  margin: 0 auto;
+  position: relative;
+  color: var(--lp-tinta);
+}
+.lp-flecha::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 4px;
+  height: 18px;
+  transform: translateX(-50%);
+  background: currentColor;
+}
+.lp-flecha::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-top: 16px solid currentColor;
+}
+.lp-flecha--blanca { color: #FFFFFF; }
+
+/* Círculo negro con el rayo rojo (la firma de la cubierta) */
+.lp-rayo {
+  display: inline-grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--lp-tinta);
+  flex-shrink: 0;
+}
+.lp-rayo svg { width: 22px; height: 28px; }
+
+.lp-kicker {
+  display: inline-block;
+  font-family: var(--lp-palo);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lp-rojo);
+  margin-bottom: var(--space-4);
+}
+
+.lp-h2 {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: clamp(var(--text-2xl), 3.4vw, var(--text-4xl));
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  margin-bottom: var(--space-4);
+  color: inherit;
+}
+
+.lp-lead {
+  font-family: var(--lp-serif);
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--lp-texto-suave);
+  max-width: 60ch;
+}
+
+.lp-rojo { color: var(--lp-rojo); }
+
+/* Botones en la tinta de la cubierta */
+.libro-page .btn--tinta {
+  background: var(--lp-tinta);
+  border: 2px solid var(--lp-tinta);
+  color: #FFFFFF;
+}
+.libro-page .btn--tinta:hover { background: #2A2A2A; border-color: #2A2A2A; transform: translateY(-2px); }
+/* Relleno opaco: con fondo transparente la trama se veía a través */
+.libro-page .btn--linea {
+  background: var(--lp-amarillo);
+  border: 2px solid var(--lp-tinta);
+  color: var(--lp-tinta);
+}
+.libro-page .btn--linea:hover { background: var(--lp-tinta); color: #FFFFFF; }
+.libro-page .btn--blanco {
+  background: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  color: var(--lp-tinta);
+}
+.libro-page .btn--blanco:hover { background: var(--lp-amarillo); border-color: var(--lp-amarillo); }
+
+/* --------------------------------------------------------------------------
+   1 · HERO: la cubierta, convertida en página
+   -------------------------------------------------------------------------- */
+
+.lp-hero {
+  padding-top: calc(var(--header-height) + var(--space-16));
+  padding-bottom: var(--space-20);
+  overflow: hidden;
+}
+
+.lp-hero__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-16);
+  align-items: center;
+}
+
+.lp-hero__lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 560px;
+}
+
+.lp-estado {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  background: var(--lp-tinta);
+  padding: 0.4em 1em;
+  border-radius: 999px;
+  margin-bottom: var(--space-6);
+}
+.lp-estado::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lp-rojo);
+}
+
+.lp-titulo {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  padding: 0.32em 0.42em 0.38em;
+  margin: 0;
+  width: 100%;
+}
+.lp-titulo__grande {
+  display: block;
+  font-size: clamp(3.6rem, 9.5vw, 7.2rem);
+  letter-spacing: -0.035em;
+}
+.lp-titulo__pequeno {
+  display: block;
+  font-size: clamp(1.32rem, 3.45vw, 2.62rem);
+  letter-spacing: -0.01em;
+  margin-top: 0.08em;
+}
+
+.lp-subtitulo {
+  font-family: var(--lp-serif);
+  font-weight: 700;
+  font-size: clamp(var(--text-base), 1.9vw, var(--text-xl));
+  line-height: 1.35;
+  padding: 0.85em 1.6em;
+  margin: 0;
+}
+.lp-subtitulo em { font-style: normal; color: var(--lp-rojo); }
+
+.lp-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.lp-hero__meta {
+  margin-top: var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(20, 20, 20, 0.75);
+}
+
+.lp-cubierta {
+  display: flex;
+  justify-content: center;
+}
+.lp-cubierta img {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 3px 8px 8px 3px;
+  box-shadow: -8px 0 0 0 rgba(0, 0, 0, 0.22), 0 40px 70px -20px rgba(0, 0, 0, 0.55);
+  transform: rotate(2.5deg);
+  transition: transform var(--transition-base);
+}
+.lp-cubierta img:hover { transform: rotate(0deg) translateY(-6px); }
+
+/* --------------------------------------------------------------------------
+   2 · LA CONTRA: el recuadro negro con el titular en rojo
+   -------------------------------------------------------------------------- */
+
+.lp-contra { padding: 0 0 var(--space-20); }
+
+.lp-contra__caja {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-12) var(--space-10);
+}
+.lp-contra__caja .lp-contra__titular {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: clamp(var(--text-2xl), 3.6vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--lp-rojo);
+  margin: 0 0 var(--space-5);
+}
+.lp-contra__caja p {
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: #E8E8E4;
+  margin: 0;
+}
+.lp-contra__caja p strong { color: #FFFFFF; }
+
+/* --------------------------------------------------------------------------
+   3 · CRITERIO (sección negra)
+   -------------------------------------------------------------------------- */
+
+.lp-claim {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: clamp(var(--text-2xl), 4.2vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto var(--space-12);
+}
+.lp-claim em {
+  font-style: normal;
+  color: var(--lp-tinta);
+  background: var(--lp-amarillo);
+  padding: 0 0.18em;
+  border-radius: 8px;
+}
+
+.lp-razones {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+.lp-razones li {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--lp-radio-caja);
+  padding: var(--space-6);
+  color: rgba(242, 242, 240, 0.78);
+  line-height: 1.55;
+}
+.lp-razones strong {
+  display: block;
+  font-family: var(--lp-palo);
+  font-weight: 800;
+  font-size: var(--text-lg);
+  color: var(--lp-amarillo);
+  margin-bottom: var(--space-2);
+}
+
+.lp-nots {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3) var(--space-4);
+  margin: var(--space-12) auto 0;
+  padding: 0;
+  max-width: 920px;
+}
+.lp-nots li {
+  position: relative;
+  padding: 0.5em 1.1em 0.5em 2.3em;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(242, 242, 240, 0.85);
+  font-size: var(--text-sm);
+}
+/* La equis se dibuja en CSS */
+.lp-nots li::before,
+.lp-nots li::after {
+  content: "";
+  position: absolute;
+  left: 1em;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  background: var(--lp-rojo);
+  border-radius: 2px;
+}
+.lp-nots li::before { transform: translateY(-50%) rotate(45deg); }
+.lp-nots li::after  { transform: translateY(-50%) rotate(-45deg); }
+
+/* --------------------------------------------------------------------------
+   4 · PARA QUIÉN
+   -------------------------------------------------------------------------- */
+
+.lp-paraquien {
+  list-style: none;
+  margin: var(--space-10) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5) var(--space-10);
+}
+.lp-paraquien li {
+  position: relative;
+  padding-left: var(--space-8);
+  color: var(--lp-texto-suave);
+  line-height: 1.6;
+}
+/* Viñeta: el rombo de la trama */
+.lp-paraquien li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: .45em;
+  width: 11px;
+  height: 11px;
+  background: var(--lp-amarillo);
+  border: 2px solid var(--lp-tinta);
+  transform: rotate(45deg);
+}
+[data-theme="dark"] .lp-paraquien li::before { border-color: var(--lp-amarillo); }
+.lp-paraquien li strong { color: var(--lp-texto); }
+
+/* --------------------------------------------------------------------------
+   4b · QUÉ ES LA HIPERAUTOMATIZACIÓN
+   -------------------------------------------------------------------------- */
+
+.lp-h3 {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: var(--text-xl);
+  margin: var(--space-12) 0 var(--space-5);
+  color: var(--lp-texto);
+}
+
+.lp-definicion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-top: var(--space-10);
+}
+.lp-def {
+  border: 2px solid var(--lp-tinta);
+  border-radius: var(--lp-radio-caja);
+  padding: var(--space-6);
+  background: var(--lp-papel);
+}
+[data-theme="dark"] .lp-def { border-color: rgba(255, 255, 255, 0.5); }
+.lp-def p { margin: 0; line-height: 1.6; color: var(--lp-texto-suave); }
+.lp-def__termino {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: var(--text-xl);
+  color: var(--lp-texto) !important;
+  margin-bottom: var(--space-2) !important;
+}
+/* La hiperautomatización va en la caja negra del título de la cubierta */
+.lp-def--hiper { background: var(--lp-tinta); border-color: var(--lp-tinta); }
+.lp-def--hiper p { color: rgba(242, 242, 240, 0.8); }
+.lp-def--hiper .lp-def__termino { color: var(--lp-amarillo) !important; }
+
+/* El ejemplo, como cadena de pasos: píldoras unidas por flechas */
+.lp-cadena {
+  list-style: none;
+  counter-reset: paso;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-8) 0 0;
+  padding: 0;
+}
+.lp-cadena li {
+  counter-increment: paso;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--lp-texto);
+}
+.lp-cadena li::before {
+  content: counter(paso);
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--lp-amarillo);
+  color: var(--lp-tinta);
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: var(--text-xs);
+}
+.lp-cadena li:not(:last-child)::after {
+  content: "→";
+  font-weight: 900;
+  color: var(--lp-rojo);
+}
+.lp-cadena__nota { margin: var(--space-5) 0 0; color: var(--lp-texto-suave); line-height: 1.6; max-width: 70ch; }
+.lp-cadena__nota strong { color: var(--lp-texto); }
+
+.lp-cajones {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-4);
+}
+.lp-cajones li {
+  background: var(--lp-papel);
+  border: 1px solid var(--lp-borde);
+  border-top: 4px solid var(--lp-amarillo);
+  border-radius: 12px;
+  padding: var(--space-4);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--lp-texto-suave);
+}
+.lp-cajones strong {
+  display: block;
+  font-family: var(--lp-palo);
+  font-weight: 800;
+  font-size: var(--text-base);
+  color: var(--lp-texto);
+  margin-bottom: var(--space-1);
+}
+
+/* --------------------------------------------------------------------------
+   8b · PREGUNTAS FRECUENTES
+   -------------------------------------------------------------------------- */
+
+.lp-faq > * { max-width: 820px; }
+.lp-faq__item {
+  border-bottom: 1px solid var(--lp-borde);
+}
+.lp-faq__item summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  font-family: var(--lp-palo);
+  font-weight: 800;
+  font-size: var(--text-lg);
+  color: var(--lp-texto);
+}
+.lp-faq__item summary::-webkit-details-marker { display: none; }
+.lp-faq__item summary::after {
+  content: "+";
+  flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--lp-tinta);
+  color: var(--lp-amarillo);
+  font-weight: 900;
+  transition: transform var(--transition-fast);
+}
+[data-theme="dark"] .lp-faq__item summary::after { background: var(--lp-amarillo); color: var(--lp-tinta); }
+.lp-faq__item[open] summary::after { transform: rotate(45deg); }
+.lp-faq__item p { margin: 0 0 var(--space-5); color: var(--lp-texto-suave); line-height: 1.65; max-width: 70ch; }
+
+/* --------------------------------------------------------------------------
+   5 · QUÉ TE LLEVAS: tres nodos unidos por flechas
+   -------------------------------------------------------------------------- */
+
+.lp-flujo {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: stretch;
+  gap: var(--space-4);
+  margin-top: var(--space-10);
+}
+.lp-nodo {
+  background: var(--lp-papel);
+  border: 2px solid var(--lp-tinta);
+  border-radius: var(--lp-radio-caja);
+  padding: var(--space-6);
+  box-shadow: 6px 6px 0 0 var(--lp-amarillo);
+}
+[data-theme="dark"] .lp-nodo { border-color: #F2F2F0; }
+.lp-nodo__num {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--lp-tinta);
+  color: var(--lp-amarillo);
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  margin-bottom: var(--space-4);
+}
+.lp-nodo h3 {
+  font-family: var(--lp-palo);
+  font-weight: 800;
+  font-size: var(--text-xl);
+  line-height: 1.2;
+  margin-bottom: var(--space-3);
+  color: var(--lp-texto);
+}
+.lp-nodo p { color: var(--lp-texto-suave); line-height: 1.6; margin: 0; }
+/* En horizontal la flecha gira: apunta al siguiente nodo */
+.lp-flujo > .lp-flecha { align-self: center; transform: rotate(-90deg); }
+[data-theme="dark"] .lp-flujo > .lp-flecha { color: var(--lp-amarillo); }
+
+/* --------------------------------------------------------------------------
+   6 · CTA INTERMEDIO (amarillo con trama + círculo del rayo)
+   -------------------------------------------------------------------------- */
+
+.lp-cta-mid { padding: var(--space-12) 0; }
+.lp-cta-mid__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+.lp-cta-mid__texto { flex: 1 1 320px; }
+.lp-cta-mid__titulo {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: var(--text-2xl);
+  line-height: 1.15;
+  margin: 0 0 var(--space-1);
+}
+.lp-cta-mid__sub { margin: 0; font-family: var(--lp-serif); }
+
+/* --------------------------------------------------------------------------
+   7 · ÍNDICE: las cuatro partes como un diagrama de flujo vertical
+   -------------------------------------------------------------------------- */
+
+.lp-indice { max-width: 980px; margin: var(--space-10) auto 0; }
+
+.lp-parte {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: var(--space-8);
+  align-items: start;
+  padding: var(--space-8);
+  border-radius: var(--lp-radio-caja);
+  border: 2px solid var(--lp-tinta);
+  background: var(--lp-papel);
+}
+[data-theme="dark"] .lp-parte { border-color: rgba(255, 255, 255, 0.5); }
+.lp-indice > .lp-flecha { margin: var(--space-2) auto; }
+[data-theme="dark"] .lp-indice > .lp-flecha { color: var(--lp-amarillo); }
+
+.lp-parte__etiqueta {
+  display: inline-block;
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lp-tinta);
+  background: var(--lp-amarillo);
+  padding: 0.35em 0.9em;
+  border-radius: 999px;
+  margin-bottom: var(--space-3);
+}
+.lp-parte__nombre {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+  margin-bottom: var(--space-3);
+  color: var(--lp-texto);
+}
+.lp-parte__desc { color: var(--lp-texto-suave); line-height: 1.55; margin: 0; }
+
+.lp-capitulos { list-style: none; margin: 0; padding: 0; }
+.lp-capitulos li {
+  display: grid;
+  grid-template-columns: 2.2em 1fr;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--lp-borde);
+  line-height: 1.45;
+  color: var(--lp-texto);
+}
+.lp-capitulos li:last-child { border-bottom: 0; }
+.lp-capitulos span {
+  font-family: var(--lp-palo);
+  font-weight: 900;
+  color: var(--lp-rojo);
+}
+
+.lp-indice__extra {
+  max-width: 980px;
+  margin: var(--space-8) auto 0;
+  color: var(--lp-texto-suave);
+  line-height: 1.6;
+}
+.lp-indice__extra strong { color: var(--lp-texto); }
+
+/* --------------------------------------------------------------------------
+   8 · EL AUTOR (amarillo liso, foto en círculo como en la contra)
+   -------------------------------------------------------------------------- */
+
+.lp-autor {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: var(--space-12);
+  align-items: start;
+  max-width: 1000px;
+}
+.lp-autor__foto {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 8px solid var(--lp-tinta);
+  box-shadow: 0 20px 40px -18px rgba(0, 0, 0, 0.5);
+}
+.lp-autor__cita {
+  font-family: var(--lp-serif);
+  font-style: italic;
+  font-weight: 900;
+  font-size: clamp(var(--text-xl), 2.6vw, var(--text-3xl));
+  line-height: 1.25;
+  margin: 0 0 var(--space-6);
+}
+.lp-autor__texto p { line-height: 1.7; margin: 0 0 var(--space-4); color: #1E1E1E; }
+.lp-autor .lp-kicker { color: var(--lp-rojo); }
+
+/* --------------------------------------------------------------------------
+   9 · LISTA DE ESPERA (negro) + ficha en píldoras
+   -------------------------------------------------------------------------- */
+
+.lp-espera__inner { max-width: 680px; margin: 0 auto; text-align: center; }
+
+.lp-ficha {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-10);
+}
+.lp-ficha div {
+  display: flex;
+  gap: 0.5em;
+  align-items: baseline;
+  padding: 0.5em 1.1em;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: var(--text-sm);
+}
+.lp-ficha dt { color: rgba(242, 242, 240, 0.55); }
+.lp-ficha dd { margin: 0; color: #FFFFFF; font-weight: 700; }
+
+.lp-espera h2 { color: #FFFFFF; }
+.lp-espera__intro { color: rgba(242, 242, 240, 0.78); margin: 0 auto var(--space-8); max-width: 56ch; }
+
+/* El botón del formulario, en amarillo sobre negro */
+.lp-espera .libro-form .btn {
+  background: var(--lp-amarillo);
+  border-color: var(--lp-amarillo);
+  color: var(--lp-tinta);
+}
+.lp-espera .libro-form .btn:hover { background: #FFC94D; border-color: #FFC94D; }
+.lp-espera .libro-form input[type="email"]:focus { border-color: var(--lp-amarillo); }
+
+/* El pie de la web es azul marino; en la landing va en la tinta del libro */
+.libro-page .footer { background: #0B0B0B; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 968px) {
+  .lp-hero__inner { grid-template-columns: 1fr; gap: var(--space-12); }
+  .lp-hero__lockup { margin: 0 auto; }
+  .lp-cubierta img { max-width: 280px; }
+  .lp-razones { grid-template-columns: 1fr; }
+  .lp-flujo { grid-template-columns: 1fr; }
+  .lp-flujo > .lp-flecha { transform: none; }
+  .lp-parte { grid-template-columns: 1fr; gap: var(--space-5); padding: var(--space-6); }
+  .lp-autor { grid-template-columns: 1fr; max-width: 600px; }
+  .lp-autor__foto { max-width: 220px; }
+}
+
+@media (max-width: 1100px) {
+  .lp-cajones { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .lp-paraquien { grid-template-columns: 1fr; }
+  .lp-definicion { grid-template-columns: 1fr; }
+  .lp-cajones { grid-template-columns: 1fr; }
+  .lp-cadena { flex-direction: column; align-items: flex-start; }
+  .lp-cadena li:not(:last-child)::after { content: "↓"; }
+}
+
+@media (max-width: 560px) {
+  .lp-section { padding: var(--space-12) 0; }
+  .lp-hero { padding-top: calc(var(--header-height) + var(--space-8)); padding-bottom: var(--space-12); }
+  .lp-contra { padding-bottom: var(--space-12); }
+  .lp-contra__caja { padding: var(--space-8) var(--space-6); }
+  .lp-subtitulo { padding: 0.8em 1.1em; border-radius: 28px; }
+  .lp-hero__cta .btn, .lp-cta-mid .btn { width: 100%; justify-content: center; }
+  .libro-form input[type="email"] { flex: 1 1 100%; }
+  .libro-form__row .btn { width: 100%; }
+}

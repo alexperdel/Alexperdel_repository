@@ -70,6 +70,23 @@ Redirect 301 /libro https://alexperdel.com/hiperautomatizaciones/
 Redirect 301 /el-libro https://alexperdel.com/hiperautomatizaciones/
 Redirect 301 /hiperautomatizaciones.html https://alexperdel.com/hiperautomatizaciones/
 
+# La portada demo pasa a la definitiva de Rafa (octubre 2026). Google y las
+# redes tenían indexada la URL vieja: así lo que apunte allí llega a la nueva.
+# Nombre nuevo a propósito: la vieja va con caché de un año en los navegadores.
+Redirect 301 /assets/img/libro/portada-hiperautomatizaciones-demo.png https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.png
+Redirect 301 /assets/img/libro/portada-hiperautomatizaciones-demo-sm.png https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.png
+
+# =============================================
+# UNA SOLA URL POR PÁGINA: /carpeta/index.html → /carpeta/
+# =============================================
+# La landing respondía 200 en /hiperautomatizaciones/ y en
+# /hiperautomatizaciones/index.html, y los enlaces internos usaban la segunda.
+# Los enlaces ya van a la carpeta; esto recoge lo que quede fuera (enlaces
+# externos, marcadores). THE_REQUEST mira la petición original del navegador,
+# no la interna de DirectoryIndex, así que no entra en bucle.
+RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?]
+RewriteRule ^(.*/)?index\.html$ https://alexperdel.com/$1 [R=301,L]
+
 # =============================================
 # SEGURIDAD
 # =============================================

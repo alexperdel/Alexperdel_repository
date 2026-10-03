@@ -69,7 +69,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
-  <link rel="stylesheet" href="../css/styles.css?v=20260913b">
+  <link rel="stylesheet" href="../css/styles.css?v=20261003">
 
   <!-- Schema.org. El author y el publisher apuntan por @id a la ficha Person
        que vive en la home: así Google suma todo lo que publicas a UNA misma
@@ -96,7 +96,7 @@
 <body>
   <header class="header">
     <div class="container header__inner">
-      <a href="../index.html" class="header__logo">
+      <a href="../" class="header__logo">
         <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
           <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="url(#bolt-gradient-p)"/>
@@ -117,18 +117,16 @@
           <span></span>
         </button>
         <ul class="nav__list">
-          <li><a href="../index.html" class="nav__link">Inicio</a></li>
+          <li><a href="../" class="nav__link">Inicio</a></li>
           <li><a href="../sobre-mi.html" class="nav__link">Sobre mí</a></li>
-          <li><a href="../proyectos/index.html" class="nav__link">Proyectos</a></li>
-          <li><a href="./index.html" class="nav__link nav__link--active">Artículos</a></li>
-          <li><a href="../hiperautomatizaciones/index.html" class="nav__link">El libro</a></li>
+          <li><a href="../proyectos/" class="nav__link">Proyectos</a></li>
           <li>
             <button class="theme-toggle" onclick="ThemeToggle.toggle()" aria-label="Cambiar tema">
               <i class="fas fa-moon icon-moon"></i>
               <i class="fas fa-sun icon-sun"></i>
             </button>
           </li>
-          <li><a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" class="btn btn--primary">LinkedIn</a></li>
+          <li><a href="../hiperautomatizaciones/" class="btn btn--primary">El libro</a></li>
         </ul>
       </nav>
     </div>
@@ -140,7 +138,7 @@
         <div class="articulo__cuerpo">
 
           <div class="articulo__meta">
-            <a href="./index.html">Artículos</a>
+            <a href="./">Artículos</a>
             <span>·</span>
             <time datetime="[[AAAA-MM-DD]]">[[D de mes de AAAA]]</time>
             <span>·</span>
@@ -206,12 +204,12 @@
                BORRA este bloque entero en vez de dejarlo diciendo algo que
                no es verdad. -->
           <div class="articulo__origen">
-            <p>Esto sale del capítulo [[N]] de <a href="../hiperautomatizaciones/index.html"><strong>Hiperautomatizaciones</strong></a>, el libro que estoy escribiendo. Sale a finales de 2026 y puedes pedir que te avise el día que esté.</p>
+            <p>Esto sale del capítulo [[N]] de <a href="../hiperautomatizaciones/"><strong>Hiperautomatizaciones</strong></a>, el libro que estoy escribiendo. Sale a finales de 2026 y puedes pedir que te avise el día que esté.</p>
           </div>
 
           <nav class="articulo__nav">
-            <a href="./index.html">← Todos los artículos</a>
-            <a href="../hiperautomatizaciones/index.html">El libro →</a>
+            <a href="./">← Todos los artículos</a>
+            <a href="../hiperautomatizaciones/">El libro →</a>
           </nav>
 
         </div>
@@ -221,23 +219,20 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <a href="../index.html" class="footer__logo">
-        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/>
-        </svg>
-        Alex Perdel
+      <a href="../" class="footer__brand" aria-label="Alex Perdel, inicio">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#DC2626"/></svg>
+        <span>&copy; 2026 Alex Perdel</span>
       </a>
-      <div class="footer__social">
-        <a href="https://www.linkedin.com/in/alexperdel/" target="_blank" rel="noopener" aria-label="LinkedIn">
-          <i class="fab fa-linkedin"></i>
-        </a>
-      </div>
-      <div class="footer__legal">
-        <a href="../aviso-legal.html">Aviso Legal</a>
+  
+      <a href="https://www.linkedin.com/in/alexperdel/" class="footer__social" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+  
+      <nav class="footer__legal" aria-label="Legal">
+        <a href="../aviso-legal.html">Aviso legal</a>
         <a href="../politica-privacidad.html">Privacidad</a>
         <a href="../politica-cookies.html">Cookies</a>
-      </div>
-      <p class="footer__copy">&copy; 2026 Alex Perdel</p>
+      </nav>
     </div>
   </footer>
 

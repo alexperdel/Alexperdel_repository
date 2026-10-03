@@ -53,8 +53,14 @@ hay estimaciones de folleto ni clientes anónimos a los que culpar.
 ## El libro
 
 - [Hiperautomatizaciones](https://alexperdel.com/hiperautomatizaciones/):
-  manual honesto y sin humos para automatizar de verdad una empresa. 336
-  páginas, 18 capítulos, 4 partes. Publicación prevista para finales de 2026.
+  manual honesto y sin humos para automatizar de verdad una empresa, de
+  Alex Perdel. 280 páginas, 18 capítulos, 4 partes. Tapa blanda y Kindle,
+  autoeditado. Publicación prevista para finales de 2026.
+
+  Qué entiende el libro por hiperautomatización: encadenar varios sistemas,
+  con más de una decisión automática y, a veces, con IA decidiendo lo que una
+  regla fija no cubre. Distingue cinco tipos: determinista clásica, RPA,
+  nocode/lowcode, agentes de IA e híbrida.
 
   Tesis del libro: la mayoría de las automatizaciones no se caen por la
   tecnología. Se caen antes, en la reunión donde todo el mundo sabía que

@@ -392,3 +392,108 @@ suscribe nadie.
 **Es lo primero que hay que probar**, y son dos minutos: darse de alta con un
 correo propio y comprobar que llega la confirmación y que el suscriptor aparece
 en el grupo.
+
+---
+
+## 14. 3 de octubre: la portada definitiva, la landing nueva y el SEO del libro
+
+### Qué cambió y por qué
+
+- **La identidad del libro es la cubierta de Rafa**: amarillo `#F6B331`, tinta
+  `#141414`, rojo `#E3262B` y la trama de flujos. La crema, el azul noche y la
+  portada demo desaparecen de la landing, de la franja de la home y del modal.
+  Los tokens viven en `:root` de `css/libro.css`; la landing tiene su propia
+  hoja, `css/libro-landing.css`, que solo carga `/hiperautomatizaciones/`.
+- **La trama** (`assets/img/libro/trama-flujos.svg`) es **provisional y
+  generada**: imita la de la cubierta hasta que Rafa pase su vectorial. Se
+  sustituye ese fichero y nada más. Lleva un velo blanco del 16 % por encima
+  (`--libro-velo`) porque sin él la portada, que tiene la misma trama, se
+  perdía contra el fondo.
+- **Menú**: fuera «Artículos» (hasta que haya artículos) y el botón destacado
+  pasa de LinkedIn a **El libro**. En la landing el botón es «Avísame»; el día
+  del lanzamiento pasa a «Comprar ahora».
+- **Pie**: una sola fila (© y nombre · LinkedIn · legales). El nombre salía
+  dos veces.
+- **Una sola URL por página**: los enlaces internos van a la carpeta
+  (`hiperautomatizaciones/`, no `…/index.html`) y el `.htaccess` redirige con
+  301 cualquier `index.html` que quede. Search Console decía que la landing
+  no tenía **ninguna página de referencia**: los enlaces de la home iban a la
+  otra URL.
+- **Portada**: nombre nuevo (`portada-hiperautomatizaciones.png`) y 301 desde
+  las dos demo. No se reutilizó el nombre porque las imágenes salen con
+  `max-age` de un año: quien ya la vio seguiría viendo la demo.
+- **Contenido para «hiperautomatización» en singular**, que es lo que la gente
+  busca: sección «¿Qué es la hiperautomatización?» (resumen del capítulo 1, con
+  los cinco tipos) y cinco preguntas frecuentes.
+- **Datos estructurados**: la landing declara `Book` (autor y editor = la
+  persona `#alexperdel` de la home, dos ediciones: tapa blanda 280 páginas y
+  Kindle), `WebPage` con migas y `FAQPage`. La home suma el `Book` a su grafo;
+  `sobre-mi.html` estrena `ProfilePage`. Descripciones de home y Sobre mí
+  mencionan el libro.
+- **Sitemap con imágenes** (portada y foto) y `lastmod` al día. `llms.txt` con
+  280 páginas y la definición de hiperautomatización del libro.
+- **Datos corregidos contra el manuscrito**: 280 páginas (no 336), el epílogo
+  (no va «del hacedor al líder», enfoque descartado el 31 de agosto), los
+  títulos de los apéndices y el del capítulo 9.
+
+### Por qué la portada demo desapareció de Google Imágenes
+
+No fue un error. La landing nació el 13 de septiembre, Google la rastreó **una
+sola vez** ese día y no la ha vuelto a visitar. La imagen tuvo 7 impresiones
+en Imágenes (posición media 31,6), la última el 25 de septiembre, y salió del
+índice. Con una página vista una vez, sin enlaces detectados y con «portada
+provisional» en el texto alternativo, es lo normal. `site:alexperdel.com` en
+Imágenes solo muestra 8 imágenes, y ni la portada ni la foto están entre ellas.
+
+### Subida por FTP (cdmon)
+
+**Subir:**
+
+```
+.htaccess                         (forzar mostrar ocultos en FileZilla)
+index.html  sobre-mi.html  aviso-legal.html  politica-privacidad.html  politica-cookies.html
+sitemap.xml  llms.txt
+hiperautomatizaciones/index.html
+articulos/index.html
+proyectos/index.html  proyectos/copilot-interno.html  proyectos/crecer-en-ingles.html
+proyectos/docencia-ia.html  proyectos/gestion-proyectos-seo.html
+proyectos/perito-guai.html  proyectos/voicebot-ia.html
+css/libro.css  css/libro-landing.css  css/footer.css
+assets/img/libro/portada-hiperautomatizaciones.png   ← el PNG BUENO de Rafa
+assets/img/libro/trama-flujos.svg
+```
+
+**Borrar del servidor:** `assets/img/libro/portada-hiperautomatizaciones-demo.png`
+y `…-demo-sm.png` (el 301 ya responde por ellas).
+
+⚠️ **No subir la portada hasta tener el PNG definitivo.** Con caché de un año,
+si sube la captura provisional y luego se cambia con el mismo nombre, los que
+ya la hayan visto seguirán viendo la captura.
+
+### Después de subir
+
+1. `curl -sI https://alexperdel.com/hiperautomatizaciones/index.html` → 301 a
+   `/hiperautomatizaciones/`; la demo → 301 a la portada nueva.
+2. Search Console: **Solicitar indexación** de `/hiperautomatizaciones/`, `/` y
+   `/sobre-mi.html`, y volver a enviar `sitemap.xml`.
+3. LinkedIn Post Inspector con la URL del libro, para que la vista previa coja
+   la portada nueva.
+4. Prueba de resultados enriquecidos de Google sobre la landing (Book, FAQ,
+   migas).
+
+### Queda pendiente
+
+| | Qué | Quién |
+|---|---|---|
+| 🔴 | PNG definitivo de la portada (y mockups) | Rafa |
+| 🟡 | Vectorial de la trama, para sustituir el SVG generado | Rafa |
+| 🟡 | Foto nueva del autor (contra definitiva) | Alex / Rafa |
+| 🟡 | Confirmar las 280 páginas al cerrar el interior: van en la landing (×2), su JSON-LD y `llms.txt` | Alex |
+| 🟡 | Dar de alta `analitica-alexperdel@scarif-automation.iam.gserviceaccount.com` en GA4 y Search Console (sigue pendiente de la sección 11) | Alex |
+| 🟡 | Decidir si `/articulos/` sale del sitemap mientras no haya artículos | Alex |
+| 🟢 | Con ISBN: `isbn`, `datePublished` y `offers` (Amazon) en cada `workExample` | Al publicar |
+| 🟢 | Google Books (Play Libros), Amazon Author Central y Goodreads; sus URLs al `sameAs` de la persona | Al publicar |
+| 🟢 | Pedir a EBIS un enlace a la landing desde el máster | Alex |
+
+En local, los enlaces a carpeta (`hiperautomatizaciones/`) **no abren con
+`file://`**: hay que servir la web (`npx serve` o similar) para previsualizarla.

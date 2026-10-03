@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://alexperdel.com/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://alexperdel.com/assets/img/alexperdel_cgto.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://alexperdel.com/sobre-mi.html</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://alexperdel.com/assets/img/alexperdel_cgto.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://alexperdel.com/hiperautomatizaciones/</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://alexperdel.com/articulos/</loc>

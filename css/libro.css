@@ -1,524 +1,37 @@
 /* ==========================================================================
-   LIBRO - Hiperautomatizaciones
-   Identidad propia de la landing del libro + tarjeta de anuncio en la home.
-   Paleta tomada de la portada (portada/README.md del repo del libro):
-   crema #F4EFE5 · azul noche #12273F · rojo Scarif #DC2626 · gris #8A9AAC
+   LIBRO - Hiperautomatizaciones · piezas compartidas
+   Lo que usan varias páginas: tokens de marca, el formulario de la lista de
+   espera, la franja de anuncio de la home, el modal y la newsletter.
+   La landing tiene su propia hoja: libro-landing.css.
+
+   Paleta de la cubierta definitiva de Rafa (octubre 2026):
+   amarillo #F6B331 · tinta #141414 · rojo #E3262B · papel #FFFFFF
+   La crema, el azul noche y el gris de la portada demo ya no existen.
    ========================================================================== */
 
-.libro-page {
-  --libro-crema: #F4EFE5;
-  --libro-crema-soft: #FBF8F2;
-  --libro-azul: #12273F;
-  --libro-azul-2: #1B3554;
-  --libro-rojo: #DC2626;
-  --libro-rojo-claro: #EF4444;
-  --libro-gris: #8A9AAC;
+:root {
+  --libro-amarillo: #F6B331;
+  --libro-amarillo-hondo: #E9A11C;
+  --libro-tinta: #141414;
+  --libro-tinta-2: #262626;
+  --libro-rojo: #E3262B;
+  --libro-rojo-claro: #F04A4E;
+  --libro-papel: #FFFFFF;
+  --libro-trama: url("../assets/img/libro/trama-flujos.svg");
+  /* Velo blanco suave sobre la trama: sin él, la cubierta (que es amarilla
+     con la misma trama) y los botones se pierden contra el fondo. */
+  --libro-velo: linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16));
 
-  --libro-bg: var(--libro-crema);
-  --libro-surface: var(--libro-crema-soft);
-  --libro-text: var(--libro-azul);
-  --libro-text-soft: #4A5C70;
-  --libro-border: rgba(18, 39, 63, 0.14);
-}
-
-[data-theme="dark"] .libro-page {
-  --libro-bg: #0C1725;
-  --libro-surface: #14243A;
-  --libro-text: #ECE6DA;
-  --libro-text-soft: #A9B7C6;
-  --libro-border: rgba(236, 230, 218, 0.16);
-
-  /* El resto del sitio vira a naranja en oscuro; el libro no.
-     El rojo Scarif es la identidad de la cubierta y aquí manda. */
-  --color-primary: #DC2626;
-  --color-primary-dark: #B91C1C;
-  --color-primary-light: #EF4444;
-}
-
-.libro-page {
-  background: var(--libro-bg);
-  color: var(--libro-text);
+  /* Nombres antiguos que siguen usando el formulario, el modal y la
+     newsletter: el «azul» de la demo pasa a ser la tinta de la cubierta. */
+  --libro-azul: var(--libro-tinta);
+  --libro-crema: var(--libro-papel);
+  --libro-gris: #6B6B6B;
 }
 
 /* --------------------------------------------------------------------------
-   Piezas comunes
+   Formulario de la lista de espera (base: escrito para fondo tinta)
    -------------------------------------------------------------------------- */
-
-.libro-section {
-  padding: var(--space-20) 0;
-}
-
-.libro-section--crema {
-  background: var(--libro-bg);
-}
-
-.libro-section--azul {
-  background: var(--libro-azul);
-  color: #ECE6DA;
-}
-
-.libro-section--surface {
-  background: var(--libro-surface);
-  border-top: 1px solid var(--libro-border);
-  border-bottom: 1px solid var(--libro-border);
-}
-
-.libro-kicker {
-  display: block;
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--libro-rojo);
-  margin-bottom: var(--space-4);
-}
-
-.libro-section--azul .libro-kicker {
-  color: var(--libro-rojo-claro);
-}
-
-.libro-h2 {
-  font-size: clamp(var(--text-2xl), 3.2vw, var(--text-4xl));
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  margin-bottom: var(--space-4);
-}
-
-.libro-lead {
-  font-size: var(--text-lg);
-  color: var(--libro-text-soft);
-  max-width: 62ch;
-}
-
-.libro-section--azul .libro-lead {
-  color: #B9C6D4;
-}
-
-/* Regla roja bajo el título, igual que en la portada */
-.libro-rule {
-  width: 100%;
-  max-width: 420px;
-  height: 3px;
-  background: var(--libro-rojo);
-  border: 0;
-  margin: var(--space-5) 0 var(--space-6);
-}
-
-/* --------------------------------------------------------------------------
-   HERO
-   -------------------------------------------------------------------------- */
-
-.libro-hero {
-  padding-top: calc(var(--header-height) + var(--space-16));
-  padding-bottom: var(--space-20);
-  background: var(--libro-bg);
-  position: relative;
-  overflow: hidden;
-}
-
-.libro-hero__inner {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: var(--space-16);
-  align-items: center;
-}
-
-.libro-hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--libro-rojo);
-  color: var(--libro-rojo);
-  font-weight: 700;
-  font-size: var(--text-sm);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: var(--radius-full);
-  margin-bottom: var(--space-6);
-}
-
-.libro-hero__badge i {
-  font-size: var(--text-xs);
-}
-
-.libro-hero__title {
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  margin: 0;
-  color: var(--libro-text);
-}
-
-.libro-hero__subtitle {
-  font-size: clamp(var(--text-lg), 2vw, var(--text-2xl));
-  color: var(--libro-text-soft);
-  max-width: 34ch;
-  margin-bottom: var(--space-8);
-}
-
-.libro-hero__hook {
-  border-left: 3px solid var(--libro-rojo);
-  padding-left: var(--space-5);
-  margin-bottom: var(--space-8);
-}
-
-.libro-hero__hook p {
-  font-size: var(--text-lg);
-  line-height: 1.55;
-  margin-bottom: var(--space-3);
-}
-
-.libro-hero__hook p:last-child {
-  margin-bottom: 0;
-  color: var(--libro-text-soft);
-}
-
-.libro-hero__cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4);
-  align-items: center;
-}
-
-.libro-hero__meta {
-  margin-top: var(--space-6);
-  font-size: var(--text-sm);
-  color: var(--libro-text-soft);
-}
-
-/* Portada */
-.libro-cover {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.libro-cover__img {
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-  border-radius: 2px 6px 6px 2px;
-  box-shadow: -6px 0 0 0 rgba(18, 39, 63, 0.18), var(--shadow-xl);
-  transform: rotate(-1.2deg);
-  transition: transform var(--transition-base);
-}
-
-.libro-cover__img:hover {
-  transform: rotate(0deg) translateY(-4px);
-}
-
-.libro-cover__note {
-  font-size: var(--text-xs);
-  color: var(--libro-text-soft);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-align: center;
-}
-
-/* --------------------------------------------------------------------------
-   Gancho grande sobre azul (el corte del espejo de la portada)
-   -------------------------------------------------------------------------- */
-
-.libro-claim {
-  font-size: clamp(var(--text-2xl), 4vw, 2.9rem);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  max-width: 28ch;
-  margin: 0 auto var(--space-8);
-  text-align: center;
-  color: #F4EFE5;
-}
-
-.libro-claim em {
-  color: var(--libro-rojo-claro);
-  font-style: normal;
-}
-
-.libro-claim-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
-  max-width: 920px;
-  margin: 0 auto;
-}
-
-/* El cuerpo va a --text-lg y no a --text-base: son tres columnas estrechas
-   sobre azul noche, y a 16px con texto gris claro sobre fondo oscuro costaba
-   leerlas. El texto claro sobre oscuro necesita un punto mas de cuerpo que
-   el mismo texto sobre blanco para leerse igual de comodo. */
-.libro-claim-list li {
-  list-style: none;
-  padding-top: var(--space-4);
-  border-top: 2px solid rgba(244, 239, 229, 0.22);
-  color: #D6DFE9;
-  font-size: var(--text-lg);
-  line-height: 1.6;
-}
-
-.libro-claim-list li strong {
-  display: block;
-  color: #F4EFE5;
-  font-size: var(--text-xl);
-  line-height: 1.3;
-  margin-bottom: var(--space-3);
-}
-
-/* --------------------------------------------------------------------------
-   Para quién sí / para quién no
-   -------------------------------------------------------------------------- */
-
-.libro-split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-8);
-  margin-top: var(--space-10);
-}
-
-.libro-panel {
-  background: var(--libro-surface);
-  border: 1px solid var(--libro-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-8);
-}
-
-.libro-panel--no {
-  background: transparent;
-}
-
-.libro-panel__title {
-  font-size: var(--text-xl);
-  margin-bottom: var(--space-5);
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
-.libro-panel__title i {
-  color: var(--libro-rojo);
-}
-
-.libro-panel ul {
-  list-style: none;
-}
-
-.libro-panel li {
-  position: relative;
-  padding-left: var(--space-6);
-  margin-bottom: var(--space-4);
-  color: var(--libro-text-soft);
-  line-height: 1.55;
-}
-
-.libro-panel li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--libro-rojo);
-}
-
-.libro-panel--no li::before {
-  border-radius: 2px;
-  background: transparent;
-  border: 2px solid var(--libro-gris);
-  width: 11px;
-  height: 11px;
-  transform: rotate(45deg);
-}
-
-/* --------------------------------------------------------------------------
-   Qué te llevas
-   -------------------------------------------------------------------------- */
-
-.libro-takeaways {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-8);
-  margin-top: var(--space-10);
-}
-
-.libro-takeaway {
-  border-top: 3px solid var(--libro-rojo);
-  padding-top: var(--space-5);
-}
-
-.libro-takeaway h3 {
-  font-size: var(--text-xl);
-  margin-bottom: var(--space-3);
-}
-
-.libro-takeaway p {
-  color: var(--libro-text-soft);
-  line-height: 1.6;
-}
-
-/* --------------------------------------------------------------------------
-   Índice
-   -------------------------------------------------------------------------- */
-
-.libro-toc {
-  margin-top: var(--space-12);
-  display: grid;
-  gap: var(--space-10);
-}
-
-.libro-part {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: var(--space-8);
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--libro-border);
-}
-
-.libro-part__label {
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--libro-rojo);
-  margin-bottom: var(--space-2);
-}
-
-.libro-part__name {
-  font-size: var(--text-2xl);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-3);
-}
-
-.libro-part__desc {
-  font-size: var(--text-sm);
-  color: var(--libro-text-soft);
-  line-height: 1.55;
-}
-
-.libro-chapters {
-  list-style: none;
-  display: grid;
-  gap: var(--space-3);
-}
-
-.libro-chapters li {
-  display: grid;
-  grid-template-columns: 2.4rem 1fr;
-  gap: var(--space-3);
-  align-items: baseline;
-  line-height: 1.5;
-}
-
-.libro-chapters li span {
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  color: var(--libro-rojo);
-  font-size: var(--text-sm);
-}
-
-.libro-toc__extra {
-  margin-top: var(--space-8);
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--libro-border);
-  font-size: var(--text-sm);
-  color: var(--libro-text-soft);
-  line-height: 1.7;
-}
-
-/* --------------------------------------------------------------------------
-   Autor
-   -------------------------------------------------------------------------- */
-
-.libro-author {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: var(--space-10);
-  align-items: start;
-}
-
-.libro-author__photo {
-  width: 100%;
-  border-radius: var(--radius-lg);
-  filter: grayscale(100%) contrast(1.05);
-  box-shadow: var(--shadow-lg);
-}
-
-.libro-author__quote {
-  font-size: var(--text-2xl);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  margin-bottom: var(--space-5);
-  padding-left: var(--space-5);
-  border-left: 3px solid var(--libro-rojo);
-}
-
-.libro-author__body p {
-  color: var(--libro-text-soft);
-  line-height: 1.65;
-  margin-bottom: var(--space-4);
-  max-width: 66ch;
-}
-
-/* --------------------------------------------------------------------------
-   Ficha técnica y estado
-   -------------------------------------------------------------------------- */
-
-.libro-facts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--space-6);
-  margin-top: var(--space-10);
-}
-
-.libro-fact {
-  border-top: 1px solid var(--libro-border);
-  padding-top: var(--space-4);
-}
-
-.libro-fact dt {
-  font-size: var(--text-xs);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--libro-text-soft);
-  margin-bottom: var(--space-2);
-}
-
-.libro-fact dd {
-  font-size: var(--text-lg);
-  font-weight: 600;
-}
-
-/* --------------------------------------------------------------------------
-   Lista de espera
-   -------------------------------------------------------------------------- */
-
-.libro-waitlist {
-  background: var(--libro-azul);
-  color: #ECE6DA;
-  padding: var(--space-20) 0;
-}
-
-.libro-waitlist__inner {
-  max-width: 640px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.libro-waitlist h2 {
-  font-size: clamp(var(--text-2xl), 3.4vw, var(--text-4xl));
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: #F4EFE5;
-  margin-bottom: var(--space-4);
-}
-
-.libro-waitlist p {
-  color: #B9C6D4;
-  margin-bottom: var(--space-8);
-}
 
 .libro-form__row {
   display: flex;
@@ -533,7 +46,7 @@
   font-size: var(--text-base);
   font-family: inherit;
   color: var(--libro-azul);
-  background: #F4EFE5;
+  background: var(--libro-papel);
   border: 2px solid transparent;
   border-radius: var(--radius-lg);
 }
@@ -550,7 +63,7 @@
   margin-top: var(--space-6);
   text-align: left;
   font-size: var(--text-sm);
-  color: #A9B7C6;
+  color: rgba(255, 255, 255, 0.72);
   line-height: 1.55;
 }
 
@@ -563,7 +76,7 @@
 }
 
 .libro-form__consent a {
-  color: #F4EFE5;
+  color: var(--libro-papel);
   text-decoration: underline;
 }
 
@@ -571,7 +84,7 @@
   margin: var(--space-5) 0 0;
   min-height: 1.5em;
   font-size: var(--text-sm);
-  color: #F4EFE5;
+  color: var(--libro-papel);
 }
 
 .libro-form__msg.is-error {
@@ -581,38 +94,30 @@
 .libro-form__fine {
   margin-top: var(--space-6);
   font-size: var(--text-xs);
-  color: #8A9AAC;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Estado sin proveedor de email configurado */
 .libro-form__fallback .libro-form__msg {
-  color: #A9B7C6;
+  color: rgba(255, 255, 255, 0.72);
   margin-top: var(--space-5);
 }
-
 /* --------------------------------------------------------------------------
    FRANJA DE ANUNCIO EN LA HOME (justo debajo del hero)
-   Va en crema para separarse del hero blanco de arriba y de la sección
-   oscura de "Qué hago" de abajo. El color es el de la cubierta.
+   Es un trozo de la cubierta: amarillo con la trama de flujos, título en caja
+   negra y subtítulo en píldora blanca. Igual en tema claro y oscuro: es la
+   marca del libro, no el tema de la web.
    -------------------------------------------------------------------------- */
 
 .book-band {
-  background: #F4EFE5;
-  border-top: 1px solid rgba(18, 39, 63, 0.1);
-  border-bottom: 1px solid rgba(18, 39, 63, 0.1);
+  background: var(--libro-velo), var(--libro-trama) center / cover no-repeat, var(--libro-amarillo);
   padding: var(--space-16) 0;
-  color: #12273F;
-}
-
-[data-theme="dark"] .book-band {
-  background: #12273F;
-  border-color: rgba(244, 239, 229, 0.14);
-  color: #ECE6DA;
+  color: var(--libro-tinta);
 }
 
 .book-band__inner {
   display: grid;
-  grid-template-columns: 190px 1fr;
+  grid-template-columns: 210px 1fr;
   gap: var(--space-12);
   align-items: center;
 }
@@ -621,13 +126,9 @@
   width: 100%;
   height: auto;
   border-radius: 2px 6px 6px 2px;
-  box-shadow: -5px 0 0 0 rgba(18, 39, 63, 0.16), var(--shadow-xl);
-  transform: rotate(-1.5deg);
+  box-shadow: -6px 0 0 0 rgba(0, 0, 0, 0.22), 0 24px 40px -12px rgba(0, 0, 0, 0.45);
+  transform: rotate(-2deg);
   transition: transform var(--transition-base);
-}
-
-[data-theme="dark"] .book-band__cover img {
-  box-shadow: -5px 0 0 0 rgba(0, 0, 0, 0.35), var(--shadow-xl);
 }
 
 .book-band__cover:hover img {
@@ -635,50 +136,101 @@
 }
 
 .book-band__tag {
-  display: block;
-  font-size: var(--text-sm);
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-primary);
-  margin-bottom: var(--space-2);
-}
-
-.book-band__title {
-  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin-bottom: var(--space-2);
-  color: inherit;
-}
-
-.book-band__sub {
-  font-size: var(--text-xl);
-  color: #4A5C70;
+  color: var(--libro-papel);
+  background: var(--libro-tinta);
+  padding: 0.35em 0.9em;
+  border-radius: var(--radius-full);
   margin-bottom: var(--space-4);
 }
 
-[data-theme="dark"] .book-band__sub {
-  color: #A9B7C6;
+.book-band__tag::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--libro-rojo);
+}
+
+/* El título, como en la cubierta: caja negra redondeada, letra de palo gruesa */
+.book-band__title {
+  display: inline-block;
+  font-family: 'Archivo', var(--font-primary);
+  font-weight: 900;
+  line-height: 0.92;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--libro-papel);
+  background: var(--libro-tinta);
+  padding: 0.38em 0.5em 0.42em;
+  border-radius: 14px;
+  margin-bottom: var(--space-4);
+  box-shadow: 0 14px 28px -14px rgba(0, 0, 0, 0.55);
+}
+.book-band__title span { display: block; }
+.book-band__title span:first-child {
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  letter-spacing: -0.03em;
+}
+.book-band__title span:last-child {
+  font-size: clamp(0.98rem, 1.88vw, 1.43rem);
+  letter-spacing: -0.005em;
+  margin-top: 0.1em;
+}
+
+.book-band__sub {
+  display: inline-block;
+  font-family: 'Merriweather', Georgia, serif;
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--libro-tinta);
+  background: var(--libro-papel);
+  padding: 0.55em 1.1em;
+  border-radius: var(--radius-full);
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.35);
+  margin-bottom: var(--space-5);
+}
+
+.book-band__sub em {
+  font-style: normal;
+  color: var(--libro-rojo);
 }
 
 .book-band__hook {
   max-width: 62ch;
   line-height: 1.6;
-  color: #4A5C70;
+  color: var(--libro-tinta);
   margin-bottom: var(--space-6);
-  padding-left: var(--space-5);
-  border-left: 3px solid var(--color-primary);
-}
-
-[data-theme="dark"] .book-band__hook {
-  color: #B9C6D4;
 }
 
 .book-band__cta {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
+}
+
+/* Botones de la franja en la tinta de la cubierta, no en el color de la web */
+.book-band .btn--primary {
+  background: var(--libro-tinta);
+  border-color: var(--libro-tinta);
+  color: var(--libro-papel);
+}
+.book-band .btn--primary:hover { background: var(--libro-tinta-2); }
+.book-band .btn--outline {
+  border-color: var(--libro-tinta);
+  color: var(--libro-tinta);
+  background: transparent;
+}
+.book-band .btn--outline:hover {
+  background: var(--libro-tinta);
+  color: var(--libro-papel);
 }
 
 @media (max-width: 768px) {
@@ -690,7 +242,7 @@
 
   .book-band__cover {
     display: block;
-    max-width: 150px;
+    max-width: 160px;
     margin: 0 auto;
   }
 
@@ -712,253 +264,6 @@
 }
 
 /* --------------------------------------------------------------------------
-   Responsive
-   -------------------------------------------------------------------------- */
-
-@media (max-width: 968px) {
-  .libro-hero__inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-10);
-  }
-
-  .libro-cover {
-    order: -1;
-  }
-
-  .libro-cover__img {
-    max-width: 260px;
-  }
-
-  .libro-hero__subtitle {
-    max-width: 100%;
-  }
-
-  .libro-claim-list,
-  .libro-takeaways,
-  .libro-split {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
-  .libro-part {
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-  }
-
-  .libro-author {
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-  }
-
-  .libro-author__photo {
-    max-width: 180px;
-  }
-
-  .home-book {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-@media (max-width: 560px) {
-  .libro-section,
-  .libro-waitlist {
-    padding: var(--space-12) 0;
-  }
-
-  .libro-hero {
-    padding-top: calc(var(--header-height) + var(--space-8));
-    padding-bottom: var(--space-12);
-  }
-
-  .libro-form input[type="email"] {
-    flex: 1 1 100%;
-  }
-
-  .libro-form__row .btn {
-    width: 100%;
-  }
-}
-
-/* ==========================================================================
-   AJUSTES 2026-09-13 — legibilidad, ritmo de scroll y CTA
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1 · El header es fijo y tapaba el destino de cada ancla
-   --------------------------------------------------------------------------
-   Al pulsar «Ver el índice» el navegador dejaba el titular debajo de la
-   barra. Se arregla en el destino, no con JavaScript.
-   -------------------------------------------------------------------------- */
-.libro-page [id] {
-  scroll-margin-top: calc(var(--header-height) + var(--space-6));
-}
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
-
-/* --------------------------------------------------------------------------
-   2 · Las negaciones, en tira
-   --------------------------------------------------------------------------
-   Antes eran un panel a la par del de «es para ti», y quedaba medio vacío
-   porque tenía un punto menos. En tira se leen de golpe, que es como pegan.
-   -------------------------------------------------------------------------- */
-.libro-nots {
-  list-style: none;
-  /* En flex y no en grid a proposito. Con cuatro columnas de 1fr las equis
-     quedaban alineadas pero los textos miden muy distinto ("No es un
-     tutorial" frente a "No es un curso motivacional"), asi que el hueco
-     entre el final de una etiqueta y la siguiente equis salia irregular y
-     la tira se leia descuadrada. En flex cada etiqueta ocupa lo que mide y
-     el hueco entre todas es el mismo, que es lo que se percibe como
-     alineado en una tira de etiquetas cortas. */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--space-4) var(--space-10);
-  /* Mismo ancho y mismo centrado que .libro-claim-list: si no, la tira
-     arranca en el borde del contenedor y no cuadra con las tres columnas. */
-  max-width: 920px;
-  margin: var(--space-12) auto 0;
-  padding: var(--space-8) 0 0;
-  border-top: 1px solid rgba(236, 230, 218, 0.18);
-}
-.libro-nots li {
-  position: relative;
-  font-size: var(--text-base);
-  line-height: 1.45;
-  color: rgba(236, 230, 218, 0.78);
-  padding-left: var(--space-8);
-}
-/* La equis se dibuja en CSS: ni icono ni fuente externa que cargar */
-.libro-nots li::before,
-.libro-nots li::after {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: .62em;
-  width: 14px;
-  height: 2px;
-  background: var(--libro-rojo);
-  border-radius: 2px;
-}
-.libro-nots li::before { transform: rotate(45deg); }
-.libro-nots li::after  { transform: rotate(-45deg); }
-
-/* --------------------------------------------------------------------------
-   3 · «Es para ti si» a dos columnas, sin panel
-   -------------------------------------------------------------------------- */
-.libro-foryou {
-  list-style: none;
-  margin: var(--space-10) 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-5) var(--space-10);
-}
-.libro-foryou li {
-  position: relative;
-  padding-left: var(--space-8);
-  color: var(--libro-text-soft);
-  line-height: 1.6;
-}
-.libro-foryou li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: .55em;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--libro-rojo);
-}
-.libro-foryou li strong { color: var(--libro-text); }
-
-/* --------------------------------------------------------------------------
-   4 · CTA intermedio
-   --------------------------------------------------------------------------
-   Corta el scroll antes del índice, que es la parte larga.
-   -------------------------------------------------------------------------- */
-.libro-cta-mid {
-  background: var(--libro-azul);
-  color: #ECE6DA;
-  padding: var(--space-10) 0;
-  border-top: 3px solid var(--libro-rojo);
-}
-.libro-cta-mid__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-8);
-  flex-wrap: wrap;
-}
-.libro-cta-mid__title {
-  font-size: var(--text-2xl);
-  font-weight: 700;
-  margin: 0 0 var(--space-1);
-  line-height: 1.2;
-}
-.libro-cta-mid__text { margin: 0; }
-/* Sobre el azul, el rojo de la casa funciona sin inventar un color nuevo */
-.libro-cta-mid__text { color: rgba(236, 230, 218, 0.75); }
-
-/* --------------------------------------------------------------------------
-   5 · El autor: la foto era un sello y el texto no llenaba la fila
-   --------------------------------------------------------------------------
-   Con 220px de foto y `max-width: 66ch` en los párrafos quedaba una columna
-   derecha vacía de casi 300px. La foto crece y la fila se ajusta al texto.
-   -------------------------------------------------------------------------- */
-.libro-author {
-  grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
-  gap: var(--space-12);
-  align-items: start;
-  max-width: 1000px;
-}
-.libro-author__body p { max-width: none; }
-
-/* --------------------------------------------------------------------------
-   6 · La ficha, dentro de la lista de espera
-   -------------------------------------------------------------------------- */
-/* El bloque de la lista de espera está centrado y capado a 640px; la ficha
-   necesita todo el ancho para que los cinco datos quepan en una fila. Se saca
-   con un margen negativo en vez de sacarla del contenedor en el HTML. */
-.libro-waitlist .libro-facts {
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-5);
-  width: min(1000px, 100%);
-  margin: 0 auto var(--space-12);
-  padding-bottom: var(--space-10);
-  border-bottom: 1px solid rgba(236, 230, 218, 0.18);
-  text-align: left;
-}
-@media (min-width: 1080px) {
-  .libro-waitlist .libro-facts { width: 1000px; margin-left: calc((640px - 1000px) / 2); }
-}
-@media (max-width: 760px) {
-  .libro-waitlist .libro-facts { grid-template-columns: repeat(2, 1fr); }
-}
-.libro-waitlist .libro-fact dt {
-  color: rgba(236, 230, 218, 0.55);
-}
-.libro-waitlist .libro-fact dd {
-  color: #ECE6DA;
-}
-
-@media (max-width: 860px) {
-  /* En pantallas medias la tira pasa a dos filas de dos sola, por el wrap. */
-  .libro-foryou { grid-template-columns: 1fr; }
-  .libro-author { grid-template-columns: 1fr; max-width: 560px; }
-  .libro-author__photo { max-width: 240px; }
-}
-
-@media (max-width: 560px) {
-  .libro-nots { flex-direction: column; align-items: flex-start; }
-  .libro-cta-mid__inner { flex-direction: column; align-items: flex-start; }
-  .libro-cta-mid .btn { width: 100%; justify-content: center; }
-}
-
-/* --------------------------------------------------------------------------
    MODAL DE LISTA DE ESPERA
    Lo abren los botones «Avísame cuando salga» de la home y de la landing.
 
@@ -972,12 +277,8 @@ html { scroll-behavior: smooth; }
    -------------------------------------------------------------------------- */
 
 .waitlist-modal {
-  /* La paleta del libro vive bajo .libro-page, y este <dialog> cuelga del
-     <body>, fuera de ese ámbito. Además la home no tiene .libro-page en
-     ninguna parte. Se declaran aquí para que el modal sea autónomo. */
-  --libro-azul: #12273F;
-  --libro-rojo: #DC2626;
-
+  /* Cuelga del <body>, fuera de .libro-page: toma los colores de los
+     tokens de marca declarados en :root, arriba del todo. */
   width: min(540px, calc(100vw - 2rem));
   /* El reset del sitio pone margin:0 a todo y eso mata el centrado que el
      navegador le da por defecto a un <dialog> modal. Se devuelve aquí. */
@@ -987,7 +288,7 @@ html { scroll-behavior: smooth; }
      de ámbito, un color inválido hace que el <dialog> caiga a transparente
      y se lea la página de debajo a través del modal. */
   background: #FFFFFF;
-  color: #12273F;
+  color: var(--libro-tinta);
   border: 1px solid rgba(18, 39, 63, 0.12);
   border-radius: var(--radius-xl);
   box-shadow: 0 24px 60px rgba(18, 39, 63, 0.28);
@@ -1044,7 +345,7 @@ html { scroll-behavior: smooth; }
 }
 
 .waitlist-modal__text {
-  color: #4A5C70;
+  color: #4A4A4A;
   font-size: var(--text-base);
   margin: 0 0 var(--space-6);
 }
@@ -1076,7 +377,7 @@ html { scroll-behavior: smooth; }
 }
 
 .waitlist-modal .libro-form__consent {
-  color: #4A5C70;
+  color: #4A4A4A;
 }
 
 .waitlist-modal .libro-form__consent a {
@@ -1132,7 +433,7 @@ html { scroll-behavior: smooth; }
   margin: 0 auto;
   background: #FFFFFF;
   border: 1px solid rgba(18, 39, 63, 0.12);
-  border-top: 3px solid #DC2626;
+  border-top: 3px solid var(--libro-rojo);
   border-radius: var(--radius-xl);
   padding: var(--space-8);
   text-align: left;
@@ -1149,12 +450,12 @@ html { scroll-behavior: smooth; }
   flex: 0 0 auto;
   width: 100%;
   background: #FFFFFF;
-  color: #12273F;
+  color: var(--libro-tinta);
   border: 2px solid rgba(18, 39, 63, 0.25);
 }
 
 .cta-news__form input[type="email"]::placeholder { color: #8A9AAC; }
-.cta-news__form input[type="email"]:focus { border-color: #DC2626; }
+.cta-news__form input[type="email"]:focus { border-color: var(--libro-rojo); }
 
 .cta-news__btn {
   width: 100%;
@@ -1163,8 +464,8 @@ html { scroll-behavior: smooth; }
 
 /* El gris de origen (#A9B7C6) sobre fondo claro se queda en 2,4:1 y no se
    lee. Se sube a un azul apagado que sí pasa el contraste. */
-.cta-news .libro-form__consent { color: #4A5C70; }
-.cta-news .libro-form__consent a { color: #12273F; text-decoration: underline; }
-.cta-news .libro-form__msg { color: #12273F; }
-.cta-news .libro-form__msg.is-error { color: #DC2626; }
+.cta-news .libro-form__consent { color: #4A4A4A; }
+.cta-news .libro-form__consent a { color: var(--libro-tinta); text-decoration: underline; }
+.cta-news .libro-form__msg { color: var(--libro-tinta); }
+.cta-news .libro-form__msg.is-error { color: var(--libro-rojo); }
 .cta-news .libro-form__fine { color: #6B7A8C; margin-top: var(--space-4); }
