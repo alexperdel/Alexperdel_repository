@@ -488,7 +488,7 @@ y `…-demo-sm.png` (el 301 ya responde por ellas).
 
 | | Qué | Quién |
 |---|---|---|
-| 🔴 | PNG definitivo de la portada (y mockups) | Rafa |
+| ✅ | Portada y mockups de Rafa (3 oct). Falta la contra definitiva con la foto nueva | Rafa |
 | 🟡 | Vectorial de la trama, para sustituir el SVG generado | Rafa |
 | 🟡 | Foto nueva del autor (contra definitiva) | Alex / Rafa |
 | 🟡 | Confirmar las 280 páginas al cerrar el interior: van en la landing (hero, ficha y FAQ), su JSON-LD y `llms.txt` | Alex |
