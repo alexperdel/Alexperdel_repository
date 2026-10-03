@@ -46,3 +46,19 @@ Todo está en `reel.html`: los textos en el HTML, las posiciones en `Y` y los
 tiempos de cada plano en `PLANOS` y en `render(t)`. La trama es la de la web
 (`assets/img/libro/trama-flujos.svg`): cuando llegue el vectorial de Rafa, el
 reel la recoge solo.
+
+## Música
+
+`musica/sports-rock-lnplusmusic.mp3` — «Sport Sports Rock Music» de lnplusmusic, de
+Pixabay Music (licencia de Pixabay: uso gratuito, sin atribución obligatoria; no
+se puede redistribuir la pista suelta, por eso solo vive en este repo privado).
+
+130,4 BPM. El reel arranca en el **puente suave (63,39 s)** y el **drop (67,99 s)**
+cae en el segundo 4,6 del vídeo, justo cuando golpea el título:
+
+```bash
+node render.js --musica musica/sports-rock-lnplusmusic.mp3 --desde 63.39
+```
+
+Si se cambia de pista, hay que volver a medir tempo y drop y ajustar `PULSO`,
+`COMPAS` y `D` en `reel.html`.
