@@ -488,10 +488,10 @@ ya la hayan visto seguirán viendo la captura.
 | 🔴 | PNG definitivo de la portada (y mockups) | Rafa |
 | 🟡 | Vectorial de la trama, para sustituir el SVG generado | Rafa |
 | 🟡 | Foto nueva del autor (contra definitiva) | Alex / Rafa |
-| 🟡 | Confirmar las 280 páginas al cerrar el interior: van en la landing (×2), su JSON-LD y `llms.txt` | Alex |
+| 🟡 | Confirmar las 280 páginas al cerrar el interior: van en la landing (hero, ficha y FAQ), su JSON-LD y `llms.txt` | Alex |
 | 🟡 | Dar de alta `analitica-alexperdel@scarif-automation.iam.gserviceaccount.com` en GA4 y Search Console (sigue pendiente de la sección 11) | Alex |
 | 🟡 | Decidir si `/articulos/` sale del sitemap mientras no haya artículos | Alex |
-| 🟢 | Con ISBN: `isbn`, `datePublished` y `offers` (Amazon) en cada `workExample` | Al publicar |
+| 🟢 | ISBN (978-84-09-92012-9) y precios (24,95 € y 9,99 €) ya están. Al publicar: `datePublished`, y `url` + `availability` de Amazon en cada `offers` | Al publicar |
 | 🟢 | Google Books (Play Libros), Amazon Author Central y Goodreads; sus URLs al `sameAs` de la persona | Al publicar |
 | 🟢 | Pedir a EBIS un enlace a la landing desde el máster | Alex |
 

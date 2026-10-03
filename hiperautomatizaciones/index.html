@@ -61,7 +61,7 @@
   <!-- Schema.org -->
   <!-- Schema.org: libro + página + preguntas. El autor y el editor apuntan a la
        ficha de persona de la home (#alexperdel). Cuando haya ISBN, fecha y
-       enlace de Amazon, van en cada workExample (isbn, datePublished, offers). -->
+       enlace de Amazon, van en cada workExample: falta datePublished y, en offers, url y availability. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -97,15 +97,27 @@
           {
             "@type": "Book",
             "bookFormat": "https://schema.org/Paperback",
+            "isbn": "978-84-09-92012-9",
             "inLanguage": "es",
-            "numberOfPages": 280
+            "numberOfPages": 280,
+            "offers": {
+              "@type": "Offer",
+              "price": "24.95",
+              "priceCurrency": "EUR"
+            }
           },
           {
             "@type": "Book",
             "bookFormat": "https://schema.org/EBook",
-            "inLanguage": "es"
+            "inLanguage": "es",
+            "offers": {
+              "@type": "Offer",
+              "price": "9.99",
+              "priceCurrency": "EUR"
+            }
           }
-        ]
+        ],
+        "isbn": "978-84-09-92012-9"
       },
       {
         "@type": "WebPage",
@@ -155,7 +167,7 @@
             "name": "¿Cuándo sale y en qué formatos?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "A finales de 2026, en tapa blanda y en Kindle, en Amazon. Si te apuntas a la lista te aviso el mismo día."
+              "text": "A finales de 2026, en Amazon: tapa blanda de 280 páginas a 24,95 € y Kindle a 9,99 €. Si te apuntas a la lista, te aviso el mismo día que esté a la venta."
             }
           },
           {
@@ -262,7 +274,7 @@
             <a href="#indice" class="btn btn--linea btn--large">Ver el índice</a>
           </div>
 
-          <p class="lp-hero__meta">18 capítulos · 4 partes · 280 páginas · papel y Kindle</p>
+          <p class="lp-hero__meta">En Amazon · Tapa blanda, 280 páginas, 24,95 € · Kindle, 9,99 €</p>
         </div>
 
         <div class="lp-cubierta">
@@ -521,7 +533,7 @@
 
         <details class="lp-faq__item">
           <summary>¿Cuándo sale y en qué formatos?</summary>
-          <p>A finales de 2026, en tapa blanda y en Kindle, en Amazon. Si te apuntas a la lista te aviso el mismo día.</p>
+          <p>A finales de 2026, en Amazon: tapa blanda de 280 páginas a 24,95 € y Kindle a 9,99 €. Si te apuntas a la lista, te aviso el mismo día que esté a la venta.</p>
         </details>
         <details class="lp-faq__item">
           <summary>¿Necesito saber programar para leerlo?</summary>
@@ -547,10 +559,11 @@
       <div class="container lp-espera__inner">
 
         <dl class="lp-ficha">
-          <div><dt>Formato</dt><dd>Tapa blanda y Kindle</dd></div>
-          <div><dt>Extensión</dt><dd>280 páginas</dd></div>
+          <div><dt>Tapa blanda</dt><dd>280 páginas · 24,95 €</dd></div>
+          <div><dt>Kindle</dt><dd>9,99 €</dd></div>
+          <div><dt>Dónde</dt><dd>Amazon</dd></div>
           <div><dt>Idioma</dt><dd>Castellano</dd></div>
-          <div><dt>Edición</dt><dd>Independiente</dd></div>
+          <div><dt>ISBN</dt><dd>978-84-09-92012-9</dd></div>
           <div><dt>Disponible</dt><dd>Finales de 2026</dd></div>
         </dl>
 

@@ -54,8 +54,8 @@ hay estimaciones de folleto ni clientes anónimos a los que culpar.
 
 - [Hiperautomatizaciones](https://alexperdel.com/hiperautomatizaciones/):
   manual honesto y sin humos para automatizar de verdad una empresa, de
-  Alex Perdel. 280 páginas, 18 capítulos, 4 partes. Tapa blanda y Kindle,
-  autoeditado. Publicación prevista para finales de 2026.
+  Alex Perdel. 280 páginas, 18 capítulos, 4 partes. En Amazon: tapa blanda a 24,95 €
+  (ISBN 978-84-09-92012-9) y Kindle a 9,99 €. Autoeditado. Publicación prevista para finales de 2026.
 
   Qué entiende el libro por hiperautomatización: encadenar varios sistemas,
   con más de una decisión automática y, a veces, con IA decidiendo lo que una
