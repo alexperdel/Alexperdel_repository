@@ -462,6 +462,7 @@ css/libro.css  css/libro-landing.css  css/footer.css
 assets/img/libro/portada-hiperautomatizaciones.png   ← el PNG BUENO de Rafa
 assets/img/libro/trama-flujos.svg
 assets/img/alex-perdel-retrato.jpg
+assets/img/libro/og-hiperautomatizaciones.jpg   ← regenerar con tools/og-libro.sh tras meter el PNG
 ```
 
 **Borrar del servidor:** `assets/img/libro/portada-hiperautomatizaciones-demo.png`
@@ -477,8 +478,9 @@ ya la hayan visto seguirán viendo la captura.
    `/hiperautomatizaciones/`; la demo → 301 a la portada nueva.
 2. Search Console: **Solicitar indexación** de `/hiperautomatizaciones/`, `/` y
    `/sobre-mi.html`, y volver a enviar `sitemap.xml`.
-3. LinkedIn Post Inspector con la URL del libro, para que la vista previa coja
-   la portada nueva.
+3. **LinkedIn Post Inspector** (linkedin.com/post-inspector) con la URL del
+   libro: hasta entonces LinkedIn enseña la vista previa vieja (comprobado el
+   3 de octubre). La tarjeta es `og-hiperautomatizaciones.jpg`, 1200×627.
 4. Prueba de resultados enriquecidos de Google sobre la landing (Book, FAQ,
    migas).
 

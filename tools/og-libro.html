@@ -1,0 +1,34 @@
+<!doctype html>
+<!-- Tarjeta para redes (og:image) de la landing del libro: 1200×627.
+     Se genera con tools/og-libro.sh. Si cambia la portada, se vuelve a lanzar. -->
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@900&family=Merriweather:wght@700&display=swap">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 627px; overflow: hidden; }
+  body {
+    background: linear-gradient(rgba(255,255,255,.16), rgba(255,255,255,.16)),
+                url("../assets/img/libro/trama-flujos.svg") center / cover no-repeat, #F6B331;
+    display: flex; align-items: center; gap: 64px; padding: 0 80px;
+    font-family: 'Archivo', sans-serif; color: #141414;
+  }
+  img { height: 520px; border-radius: 3px 8px 8px 3px; transform: rotate(-2deg);
+        box-shadow: -8px 0 0 rgba(0,0,0,.22), 0 36px 60px -18px rgba(0,0,0,.55); }
+  .caja { background: #141414; color: #fff; border-radius: 20px; padding: 26px 34px 30px;
+          text-transform: uppercase; line-height: .9; display: inline-block; }
+  .g { font-size: 112px; letter-spacing: -3px; display: block; }
+  .p { font-size: 40px; display: block; margin-top: 8px; }
+  .sub { font-family: 'Merriweather', serif; font-size: 27px; line-height: 1.35; background: #fff;
+         border-radius: 999px; padding: 18px 32px; margin-top: 26px; display: inline-block;
+         box-shadow: 0 10px 22px -10px rgba(0,0,0,.45); }
+  .sub em { font-style: normal; color: #E3262B; }
+  .autor { margin-top: 28px; font-family: 'Merriweather', serif; font-size: 26px; font-weight: 700; }
+</style></head>
+<body>
+  <img src="../assets/img/libro/portada-hiperautomatizaciones.png" alt="">
+  <div>
+    <div class="caja"><span class="g">Hiper</span><span class="p">automatizaciones</span></div><br>
+    <div class="sub">Manual <em>honesto</em> y <em>sin humos</em> para<br><em>automatizar de verdad</em> tu empresa</div>
+    <p class="autor">Alex Perdel · Próximamente en Amazon</p>
+  </div>
+</body></html>
