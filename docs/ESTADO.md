@@ -461,6 +461,7 @@ proyectos/perito-guai.html  proyectos/voicebot-ia.html
 css/libro.css  css/libro-landing.css  css/footer.css
 assets/img/libro/portada-hiperautomatizaciones.png   ← el PNG BUENO de Rafa
 assets/img/libro/trama-flujos.svg
+assets/img/alex-perdel-retrato.jpg
 ```
 
 **Borrar del servidor:** `assets/img/libro/portada-hiperautomatizaciones-demo.png`
