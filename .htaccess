@@ -73,8 +73,8 @@ Redirect 301 /hiperautomatizaciones.html https://alexperdel.com/hiperautomatizac
 # La portada demo pasa a la definitiva de Rafa (octubre 2026). Google y las
 # redes tenían indexada la URL vieja: así lo que apunte allí llega a la nueva.
 # Nombre nuevo a propósito: la vieja va con caché de un año en los navegadores.
-Redirect 301 /assets/img/libro/portada-hiperautomatizaciones-demo.png https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.png
-Redirect 301 /assets/img/libro/portada-hiperautomatizaciones-demo-sm.png https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.png
+Redirect 301 /assets/img/libro/portada-hiperautomatizaciones-demo.png https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.jpg
+Redirect 301 /assets/img/libro/portada-hiperautomatizaciones-demo-sm.png https://alexperdel.com/assets/img/libro/portada-hiperautomatizaciones.jpg
 
 # =============================================
 # UNA SOLA URL POR PÁGINA: /carpeta/index.html → /carpeta/

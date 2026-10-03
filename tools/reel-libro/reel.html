@@ -77,12 +77,15 @@
           box-shadow: 0 30px 60px -26px rgba(0,0,0,.6); }
   #rayo svg { width: 46px; height: 58px; }
   #rayo .serif { font-style: italic; font-weight: 900; font-size: 38px; margin-top: 10px; }
+  #c-libros { display: block; width: 1040px; height: 780px; margin: -150px auto -170px; position: relative; left: 50%; transform-origin: 50% 60%; filter: drop-shadow(0 30px 40px rgba(0,0,0,.22)); }
   #cierre .caja { margin-top: 56px; padding: 40px 30px 46px; }
   #cierre .caja.palo { font-size: 96px; letter-spacing: -2px; }
   #cierre .pildora { margin: 34px auto 0; width: 900px; padding: 28px 40px; font-size: 46px; }
   #url { margin-top: 40px; font-family: 'Archivo'; font-weight: 900; font-size: 44px; color: var(--tinta); }
 
   .w { display: inline-block; }
+  #i-libros { display: block; width: 1120px; height: 840px; filter: drop-shadow(0 34px 44px rgba(0,0,0,.22)); }
+  #flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
   #progreso { position: absolute; left: 0; bottom: 0; height: 12px; background: var(--tinta); }
 </style>
 </head>
@@ -92,6 +95,7 @@
   <div id="velo"></div>
 
   <div id="escenario">
+    <div class="nodo" id="n-intro"><img id="i-libros" src="../../assets/img/libro/mockup-libros-apilados.webp" alt=""></div>
     <div class="nodo" id="n-titulo"><div id="titulo" class="caja palo"><span class="g" id="t-g">Hiper</span><span class="p" id="t-p">automatizaciones</span></div></div>
     <div class="flecha" id="f1"><i></i><b></b></div>
     <div class="nodo" id="n-sub"><div id="subtitulo" class="pildora serif">Manual <span class="rojo">honesto</span> y <span class="rojo">sin humos</span><br>para <span class="rojo">automatizar de verdad</span> tu empresa</div></div>
@@ -113,18 +117,22 @@
 
     <div class="flecha" id="f6"><i></i><b></b></div>
     <div class="nodo" id="n-cierre"><div id="cierre">
-      <div id="rayo"><svg viewBox="0 0 32 32"><path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#E3262B"/></svg><span class="serif">Alex Perdel</span></div>
+      <img id="c-libros" src="../../assets/img/libro/mockup-libros-apilados.webp" alt="">
       <div class="caja palo" id="c-caja"><span class="w">Sale a finales</span><br><span class="w">de 2026</span></div>
       <div class="pildora serif" id="c-pild">Apúntate y te aviso el día que salga</div>
       <p id="url">alexperdel.com/hiperautomatizaciones</p>
     </div></div>
   </div>
 
+  <div id="flash"></div>
   <div id="progreso"></div>
 </div>
 
 <script>
-const DUR = 28;
+// Montado sobre «sports rock» a 130,4 BPM: un pulso = 0,46 s, un compás = 1,84 s.
+// El vídeo arranca en el puente suave de la pista (63,39 s) y el drop (67,99 s)
+// cae en el segundo 4,6 del vídeo. render.js: --musica pista.mp3 --desde 63.39
+const DUR = 29.44;
 window.DUR = DUR;
 const H = +(new URLSearchParams(location.search).get('h') || 1350);
 const W = 1080;
@@ -141,9 +149,9 @@ const lerp = (a, b, x) => a + (b - a) * x;
 
 // ---------- escenario: posiciones (centro vertical de cada nodo) ----------
 const $ = id => document.getElementById(id);
-const Y = { titulo: 0, sub: 360, r1: 1120, r2: 2000, r3: 2880, libro: 3780, cierre: 4700 };
+const Y = { intro: -1180, titulo: 0, sub: 360, r1: 1120, r2: 2000, r3: 2880, libro: 3780, cierre: 4700 };
 const sitio = (id, y) => { const n = $(id); n.style.top = y + 'px'; n.dataset.y = y; };
-sitio('n-titulo', Y.titulo); sitio('n-sub', Y.sub); sitio('n-r1', Y.r1); sitio('n-r2', Y.r2);
+sitio('n-intro', Y.intro); sitio('n-titulo', Y.titulo); sitio('n-sub', Y.sub); sitio('n-r1', Y.r1); sitio('n-r2', Y.r2);
 sitio('n-r3', Y.r3); sitio('n-libro', Y.libro); sitio('n-cierre', Y.cierre);
 // Las flechas unen el borde de abajo de un nodo con el de arriba del siguiente
 const borde = (id, lado) => { const n = $(id); const h = n.offsetHeight; return +n.dataset.y + (lado === 'abajo' ? h / 2 : -h / 2); };
@@ -186,31 +194,33 @@ const listo = fetch('../../assets/img/libro/trama-flujos.svg').then(r => r.text(
   });
 });
 
-// ---------- guion: cuándo llega la cámara a cada nodo ----------
-// Versión rápida (28 s): cambios de plano de 0,45 s con rebote y un zoom de
-// impacto al llegar. Todo cuelga de T: moviendo un número se mueve la escena.
-const T = { titulo: .3, sub: 2.6, r1: 5.4, r2: 8.9, r3: 12.4, libro: 15.9, cierre: 21.2 };
+// ---------- guion al compás ----------
+const PULSO = 0.46, COMPAS = 1.84, D = 4.6;          // D = el drop
+const T = { titulo: D, sub: D + COMPAS, r1: D + 2 * COMPAS, r2: D + 4 * COMPAS, r3: D + 6 * COMPAS,
+            libro: D + 8 * COMPAS, cierre: D + 10 * COMPAS };
+// [cuándo empieza a moverse, a dónde mira, cuánto tarda]: llega justo en el tiempo fuerte
 const PLANOS = [
-  [0, (Y.titulo + Y.sub) / 2 - 40],
-  [T.r1 - .45, Y.r1], [T.r2 - .45, Y.r2], [T.r3 - .45, Y.r3], [T.libro - .45, Y.libro], [T.cierre - .45, Y.cierre],
+  [0, Y.intro],
+  [D - .16, (Y.titulo + Y.sub) / 2 - 40, .16],          // corte seco en el drop
+  [T.r1 - .42, Y.r1, .42], [T.r2 - .42, Y.r2, .42], [T.r3 - .42, Y.r3, .42],
+  [T.libro - .42, Y.libro, .42], [T.cierre - .42, Y.cierre, .42],
 ];
-const MOVER = .45;
 const rebote = x => { const c = 1.25; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
 function camara(t) {
   let y = PLANOS[0][1];
-  for (let i = 1; i < PLANOS.length; i++) y = lerp(y, PLANOS[i][1], rebote(prog(t, PLANOS[i][0], MOVER)));
+  for (let i = 1; i < PLANOS.length; i++) y = lerp(y, PLANOS[i][1], (i === 1 ? easeOut : rebote)(prog(t, PLANOS[i][0], PLANOS[i][2])));
   return y;
 }
-// Zoom de impacto y sacudida corta al aterrizar en cada plano
+// Zoom lento durante el puente, zoom de impacto y sacudida en cada golpe
 function impacto(t) {
-  let z = 0, sx = 0, sy = 0;
-  for (const [ta] of PLANOS.slice(1)) {
-    const x = prog(t, ta + MOVER * .8, .35);
-    if (x > 0 && x < 1) { z += .07 * (1 - easeOut(x)); }
+  let z = t < D ? .06 * easeInOut(prog(t, .3, D - .3)) : 0, sx = 0, sy = 0;
+  for (const [ta, , d] of PLANOS.slice(1)) {
+    const x = prog(t, ta + d, .35);
+    if (x > 0 && x < 1) z += .08 * (1 - easeOut(x));
   }
-  for (const ta of [T.titulo + .25, T.r1 + .15, T.r2 + .15, T.r3 + .15, T.cierre + .45]) {
-    const x = prog(t, ta, .18);
-    if (x > 0 && x < 1) { const k = (1 - x) * 14; sx += Math.sin(t * 160) * k; sy += Math.cos(t * 190) * k; }
+  for (const ta of [D, T.r1, T.r2, T.r3, T.cierre + PULSO]) {
+    const x = prog(t, ta, .2);
+    if (x > 0 && x < 1) { const k = (1 - x) * 16; sx += Math.sin(t * 160) * k; sy += Math.cos(t * 190) * k; }
   }
   return { z, sx, sy };
 }
@@ -235,19 +245,26 @@ window.render = function (t) {
   $('escenario').style.transform = `translate(${im.sx}px, ${H / 2 - cy + im.sy}px) scale(${1 + im.z})`;
   $('fondo').style.transform = `translate(${Math.sin(t / 3) * 22}px, ${-cy * 0.08 + Math.cos(t / 2.5) * 12}px) scale(${1 + im.z * .5})`;
 
-  // Trama dibujándose (0–1,4 s) y respirando después
-  for (const l of lineasTrama) l.el.style.strokeDashoffset = l.L * (1 - easeOut(prog(t, l.d * .8, .6)));
+  // Trama: se dibuja despacio durante el puente y respira después
+  for (const l of lineasTrama) l.el.style.strokeDashoffset = l.L * (1 - easeOut(prog(t, l.d * 2.4, 1.2)));
   for (const f of formasTrama) {
-    const x = prog(t, .2 + f.d * 1.1, .3);
+    const x = prog(t, .3 + f.d * 2.8, .5);
     f.el.style.transform = `scale(${backOut(x) * (1 + Math.sin(t * 4 + f.d * 20) * .08)})`;
     f.el.style.opacity = x;
   }
 
+  // Arranque: los libros de Rafa aparecen flotando mientras suena el puente
+  const xi = prog(t, .4, 1.4);
+  $('n-intro').style.opacity = clamp(xi * 2);
+  $('n-intro').style.transform = `translate(-50%, -50%) translateY(${lerp(80, 0, easeOut(xi)) + Math.sin(t * 1.8) * 12}px) scale(${lerp(.86, 1, easeOut(xi))}) rotate(${Math.sin(t * 1.3) * 1.5}deg)`;
+  // Destello en el drop
+  $('flash').style.opacity = t >= D ? .8 * (1 - easeOut(prog(t, D, .32))) : 0;
+
   // Título: la caja cae y las dos palabras golpean
   const sT = pop($('n-titulo'), t, T.titulo, .35, 1.4);
   $('n-titulo').style.transform = `translate(-50%, -50%) scale(${sT})`;
-  $('t-g').style.opacity = clamp(prog(t, T.titulo + .2, .12)); $('t-g').style.transform = `scale(${lerp(1.7, 1, backOut(prog(t, T.titulo + .2, .3)))})`;
-  $('t-p').style.opacity = clamp(prog(t, T.titulo + .5, .15)); $('t-p').style.transform = `translateY(${lerp(50, 0, backOut(prog(t, T.titulo + .5, .3)))}px)`;
+  $('t-g').style.opacity = clamp(prog(t, T.titulo, .08)); $('t-g').style.transform = `scale(${lerp(1.7, 1, backOut(prog(t, T.titulo, .3)))})`;
+  $('t-p').style.opacity = clamp(prog(t, T.titulo + PULSO, .12)); $('t-p').style.transform = `translateY(${lerp(50, 0, backOut(prog(t, T.titulo + PULSO, .3)))}px)`;
 
   // Flechas: se disparan justo antes de su nodo
   const flecha = (f, a) => {
@@ -259,7 +276,7 @@ window.render = function (t) {
   // Subtítulo: entra la píldora y se subrayan las palabras rojas
   $('n-sub').style.transform = `translate(-50%, -50%) scale(${pop($('n-sub'), t, T.sub)})`;
   [...document.querySelectorAll('#subtitulo .rojo')].forEach((r, i) => {
-    r.style.backgroundSize = (100 * easeOut(prog(t, T.sub + .4 + i * .25, .25))) + '% 5px';
+    r.style.backgroundSize = (100 * easeOut(prog(t, T.sub + PULSO * (i + 1), .25))) + '% 5px';
   });
 
   // Las tres razones: número, palabras que golpean y píldora que sube
@@ -269,30 +286,31 @@ window.render = function (t) {
     num.style.opacity = clamp(prog(t, a - .1, .12)); num.style.transform = `translateY(${lerp(-30, 0, easeOut(prog(t, a - .1, .2)))}px)`;
     cajaW.style.opacity = clamp(prog(t, a, .1) * 2);
     cajaW.style.transform = `scale(${lerp(1.3, 1, backOut(prog(t, a, .3)))}) rotate(${lerp(-6, 0, easeOut(prog(t, a, .35)))}deg)`;
-    golpes(cajaW, t, a + .08);
-    pild.style.opacity = clamp(prog(t, a + .45, .2));
-    pild.style.transform = `translateY(${lerp(60, 0, backOut(prog(t, a + .45, .3)))}px)`;
+    golpes(cajaW, t, a + .04, PULSO / 2);
+    pild.style.opacity = clamp(prog(t, a + 2 * PULSO, .2));
+    pild.style.transform = `translateY(${lerp(60, 0, backOut(prog(t, a + 2 * PULSO, .3)))}px)`;
   });
 
   // Libro: aparece y pasa seis páginas al doble de velocidad
   $('n-libro').style.transform = `translate(-50%, -50%) scale(${pop($('n-libro'), t, T.libro, .4, .7)})`;
   paginas.forEach((p, i) => {
-    const x = easeInOut(prog(t, T.libro + .55 + i * .6, .55));
+    const x = easeInOut(prog(t, T.libro + PULSO * (i + 1), .42));
     p.style.transform = `rotateY(${-180 * x}deg)`;
     p.style.zIndex = x > .5 ? 100 + i : 100 - i;
   });
 
   // Cierre
   $('n-cierre').style.transform = 'translate(-50%, -50%)'; $('n-cierre').style.opacity = 1;
-  const rayo = $('rayo');
-  rayo.style.opacity = clamp(prog(t, T.cierre, .12));
-  rayo.style.transform = `scale(${lerp(.2, 1, backOut(prog(t, T.cierre, .35)))}) rotate(${lerp(-120, 0, easeOut(prog(t, T.cierre, .4)))}deg)`;
-  $('c-caja').style.opacity = clamp(prog(t, T.cierre + .35, .1));
-  $('c-caja').style.transform = `scale(${lerp(1.3, 1, backOut(prog(t, T.cierre + .35, .3)))})`;
-  golpes($('c-caja'), t, T.cierre + .4, .15);
-  $('c-pild').style.opacity = clamp(prog(t, T.cierre + .9, .2)); $('c-pild').style.transform = `translateY(${lerp(50, 0, backOut(prog(t, T.cierre + .9, .3)))}px)`;
-  $('url').style.opacity = clamp(prog(t, T.cierre + 1.3, .2));
-  $('url').style.transform = `scale(${1 + Math.sin(prog(t, T.cierre + 1.6, .5) * Math.PI) * .1 + Math.sin(prog(t, T.cierre + 3.4, .5) * Math.PI) * .06})`;
+  // Los libros de Rafa entran con rebote y se quedan flotando
+  const libros = $('c-libros'), xl = prog(t, T.cierre, .45);
+  libros.style.opacity = clamp(xl * 3);
+  libros.style.transform = `translateX(-50%) translateY(${lerp(160, 0, backOut(xl)) + Math.sin(t * 2.2) * 10 * xl}px) scale(${lerp(.5, 1, backOut(xl))}) rotate(${lerp(-14, 0, easeOut(xl)) + Math.sin(t * 1.6) * 1.2 * xl}deg)`;
+  $('c-caja').style.opacity = clamp(prog(t, T.cierre + PULSO, .1));
+  $('c-caja').style.transform = `scale(${lerp(1.3, 1, backOut(prog(t, T.cierre + PULSO, .3)))})`;
+  golpes($('c-caja'), t, T.cierre + PULSO, PULSO / 2);
+  $('c-pild').style.opacity = clamp(prog(t, T.cierre + 3 * PULSO, .2)); $('c-pild').style.transform = `translateY(${lerp(50, 0, backOut(prog(t, T.cierre + 3 * PULSO, .3)))}px)`;
+  $('url').style.opacity = clamp(prog(t, T.cierre + COMPAS, .2));
+  $('url').style.transform = `scale(${1 + Math.sin(prog(t, T.cierre + COMPAS + PULSO, .46) * Math.PI) * .1 + Math.sin(prog(t, T.cierre + 2 * COMPAS + PULSO, .46) * Math.PI) * .07})`;
 
   $('progreso').style.width = (W * clamp(t / DUR)) + 'px';
 };

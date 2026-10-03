@@ -419,9 +419,11 @@ en el grupo.
   301 cualquier `index.html` que quede. Search Console decía que la landing
   no tenía **ninguna página de referencia**: los enlaces de la home iban a la
   otra URL.
-- **Portada**: nombre nuevo (`portada-hiperautomatizaciones.png`) y 301 desde
+- **Portada**: nombre nuevo (`portada-hiperautomatizaciones.jpg`) y 301 desde
   las dos demo. No se reutilizó el nombre porque las imágenes salen con
-  `max-age` de un año: quien ya la vio seguiría viendo la demo.
+  `max-age` de un año: quien ya la vio seguiría viendo la demo. Desde el 3 de
+  octubre la portada es la de Rafa, en JPG (`portada-hiperautomatizaciones.jpg`):
+  el PNG pesaba varios MB para una imagen fotográfica.
 - **Contenido para «hiperautomatización» en singular**, que es lo que la gente
   busca: sección «¿Qué es la hiperautomatización?» (resumen del capítulo 1, con
   los cinco tipos) y cinco preguntas frecuentes.
@@ -459,7 +461,8 @@ proyectos/index.html  proyectos/copilot-interno.html  proyectos/crecer-en-ingles
 proyectos/docencia-ia.html  proyectos/gestion-proyectos-seo.html
 proyectos/perito-guai.html  proyectos/voicebot-ia.html
 css/libro.css  css/libro-landing.css  css/footer.css
-assets/img/libro/portada-hiperautomatizaciones.png   ← el PNG BUENO de Rafa
+assets/img/libro/portada-hiperautomatizaciones.jpg   ← portada de Rafa (recortada de la cubierta plana)
+assets/img/libro/mockup-libros-apilados.webp        ← hero de la landing
 assets/img/libro/trama-flujos.svg
 assets/img/alex-perdel-retrato.jpg
 assets/img/libro/og-hiperautomatizaciones.jpg   ← regenerar con tools/og-libro.sh tras meter el PNG
@@ -468,9 +471,6 @@ assets/img/libro/og-hiperautomatizaciones.jpg   ← regenerar con tools/og-libro
 **Borrar del servidor:** `assets/img/libro/portada-hiperautomatizaciones-demo.png`
 y `…-demo-sm.png` (el 301 ya responde por ellas).
 
-⚠️ **No subir la portada hasta tener el PNG definitivo.** Con caché de un año,
-si sube la captura provisional y luego se cambia con el mismo nombre, los que
-ya la hayan visto seguirán viendo la captura.
 
 ### Después de subir
 

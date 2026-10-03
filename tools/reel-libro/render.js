@@ -3,7 +3,7 @@
 //   node render.js                     → los dos formatos, 4:5 y 9:16
 //   node render.js --h 1920            → solo uno
 //   node render.js --fotos 2,6,10      → solo fotogramas sueltos (PNG) para revisar
-//   node render.js --musica pista.mp3  → además, versión con música (fundidos de 1 y 2 s)
+//   node render.js --musica pista.mp3 --desde 63.39  → además, versión con música desde ese segundo
 //
 // Salida en ./salida/ (no se versiona).
 
@@ -22,6 +22,7 @@ const arg = (n, def) => { const i = process.argv.indexOf('--' + n); return i > 0
 const alturas = arg('h') ? [+arg('h')] : [1350, 1920];
 const fotos = arg('fotos') ? arg('fotos').split(',').map(Number) : null;
 const musica = arg('musica');
+const desde = +(arg('desde') || 0);      // segundo de la pista en el que arranca el vídeo
 const SALIDA = path.join(__dirname, 'salida');
 fs.mkdirSync(SALIDA, { recursive: true });
 
@@ -80,7 +81,7 @@ function servir() {
     if (musica) {
       const conMusica = mp4.replace('.mp4', '-musica.mp4');
       execFileSync(ffmpeg, ['-y', '-loglevel', 'error', '-i', mp4, '-i', musica,
-        '-filter_complex', `[1:a]atrim=0:${DUR},afade=t=in:st=0:d=1,afade=t=out:st=${DUR - 2}:d=2,volume=0.85[a]`,
+        '-filter_complex', `[1:a]atrim=start=${desde}:end=${desde + DUR},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.4,afade=t=out:st=${DUR - 1.5}:d=1.5[a]`,
         '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', conMusica]);
       console.log(`→ ${conMusica}`);
     }
