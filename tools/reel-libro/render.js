@@ -16,7 +16,7 @@ const ffmpeg = require('ffmpeg-static');
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const RAIZ = path.resolve(__dirname, '../..');          // raíz de la web: el reel lee la trama de assets/
-const FPS = 30, DUR = 40, W = 1080;
+const FPS = 30, W = 1080;   // la duración la marca reel.html (window.DUR)
 
 const arg = (n, def) => { const i = process.argv.indexOf('--' + n); return i > 0 ? process.argv[i + 1] : def; };
 const alturas = arg('h') ? [+arg('h')] : [1350, 1920];
@@ -49,6 +49,7 @@ function servir() {
     await pag.goto(`${base}?h=${H}`, { waitUntil: 'networkidle0' });
     await pag.evaluate(() => window.listo);
     const nombre = H === 1920 ? '9x16' : '4x5';
+    const DUR = await pag.evaluate(() => window.DUR);
 
     if (fotos) {
       for (const t of fotos) {

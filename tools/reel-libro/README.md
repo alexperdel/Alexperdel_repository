@@ -1,4 +1,4 @@
-# Reel del libro (40 s)
+# Reel del libro (28 s)
 
 Animación con la identidad de la cubierta: la trama se dibuja sola y la cámara
 recorre un diagrama de flujo — título → subtítulo → las tres razones (Cero

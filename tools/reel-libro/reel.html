@@ -82,6 +82,7 @@
   #cierre .pildora { margin: 34px auto 0; width: 900px; padding: 28px 40px; font-size: 46px; }
   #url { margin-top: 40px; font-family: 'Archivo'; font-weight: 900; font-size: 44px; color: var(--tinta); }
 
+  .w { display: inline-block; }
   #progreso { position: absolute; left: 0; bottom: 0; height: 12px; background: var(--tinta); }
 </style>
 </head>
@@ -96,11 +97,11 @@
     <div class="nodo" id="n-sub"><div id="subtitulo" class="pildora serif">Manual <span class="rojo">honesto</span> y <span class="rojo">sin humos</span><br>para <span class="rojo">automatizar de verdad</span> tu empresa</div></div>
 
     <div class="flecha" id="f2"><i></i><b></b></div>
-    <div class="nodo razon" id="n-r1"><div style="text-align:center"><span class="num">01</span></div><div class="caja palo">Cero<br>humo</div><div class="pildora serif">Ni IA mágica ni casos de éxito<br>de diapositiva.</div></div>
+    <div class="nodo razon" id="n-r1"><div style="text-align:center"><span class="num">01</span></div><div class="caja palo"><span class="w">Cero</span><br><span class="w">humo</span></div><div class="pildora serif">Ni IA mágica ni casos de éxito<br>de diapositiva.</div></div>
     <div class="flecha" id="f3"><i></i><b></b></div>
-    <div class="nodo razon" id="n-r2"><div style="text-align:center"><span class="num">02</span></div><div class="caja palo">Cicatrices<br>reales</div><div class="pildora serif">Errores vistos de cerca,<br>donde he trabajado.</div></div>
+    <div class="nodo razon" id="n-r2"><div style="text-align:center"><span class="num">02</span></div><div class="caja palo"><span class="w">Cicatrices</span><br><span class="w">reales</span></div><div class="pildora serif">Errores vistos de cerca,<br>donde he trabajado.</div></div>
     <div class="flecha" id="f4"><i></i><b></b></div>
-    <div class="nodo razon" id="n-r3"><div style="text-align:center"><span class="num">03</span></div><div class="caja palo">No<br>caduca</div><div class="pildora serif">Da igual la herramienta.<br>Y la década.</div></div>
+    <div class="nodo razon" id="n-r3"><div style="text-align:center"><span class="num">03</span></div><div class="caja palo"><span class="w">No</span><br><span class="w">caduca</span></div><div class="pildora serif">Da igual la herramienta.<br>Y la década.</div></div>
 
     <div class="flecha" id="f5"><i></i><b></b></div>
     <div class="nodo" id="n-libro"><div id="libro">
@@ -113,7 +114,7 @@
     <div class="flecha" id="f6"><i></i><b></b></div>
     <div class="nodo" id="n-cierre"><div id="cierre">
       <div id="rayo"><svg viewBox="0 0 32 32"><path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#E3262B"/></svg><span class="serif">Alex Perdel</span></div>
-      <div class="caja palo" id="c-caja">Sale a finales<br>de 2026</div>
+      <div class="caja palo" id="c-caja"><span class="w">Sale a finales</span><br><span class="w">de 2026</span></div>
       <div class="pildora serif" id="c-pild">Apúntate y te aviso el día que salga</div>
       <p id="url">alexperdel.com/hiperautomatizaciones</p>
     </div></div>
@@ -123,7 +124,8 @@
 </div>
 
 <script>
-const DUR = 40;
+const DUR = 28;
+window.DUR = DUR;
 const H = +(new URLSearchParams(location.search).get('h') || 1350);
 const W = 1080;
 document.getElementById('lienzo').style.height = H + 'px';
@@ -184,81 +186,113 @@ const listo = fetch('../../assets/img/libro/trama-flujos.svg').then(r => r.text(
   });
 });
 
-// ---------- guion: a qué nodo mira la cámara y cuándo ----------
+// ---------- guion: cuándo llega la cámara a cada nodo ----------
+// Versión rápida (28 s): cambios de plano de 0,45 s con rebote y un zoom de
+// impacto al llegar. Todo cuelga de T: moviendo un número se mueve la escena.
+const T = { titulo: .3, sub: 2.6, r1: 5.4, r2: 8.9, r3: 12.4, libro: 15.9, cierre: 21.2 };
 const PLANOS = [
   [0, (Y.titulo + Y.sub) / 2 - 40],
-  [8.4, Y.r1], [14.4, Y.r2], [20.4, Y.r3], [26.4, Y.libro], [33.6, Y.cierre],
+  [T.r1 - .45, Y.r1], [T.r2 - .45, Y.r2], [T.r3 - .45, Y.r3], [T.libro - .45, Y.libro], [T.cierre - .45, Y.cierre],
 ];
+const MOVER = .45;
+const rebote = x => { const c = 1.25; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
 function camara(t) {
   let y = PLANOS[0][1];
-  for (let i = 1; i < PLANOS.length; i++) y = lerp(y, PLANOS[i][1], easeInOut(prog(t, PLANOS[i][0], .75)));
+  for (let i = 1; i < PLANOS.length; i++) y = lerp(y, PLANOS[i][1], rebote(prog(t, PLANOS[i][0], MOVER)));
   return y;
 }
+// Zoom de impacto y sacudida corta al aterrizar en cada plano
+function impacto(t) {
+  let z = 0, sx = 0, sy = 0;
+  for (const [ta] of PLANOS.slice(1)) {
+    const x = prog(t, ta + MOVER * .8, .35);
+    if (x > 0 && x < 1) { z += .07 * (1 - easeOut(x)); }
+  }
+  for (const ta of [T.titulo + .25, T.r1 + .15, T.r2 + .15, T.r3 + .15, T.cierre + .45]) {
+    const x = prog(t, ta, .18);
+    if (x > 0 && x < 1) { const k = (1 - x) * 14; sx += Math.sin(t * 160) * k; sy += Math.cos(t * 190) * k; }
+  }
+  return { z, sx, sy };
+}
 // Aparición con rebote: escala y opacidad
-function pop(el, t, a, d = .5, desde = .55) {
-  const x = prog(t, a, d); el.style.opacity = clamp(x * 2.5);
+function pop(el, t, a, d = .35, desde = .55) {
+  const x = prog(t, a, d); el.style.opacity = clamp(x * 3);
   return lerp(desde, 1, backOut(x));
+}
+// Palabras que golpean una detrás de otra
+function golpes(cont, t, a, paso = .12) {
+  cont.querySelectorAll('.w').forEach((w, i) => {
+    const x = prog(t, a + i * paso, .28);
+    w.style.opacity = clamp(x * 4);
+    w.style.transform = `scale(${lerp(1.9, 1, backOut(x))})`;
+  });
 }
 
 window.render = function (t) {
-  // Cámara y paralaje del fondo
-  const cy = camara(t);
-  $('escenario').style.transform = `translateY(${H / 2 - cy}px)`;
-  $('fondo').style.transform = `translate(${Math.sin(t / 6) * 18}px, ${-cy * 0.06 + Math.cos(t / 5) * 10}px)`;
+  // Cámara, zoom de impacto y paralaje del fondo
+  const cy = camara(t), im = impacto(t);
+  $('escenario').style.transformOrigin = `50% ${cy}px`;
+  $('escenario').style.transform = `translate(${im.sx}px, ${H / 2 - cy + im.sy}px) scale(${1 + im.z})`;
+  $('fondo').style.transform = `translate(${Math.sin(t / 3) * 22}px, ${-cy * 0.08 + Math.cos(t / 2.5) * 12}px) scale(${1 + im.z * .5})`;
 
-  // Trama dibujándose (0–2,4 s) y respirando después
-  for (const l of lineasTrama) l.el.style.strokeDashoffset = l.L * (1 - easeOut(prog(t, l.d * 1.4, 1)));
+  // Trama dibujándose (0–1,4 s) y respirando después
+  for (const l of lineasTrama) l.el.style.strokeDashoffset = l.L * (1 - easeOut(prog(t, l.d * .8, .6)));
   for (const f of formasTrama) {
-    const x = prog(t, .4 + f.d * 1.8, .45);
-    f.el.style.transform = `scale(${backOut(x) * (1 + Math.sin(t * 2 + f.d * 20) * .06)})`;
+    const x = prog(t, .2 + f.d * 1.1, .3);
+    f.el.style.transform = `scale(${backOut(x) * (1 + Math.sin(t * 4 + f.d * 20) * .08)})`;
     f.el.style.opacity = x;
   }
 
-  // Título: la caja cae y HIPER golpea
-  const sT = pop($('n-titulo'), t, .5, .55, 1.35);
+  // Título: la caja cae y las dos palabras golpean
+  const sT = pop($('n-titulo'), t, T.titulo, .35, 1.4);
   $('n-titulo').style.transform = `translate(-50%, -50%) scale(${sT})`;
-  $('t-g').style.opacity = clamp(prog(t, .75, .2)); $('t-g').style.transform = `scale(${lerp(1.5, 1, easeOut(prog(t, .75, .35)))})`;
-  $('t-p').style.opacity = clamp(prog(t, 1.25, .25)); $('t-p').style.transform = `translateY(${lerp(40, 0, easeOut(prog(t, 1.25, .4)))}px)`;
+  $('t-g').style.opacity = clamp(prog(t, T.titulo + .2, .12)); $('t-g').style.transform = `scale(${lerp(1.7, 1, backOut(prog(t, T.titulo + .2, .3)))})`;
+  $('t-p').style.opacity = clamp(prog(t, T.titulo + .5, .15)); $('t-p').style.transform = `translateY(${lerp(50, 0, backOut(prog(t, T.titulo + .5, .3)))}px)`;
 
-  // Flechas: se dibujan justo antes de su nodo
+  // Flechas: se disparan justo antes de su nodo
   const flecha = (f, a) => {
-    const x = easeOut(prog(t, a, .45)); FL[f].querySelector('i').style.transform = `scaleY(${x})`;
+    const x = easeOut(prog(t, a, .25)); FL[f].querySelector('i').style.transform = `scaleY(${x})`;
     FL[f].querySelector('b').style.opacity = clamp((x - .85) * 7);
   };
-  flecha('f1', 3.6); flecha('f2', 8.6); flecha('f3', 14.6); flecha('f4', 20.6); flecha('f5', 26.6); flecha('f6', 33.8);
+  flecha('f1', T.sub - .3); flecha('f2', T.r1 - .4); flecha('f3', T.r2 - .4); flecha('f4', T.r3 - .4); flecha('f5', T.libro - .4); flecha('f6', T.cierre - .4);
 
-  // Subtítulo: entra la píldora y las palabras rojas laten una a una
-  $('n-sub').style.transform = `translate(-50%, -50%) scale(${pop($('n-sub'), t, 4.0)})`;
+  // Subtítulo: entra la píldora y se subrayan las palabras rojas
+  $('n-sub').style.transform = `translate(-50%, -50%) scale(${pop($('n-sub'), t, T.sub)})`;
   [...document.querySelectorAll('#subtitulo .rojo')].forEach((r, i) => {
-    r.style.backgroundSize = (100 * easeOut(prog(t, 4.8 + i * .45, .4))) + '% 5px';
+    r.style.backgroundSize = (100 * easeOut(prog(t, T.sub + .4 + i * .25, .25))) + '% 5px';
   });
 
-  // Las tres razones: número, caja que golpea y píldora que sube
-  [['n-r1', 9.1], ['n-r2', 15.1], ['n-r3', 21.1]].forEach(([id, a]) => {
+  // Las tres razones: número, palabras que golpean y píldora que sube
+  [['n-r1', T.r1], ['n-r2', T.r2], ['n-r3', T.r3]].forEach(([id, a]) => {
     const n = $(id), [num, cajaW, pild] = [n.querySelector('.num'), n.querySelector('.caja'), n.querySelector('.pildora')];
     n.style.transform = 'translate(-50%, -50%)'; n.style.opacity = 1;
-    num.style.opacity = clamp(prog(t, a, .2)); num.style.transform = `translateY(${lerp(-30, 0, easeOut(prog(t, a, .35)))}px)`;
-    cajaW.style.opacity = clamp(prog(t, a + .15, .15) * 2);
-    cajaW.style.transform = `scale(${lerp(1.45, 1, backOut(prog(t, a + .15, .45)))}) rotate(${lerp(-4, 0, easeOut(prog(t, a + .15, .5)))}deg)`;
-    pild.style.opacity = clamp(prog(t, a + .7, .3));
-    pild.style.transform = `translateY(${lerp(50, 0, easeOut(prog(t, a + .7, .45)))}px)`;
+    num.style.opacity = clamp(prog(t, a - .1, .12)); num.style.transform = `translateY(${lerp(-30, 0, easeOut(prog(t, a - .1, .2)))}px)`;
+    cajaW.style.opacity = clamp(prog(t, a, .1) * 2);
+    cajaW.style.transform = `scale(${lerp(1.3, 1, backOut(prog(t, a, .3)))}) rotate(${lerp(-6, 0, easeOut(prog(t, a, .35)))}deg)`;
+    golpes(cajaW, t, a + .08);
+    pild.style.opacity = clamp(prog(t, a + .45, .2));
+    pild.style.transform = `translateY(${lerp(60, 0, backOut(prog(t, a + .45, .3)))}px)`;
   });
 
-  // Libro: aparece y pasa seis páginas
-  $('n-libro').style.transform = `translate(-50%, -50%) scale(${pop($('n-libro'), t, 27.0, .6, .7)})`;
+  // Libro: aparece y pasa seis páginas al doble de velocidad
+  $('n-libro').style.transform = `translate(-50%, -50%) scale(${pop($('n-libro'), t, T.libro, .4, .7)})`;
   paginas.forEach((p, i) => {
-    const x = easeInOut(prog(t, 27.9 + i * .92, .85));
+    const x = easeInOut(prog(t, T.libro + .55 + i * .6, .55));
     p.style.transform = `rotateY(${-180 * x}deg)`;
     p.style.zIndex = x > .5 ? 100 + i : 100 - i;
   });
 
   // Cierre
   $('n-cierre').style.transform = 'translate(-50%, -50%)'; $('n-cierre').style.opacity = 1;
-  const rayo = $('rayo'), sr = backOut(prog(t, 34.3, .55));
-  rayo.style.opacity = clamp(prog(t, 34.3, .2)); rayo.style.transform = `scale(${lerp(.3, 1, sr)}) rotate(${lerp(-90, 0, easeOut(prog(t, 34.3, .6)))}deg)`;
-  $('c-caja').style.opacity = clamp(prog(t, 34.9, .2)); $('c-caja').style.transform = `scale(${lerp(1.4, 1, backOut(prog(t, 34.9, .45)))})`;
-  $('c-pild').style.opacity = clamp(prog(t, 35.5, .3)); $('c-pild').style.transform = `translateY(${lerp(40, 0, easeOut(prog(t, 35.5, .4)))}px)`;
-  $('url').style.opacity = clamp(prog(t, 36.1, .3)); $('url').style.transform = `scale(${1 + Math.sin(prog(t, 36.6, .6) * Math.PI) * .08})`;
+  const rayo = $('rayo');
+  rayo.style.opacity = clamp(prog(t, T.cierre, .12));
+  rayo.style.transform = `scale(${lerp(.2, 1, backOut(prog(t, T.cierre, .35)))}) rotate(${lerp(-120, 0, easeOut(prog(t, T.cierre, .4)))}deg)`;
+  $('c-caja').style.opacity = clamp(prog(t, T.cierre + .35, .1));
+  $('c-caja').style.transform = `scale(${lerp(1.3, 1, backOut(prog(t, T.cierre + .35, .3)))})`;
+  golpes($('c-caja'), t, T.cierre + .4, .15);
+  $('c-pild').style.opacity = clamp(prog(t, T.cierre + .9, .2)); $('c-pild').style.transform = `translateY(${lerp(50, 0, backOut(prog(t, T.cierre + .9, .3)))}px)`;
+  $('url').style.opacity = clamp(prog(t, T.cierre + 1.3, .2));
+  $('url').style.transform = `scale(${1 + Math.sin(prog(t, T.cierre + 1.6, .5) * Math.PI) * .1 + Math.sin(prog(t, T.cierre + 3.4, .5) * Math.PI) * .06})`;
 
   $('progreso').style.width = (W * clamp(t / DUR)) + 'px';
 };
