@@ -1,0 +1,281 @@
+<!doctype html>
+<!--
+  Reel del libro (40 s). Animación determinista: window.render(t) pinta el
+  fotograma del segundo t, así render.js puede grabarlo fotograma a fotograma.
+  Se puede ver en el navegador tal cual (reproduce sola en bucle).
+  Formato por URL: ?h=1350 (4:5, feed) · ?h=1920 (9:16, historias/reels).
+-->
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Merriweather:ital,wght@0,700;0,900;1,900&display=swap">
+<style>
+  :root { --amarillo: #F6B331; --tinta: #141414; --rojo: #E3262B; --W: 1080px; }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: var(--W); overflow: hidden; background: #000; }
+  #lienzo { position: relative; width: var(--W); overflow: hidden; background: var(--amarillo); }
+
+  /* Fondo: trama + velo blanco. Va más grande que el lienzo para el paralaje */
+  #fondo { position: absolute; left: -10%; width: 120%; top: -15%; height: 130%; }
+  #fondo svg { width: 100%; height: 100%; }
+  #velo { position: absolute; inset: 0; background: rgba(255,255,255,.14); }
+
+  /* El escenario es una columna larga; la cámara lo desplaza en vertical */
+  #escenario { position: absolute; left: 0; top: 0; width: var(--W); }
+  .nodo { position: absolute; left: 50%; transform-origin: 50% 50%; }
+
+  .caja { background: var(--tinta); color: #fff; border-radius: 30px; text-align: center;
+          box-shadow: 0 30px 60px -28px rgba(0,0,0,.6); }
+  .pildora { background: #fff; color: var(--tinta); border-radius: 999px; text-align: center;
+             box-shadow: 0 18px 34px -16px rgba(0,0,0,.45); }
+  .palo { font-family: 'Archivo', sans-serif; font-weight: 900; text-transform: uppercase; line-height: .9; }
+  .serif { font-family: 'Merriweather', serif; font-weight: 700; }
+  .rojo { color: var(--rojo); background: linear-gradient(var(--rojo), var(--rojo)) 0 100% / 0% 5px no-repeat; padding-bottom: 2px; }
+
+  #titulo { width: 920px; padding: 46px 40px 52px; }
+  #titulo .g { display: block; font-size: 236px; letter-spacing: -8px; }
+  #titulo .p { display: block; font-size: 70px; letter-spacing: -1px; margin-top: 10px; }
+  #subtitulo { width: 960px; padding: 32px 40px; font-size: 45px; line-height: 1.32; }
+
+  .flecha { position: absolute; left: 50%; width: 0; }
+  .flecha i { position: absolute; left: -5px; top: 0; width: 10px; background: var(--tinta); transform-origin: top; }
+  .flecha b { position: absolute; left: -26px; width: 0; height: 0; border-left: 26px solid transparent;
+              border-right: 26px solid transparent; border-top: 30px solid var(--tinta); }
+  .flecha.blanca i { background: #fff; } .flecha.blanca b { border-top-color: #fff; }
+
+  .razon { width: 940px; }
+  .razon .num { display: inline-block; font-family: 'Archivo'; font-weight: 900; font-size: 44px;
+                color: var(--amarillo); background: var(--tinta); border-radius: 999px; padding: 10px 30px; margin-bottom: 26px; }
+  .razon .caja { padding: 50px 40px 56px; }
+  .razon .caja.palo { font-size: 128px; letter-spacing: -3px; }
+  .razon .pildora { margin: 34px auto 0; width: 900px; padding: 30px 46px; font-size: 46px; line-height: 1.3; }
+
+  /* Libro abierto pasando páginas */
+  #libro { width: 960px; }
+  #libro .kicker { text-align: center; font-family: 'Archivo'; font-weight: 900; font-size: 52px;
+                   text-transform: uppercase; margin-bottom: 36px; }
+  .tomo { position: relative; width: 960px; height: 600px; perspective: 2600px; }
+  .tomo .hoja-izq, .tomo .pag { position: absolute; top: 0; width: 480px; height: 600px; }
+  .tomo .hoja-izq { left: 0; background: var(--tinta); border-radius: 20px 4px 4px 20px; color: #fff;
+                    display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .tomo .hoja-izq .palo { font-size: 92px; letter-spacing: -2px; text-align: center; }
+  .tomo .hoja-izq .palo small { display: block; font-size: 33px; letter-spacing: 0; margin-top: 8px; }
+  .tomo .pag { left: 480px; transform-origin: 0 50%; transform-style: preserve-3d; }
+  .tomo .cara { position: absolute; inset: 0; backface-visibility: hidden; background: #fff;
+                border-radius: 4px 20px 20px 4px; padding: 64px 56px; box-shadow: inset 18px 0 30px -18px rgba(0,0,0,.25); }
+  .tomo .cara.dorso { transform: rotateY(180deg); border-radius: 20px 4px 4px 20px; background: #FAFAF8;
+                      box-shadow: inset -18px 0 30px -18px rgba(0,0,0,.25); }
+  .cara .cap { font-family: 'Archivo'; font-weight: 900; font-size: 40px; color: var(--rojo); }
+  .cara .tit { font-family: 'Merriweather'; font-weight: 900; font-size: 52px; line-height: 1.18; margin-top: 22px; color: var(--tinta); }
+  .cara .lineas { margin-top: 40px; }
+  .cara .lineas span { display: block; height: 12px; background: #E6E6E2; border-radius: 6px; margin-bottom: 18px; }
+
+  /* Cierre */
+  #cierre { width: 960px; text-align: center; }
+  #rayo { width: 250px; height: 250px; border-radius: 50%; background: var(--tinta); margin: 0 auto;
+          display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff;
+          box-shadow: 0 30px 60px -26px rgba(0,0,0,.6); }
+  #rayo svg { width: 46px; height: 58px; }
+  #rayo .serif { font-style: italic; font-weight: 900; font-size: 38px; margin-top: 10px; }
+  #cierre .caja { margin-top: 56px; padding: 40px 30px 46px; }
+  #cierre .caja.palo { font-size: 96px; letter-spacing: -2px; }
+  #cierre .pildora { margin: 34px auto 0; width: 900px; padding: 28px 40px; font-size: 46px; }
+  #url { margin-top: 40px; font-family: 'Archivo'; font-weight: 900; font-size: 44px; color: var(--tinta); }
+
+  #progreso { position: absolute; left: 0; bottom: 0; height: 12px; background: var(--tinta); }
+</style>
+</head>
+<body>
+<div id="lienzo">
+  <div id="fondo"></div>
+  <div id="velo"></div>
+
+  <div id="escenario">
+    <div class="nodo" id="n-titulo"><div id="titulo" class="caja palo"><span class="g" id="t-g">Hiper</span><span class="p" id="t-p">automatizaciones</span></div></div>
+    <div class="flecha" id="f1"><i></i><b></b></div>
+    <div class="nodo" id="n-sub"><div id="subtitulo" class="pildora serif">Manual <span class="rojo">honesto</span> y <span class="rojo">sin humos</span><br>para <span class="rojo">automatizar de verdad</span> tu empresa</div></div>
+
+    <div class="flecha" id="f2"><i></i><b></b></div>
+    <div class="nodo razon" id="n-r1"><div style="text-align:center"><span class="num">01</span></div><div class="caja palo">Cero<br>humo</div><div class="pildora serif">Ni IA mágica ni casos de éxito<br>de diapositiva.</div></div>
+    <div class="flecha" id="f3"><i></i><b></b></div>
+    <div class="nodo razon" id="n-r2"><div style="text-align:center"><span class="num">02</span></div><div class="caja palo">Cicatrices<br>reales</div><div class="pildora serif">Errores vistos de cerca,<br>donde he trabajado.</div></div>
+    <div class="flecha" id="f4"><i></i><b></b></div>
+    <div class="nodo razon" id="n-r3"><div style="text-align:center"><span class="num">03</span></div><div class="caja palo">No<br>caduca</div><div class="pildora serif">Da igual la herramienta.<br>Y la década.</div></div>
+
+    <div class="flecha" id="f5"><i></i><b></b></div>
+    <div class="nodo" id="n-libro"><div id="libro">
+      <p class="kicker">18 capítulos · 4 partes</p>
+      <div class="tomo" id="tomo">
+        <div class="hoja-izq"><div class="palo">Hiper<small>automatizaciones</small></div></div>
+      </div>
+    </div></div>
+
+    <div class="flecha" id="f6"><i></i><b></b></div>
+    <div class="nodo" id="n-cierre"><div id="cierre">
+      <div id="rayo"><svg viewBox="0 0 32 32"><path d="M18 2L6 18H14L12 30L24 14H16L18 2Z" fill="#E3262B"/></svg><span class="serif">Alex Perdel</span></div>
+      <div class="caja palo" id="c-caja">Sale a finales<br>de 2026</div>
+      <div class="pildora serif" id="c-pild">Apúntate y te aviso el día que salga</div>
+      <p id="url">alexperdel.com/hiperautomatizaciones</p>
+    </div></div>
+  </div>
+
+  <div id="progreso"></div>
+</div>
+
+<script>
+const DUR = 40;
+const H = +(new URLSearchParams(location.search).get('h') || 1350);
+const W = 1080;
+document.getElementById('lienzo').style.height = H + 'px';
+document.body.style.height = H + 'px';
+
+// ---------- utilidades de tiempo ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, d) => clamp((t - a) / d);                       // 0→1 entre a y a+d
+const easeOut = x => 1 - Math.pow(1 - x, 3);
+const easeInOut = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const backOut = x => { const c = 1.9; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const lerp = (a, b, x) => a + (b - a) * x;
+
+// ---------- escenario: posiciones (centro vertical de cada nodo) ----------
+const $ = id => document.getElementById(id);
+const Y = { titulo: 0, sub: 360, r1: 1120, r2: 2000, r3: 2880, libro: 3780, cierre: 4700 };
+const sitio = (id, y) => { const n = $(id); n.style.top = y + 'px'; n.dataset.y = y; };
+sitio('n-titulo', Y.titulo); sitio('n-sub', Y.sub); sitio('n-r1', Y.r1); sitio('n-r2', Y.r2);
+sitio('n-r3', Y.r3); sitio('n-libro', Y.libro); sitio('n-cierre', Y.cierre);
+// Las flechas unen el borde de abajo de un nodo con el de arriba del siguiente
+const borde = (id, lado) => { const n = $(id); const h = n.offsetHeight; return +n.dataset.y + (lado === 'abajo' ? h / 2 : -h / 2); };
+const flechas = [['f1', 'n-titulo', 'n-sub'], ['f2', 'n-sub', 'n-r1'], ['f3', 'n-r1', 'n-r2'],
+                 ['f4', 'n-r2', 'n-r3'], ['f5', 'n-r3', 'n-libro'], ['f6', 'n-libro', 'n-cierre']];
+const FL = {};
+for (const [f, a, b] of flechas) {
+  const y0 = borde(a, 'abajo') + 14, y1 = borde(b, 'arriba') - 14, el = $(f);
+  el.style.top = y0 + 'px'; el.querySelector('i').style.height = (y1 - y0 - 28) + 'px';
+  el.querySelector('b').style.top = (y1 - y0 - 30) + 'px'; FL[f] = el;
+}
+$('f1').classList.add('blanca');
+
+// ---------- libro: páginas ----------
+const CAPS = [
+  ['Capítulo 4', 'Empezar la casa por el tejado'],
+  ['Capítulo 5', 'Kickoffs épicos, muertes silenciosas'],
+  ['Capítulo 6', 'Esto se hace en un rato'],
+  ['Capítulo 10', 'Less is more'],
+  ['Capítulo 15', 'Nadie pregunta'],
+  ['Capítulo 17', 'Cerrar en vez de mejorar'],
+];
+const lineas = n => '<div class="lineas">' + Array.from({ length: n }, (_, i) => `<span style="width:${70 + ((i * 37) % 30)}%"></span>`).join('') + '</div>';
+const paginas = CAPS.map(([c, t], i) => {
+  const p = document.createElement('div'); p.className = 'pag';
+  p.innerHTML = `<div class="cara"><p class="cap">${c}</p><p class="tit">${t}</p>${lineas(9)}</div><div class="cara dorso">${lineas(14)}</div>`;
+  $('tomo').appendChild(p); return p;
+});
+
+// ---------- trama: se inyecta el SVG de la web y se prepara para dibujarse ----------
+let lineasTrama = [], formasTrama = [];
+const listo = fetch('../../assets/img/libro/trama-flujos.svg').then(r => r.text()).then(svg => {
+  $('fondo').innerHTML = svg;
+  lineasTrama = [...document.querySelectorAll('#fondo line')].map((l, i) => {
+    const L = l.getTotalLength(); l.style.strokeDasharray = L; return { el: l, L, d: (i * 0.618) % 1 };
+  });
+  formasTrama = [...document.querySelectorAll('#fondo rect, #fondo circle')].map((f, i) => {
+    const b = f.getBBox(); f.style.transformOrigin = `${b.x + b.width / 2}px ${b.y + b.height / 2}px`;
+    return { el: f, d: (i * 0.381) % 1 };
+  });
+});
+
+// ---------- guion: a qué nodo mira la cámara y cuándo ----------
+const PLANOS = [
+  [0, (Y.titulo + Y.sub) / 2 - 40],
+  [8.4, Y.r1], [14.4, Y.r2], [20.4, Y.r3], [26.4, Y.libro], [33.6, Y.cierre],
+];
+function camara(t) {
+  let y = PLANOS[0][1];
+  for (let i = 1; i < PLANOS.length; i++) y = lerp(y, PLANOS[i][1], easeInOut(prog(t, PLANOS[i][0], .75)));
+  return y;
+}
+// Aparición con rebote: escala y opacidad
+function pop(el, t, a, d = .5, desde = .55) {
+  const x = prog(t, a, d); el.style.opacity = clamp(x * 2.5);
+  return lerp(desde, 1, backOut(x));
+}
+
+window.render = function (t) {
+  // Cámara y paralaje del fondo
+  const cy = camara(t);
+  $('escenario').style.transform = `translateY(${H / 2 - cy}px)`;
+  $('fondo').style.transform = `translate(${Math.sin(t / 6) * 18}px, ${-cy * 0.06 + Math.cos(t / 5) * 10}px)`;
+
+  // Trama dibujándose (0–2,4 s) y respirando después
+  for (const l of lineasTrama) l.el.style.strokeDashoffset = l.L * (1 - easeOut(prog(t, l.d * 1.4, 1)));
+  for (const f of formasTrama) {
+    const x = prog(t, .4 + f.d * 1.8, .45);
+    f.el.style.transform = `scale(${backOut(x) * (1 + Math.sin(t * 2 + f.d * 20) * .06)})`;
+    f.el.style.opacity = x;
+  }
+
+  // Título: la caja cae y HIPER golpea
+  const sT = pop($('n-titulo'), t, .5, .55, 1.35);
+  $('n-titulo').style.transform = `translate(-50%, -50%) scale(${sT})`;
+  $('t-g').style.opacity = clamp(prog(t, .75, .2)); $('t-g').style.transform = `scale(${lerp(1.5, 1, easeOut(prog(t, .75, .35)))})`;
+  $('t-p').style.opacity = clamp(prog(t, 1.25, .25)); $('t-p').style.transform = `translateY(${lerp(40, 0, easeOut(prog(t, 1.25, .4)))}px)`;
+
+  // Flechas: se dibujan justo antes de su nodo
+  const flecha = (f, a) => {
+    const x = easeOut(prog(t, a, .45)); FL[f].querySelector('i').style.transform = `scaleY(${x})`;
+    FL[f].querySelector('b').style.opacity = clamp((x - .85) * 7);
+  };
+  flecha('f1', 3.6); flecha('f2', 8.6); flecha('f3', 14.6); flecha('f4', 20.6); flecha('f5', 26.6); flecha('f6', 33.8);
+
+  // Subtítulo: entra la píldora y las palabras rojas laten una a una
+  $('n-sub').style.transform = `translate(-50%, -50%) scale(${pop($('n-sub'), t, 4.0)})`;
+  [...document.querySelectorAll('#subtitulo .rojo')].forEach((r, i) => {
+    r.style.backgroundSize = (100 * easeOut(prog(t, 4.8 + i * .45, .4))) + '% 5px';
+  });
+
+  // Las tres razones: número, caja que golpea y píldora que sube
+  [['n-r1', 9.1], ['n-r2', 15.1], ['n-r3', 21.1]].forEach(([id, a]) => {
+    const n = $(id), [num, cajaW, pild] = [n.querySelector('.num'), n.querySelector('.caja'), n.querySelector('.pildora')];
+    n.style.transform = 'translate(-50%, -50%)'; n.style.opacity = 1;
+    num.style.opacity = clamp(prog(t, a, .2)); num.style.transform = `translateY(${lerp(-30, 0, easeOut(prog(t, a, .35)))}px)`;
+    cajaW.style.opacity = clamp(prog(t, a + .15, .15) * 2);
+    cajaW.style.transform = `scale(${lerp(1.45, 1, backOut(prog(t, a + .15, .45)))}) rotate(${lerp(-4, 0, easeOut(prog(t, a + .15, .5)))}deg)`;
+    pild.style.opacity = clamp(prog(t, a + .7, .3));
+    pild.style.transform = `translateY(${lerp(50, 0, easeOut(prog(t, a + .7, .45)))}px)`;
+  });
+
+  // Libro: aparece y pasa seis páginas
+  $('n-libro').style.transform = `translate(-50%, -50%) scale(${pop($('n-libro'), t, 27.0, .6, .7)})`;
+  paginas.forEach((p, i) => {
+    const x = easeInOut(prog(t, 27.9 + i * .92, .85));
+    p.style.transform = `rotateY(${-180 * x}deg)`;
+    p.style.zIndex = x > .5 ? 100 + i : 100 - i;
+  });
+
+  // Cierre
+  $('n-cierre').style.transform = 'translate(-50%, -50%)'; $('n-cierre').style.opacity = 1;
+  const rayo = $('rayo'), sr = backOut(prog(t, 34.3, .55));
+  rayo.style.opacity = clamp(prog(t, 34.3, .2)); rayo.style.transform = `scale(${lerp(.3, 1, sr)}) rotate(${lerp(-90, 0, easeOut(prog(t, 34.3, .6)))}deg)`;
+  $('c-caja').style.opacity = clamp(prog(t, 34.9, .2)); $('c-caja').style.transform = `scale(${lerp(1.4, 1, backOut(prog(t, 34.9, .45)))})`;
+  $('c-pild').style.opacity = clamp(prog(t, 35.5, .3)); $('c-pild').style.transform = `translateY(${lerp(40, 0, easeOut(prog(t, 35.5, .4)))}px)`;
+  $('url').style.opacity = clamp(prog(t, 36.1, .3)); $('url').style.transform = `scale(${1 + Math.sin(prog(t, 36.6, .6) * Math.PI) * .08})`;
+
+  $('progreso').style.width = (W * clamp(t / DUR)) + 'px';
+};
+
+window.listo = Promise.all([listo, document.fonts.ready]).then(() => { render(0); return true; });
+
+// Vista previa en el navegador: reproduce en bucle si no lo controla render.js.
+// Con ?t=12.5 se queda congelado en ese segundo, para revisar un fotograma.
+const tFijo = new URLSearchParams(location.search).get('t');
+if (tFijo !== null) window.listo.then(() => render(+tFijo));
+else if (!navigator.webdriver) {
+  window.listo.then(() => {
+    const t0 = performance.now();
+    const bucle = () => { render(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(bucle); };
+    bucle();
+  });
+}
+</script>
+</body>
+</html>
